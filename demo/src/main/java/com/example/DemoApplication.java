@@ -12,12 +12,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Configuration
 @EnableAutoConfiguration
-@ComponentScan({"demo","controller"})
+@ComponentScan({"demo","controller","configuration"})
 
 public class DemoApplication {
 
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
+		//https://springframework.guru/spring-boot-web-application-part-2-using-thymeleaf/
 	}
 }

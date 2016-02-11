@@ -24,12 +24,12 @@ public class PersonController {
 		
 		
 	}
-	@ResponseBody
-	@RequestMapping("/")
-	String entry(){		
-		return "My Spring Bood App";		
-	}
-	
+//	@ResponseBody
+//	@RequestMapping("/")
+//	String entry(){		
+//		return "My Spring Bood App";		
+//	}
+//	
 	
 	
 	
