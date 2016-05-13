@@ -1,6 +1,8 @@
 package com.test.services;
 
 
+import javax.persistence.Query;
+
 import com.test.domain.Product;
 
 public interface ProductService {
@@ -11,4 +13,8 @@ public interface ProductService {
     Product saveProduct(Product product);
 
     void deleteProduct(Integer id);
+    
+    Iterable<Product> getProductsbySearch(String productDescription);
+    
+  
 }

@@ -33,4 +33,10 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProduct(Integer id) {
         productRepository.delete(id);
     }
+
+	@Override
+	public Iterable<Product> getProductsbySearch(String productDescription) {
+		
+		return productRepository.getProductsbySearch("%"+productDescription+"%");
+	}
 }

@@ -2,9 +2,14 @@ package com.test.domain;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
+
 import java.math.BigDecimal;
 
 @Entity
+@NamedQuery(name = "Product.findByName", query = "SELECT p FROM Product p WHERE p.description=:productDescription") 
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -14,6 +19,10 @@ public class Product {
     private Integer version;
 
     private String productId;
+    
+    @NotNull
+    @NotBlank
+    @Column(name = "description" ,nullable = false)
     private String description;
     private String imageUrl;
     private BigDecimal price;
