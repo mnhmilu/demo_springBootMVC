@@ -19,19 +19,7 @@ public class PersonController {
 		p.setLastName("Hossain");
 		
 		model.addAttribute("person",p);
-		return "personview";	
-		
-		
-		
-	}
-//	@ResponseBody
-//	@RequestMapping("/")
-//	String entry(){		
-//		return "My Spring Bood App";		
-//	}
-//	
-	
-	
-	
+		return "personview";		
+	}	
 
 }
