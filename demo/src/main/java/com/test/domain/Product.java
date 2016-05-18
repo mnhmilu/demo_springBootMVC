@@ -9,7 +9,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import java.math.BigDecimal;
 
 @Entity
-@NamedQuery(name = "Product.findByName", query = "SELECT p FROM Product p WHERE p.description=:productDescription") 
+
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

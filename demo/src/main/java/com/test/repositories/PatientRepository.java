@@ -19,6 +19,8 @@ public interface PatientRepository extends CrudRepository<PatientProfile, Intege
 	
 	@Query("SELECT p FROM PatientProfile p WHERE p.mobile like :mobile" )
 	List<PatientProfile> getPatientProfilebySearch(@Param("mobile") String mobile);
+	List<PatientProfile> findByMobileOrNameIgnoreCase(String mobile, String name);
+	
 	
 }
 	
