@@ -56,7 +56,7 @@ public class PatientProfileLoader implements ApplicationListener<ContextRefreshe
         twoSerial.setRemarks("test2");
         twoSerial.setPatientProfile(patientOne);  
         twoSerial.setSerialNumber(4);
-        twoSerial.setSerialDate(new Date(2015,4,1));
+        twoSerial.setSerialDate(new Date());
         patientSerialRepository.save(twoSerial);  
         
 

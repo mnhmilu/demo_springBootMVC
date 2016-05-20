@@ -2,24 +2,30 @@ package com.test.controller;
 
 import com.test.domain.PatientProfile;
 import com.test.domain.PatientSerials;
+import com.test.dto.PatientSerialDTO;
 import com.test.repositories.PatientRepository;
 import com.test.repositories.PatientSerialRepository;
 import com.test.services.PatientProfiletService;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class PatientController {
@@ -93,13 +99,64 @@ public class PatientController {
     
     @RequestMapping(value = "patient/serials/{id}", method = RequestMethod.GET)
     public String seriallist(@PathVariable Integer id,Model model){
-    	 model.addAttribute("patient", patientProfiletService.getPatientProfileById((id)));
-    	 PatientProfile patientProfilenew= new PatientProfile();
-    	 patientProfilenew.setId(id);    	 
-    	 model.addAttribute("serials", patientSerialRepository.findByPatientProfile(patientProfilenew));
-    	 model.addAttribute("serial", new PatientSerials());
+    	
+    	 PatientProfile patient=patientProfiletService.getPatientProfileById((id));    	
+    	 model.addAttribute("patient", patient);    	 
+    	  	 
+    	 
+    	 model.addAttribute("serials", patientSerialRepository.findByPatientProfile(patient));
+    	 
+    	 
+    	 PatientSerialDTO dto = new PatientSerialDTO();
+    	 dto.setPatientProfileId(patient.getId());  
+    	 
+    	 SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+    	 Date today = new Date();
+    	 
+    	 dateFormat.format(today);
+    	 dto.setSerialDate(today);
+    	 	 
+    	 model.addAttribute("serial", dto);
+    	 
          return "patientSerialForm";
     }
+    
+    @RequestMapping(value = "serialEntry", method = RequestMethod.POST)
+    public String savepatientSerial(@ModelAttribute("serial") PatientSerialDTO serial,BindingResult bindingResult,RedirectAttributes redirectAttributes){
+    	
+    	if(bindingResult.hasErrors())
+    	{
+    		 return "patientSerialForm";    		
+    	}
+    	
+    	PatientProfile patient = new PatientProfile();
+    	patient.setId(serial.getPatientProfileId());   	
+    	PatientSerials patientSerial= new PatientSerials();
+    	patientSerial.setPatientProfile(patient);    	
+    	patientSerial.setSerialDate(serial.getSerialDate());
+    	patientSerial.setRemarks(serial.getRemarks());
+    	patientSerial.setSerialNumber(1);
+    	patientSerial.setLastInsartedDate(new Date());      	
+    	patientSerialRepository.save(patientSerial);
+    	
+    	//redirectAttributes.addAttribute("id",serial.getPatientProfileId().toString());
+    	
+    	return "redirect:patient/serials/"+serial.getPatientProfileId();
+    	
+       // return "redirect:/patients";
+      
+    }
+    
+    @InitBinder
+    private void dateBinder(WebDataBinder binder) {
+                //The date format to parse or output your dates
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+                //Create a new CustomDateEditor
+        CustomDateEditor editor = new CustomDateEditor(dateFormat, true);
+                //Register it as custom editor for the Date type
+        binder.registerCustomEditor(Date.class, editor);
+    }
+
     
     
     
