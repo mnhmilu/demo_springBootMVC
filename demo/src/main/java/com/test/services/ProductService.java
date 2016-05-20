@@ -1,8 +1,6 @@
 package com.test.services;
 
 
-import javax.persistence.Query;
-
 import com.test.domain.Product;
 
 public interface ProductService {

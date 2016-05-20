@@ -1,9 +1,10 @@
 package  com.test.services;
 
-import com.test.domain.Product;
-import com.test.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.test.domain.Product;
+import com.test.repositories.ProductRepository;
 
 @Service
 public class ProductServiceImpl implements ProductService {

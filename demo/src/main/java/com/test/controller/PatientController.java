@@ -1,15 +1,7 @@
 package com.test.controller;
 
-import com.test.domain.PatientProfile;
-import com.test.domain.PatientSerials;
-import com.test.dto.PatientSerialDTO;
-import com.test.repositories.PatientRepository;
-import com.test.repositories.PatientSerialRepository;
-import com.test.services.PatientProfiletService;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import javax.validation.Valid;
 
@@ -24,8 +16,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.test.domain.PatientProfile;
+import com.test.domain.PatientSerials;
+import com.test.dto.PatientSerialDTO;
+import com.test.repositories.PatientRepository;
+import com.test.repositories.PatientSerialRepository;
+import com.test.services.PatientProfiletService;
 
 @Controller
 public class PatientController {
@@ -45,20 +43,20 @@ public class PatientController {
     public String list(Model model){
     	
     	 model.addAttribute("patient", new PatientProfile());
-        model.addAttribute("patients", patientProfiletService.listAllPatients());     
+        model.addAttribute("patients", patientRepository.findAll());     
         return "patients";
     }
 
     @RequestMapping("patient/{id}")
     public String showpatient(@PathVariable Integer id, Model model){
-        model.addAttribute("patient", patientProfiletService.getPatientProfileById(id));        
+        model.addAttribute("patient", patientRepository.findById(id));        
        
         return "patientshow";
     }
 
     @RequestMapping("patient/edit/{id}")
     public String edit(@PathVariable Integer id, Model model){
-        model.addAttribute("patient", patientProfiletService.getPatientProfileById((id)));
+        model.addAttribute("patient",patientRepository.findById(id));
         return "patientform";
     }
 
@@ -88,26 +86,24 @@ public class PatientController {
     		 return "patientform";    		
     	}
     	patient.setLastInsartedDate(new Date());
-        patientProfiletService.savePatientProfile(patient);
+    	patientRepository.save(patient);        
         return "redirect:/patients";
       
     }
 
     @RequestMapping("patient/delete/{id}")
     public String delete(@PathVariable Integer id){
-        patientProfiletService.deletePatientProfile(id);
+    	patientRepository.delete(id);       
         return "redirect:/patients";
     }
     
     @RequestMapping(value = "patient/serials/{id}", method = RequestMethod.GET)
     public String seriallist(@PathVariable Integer id,Model model){
     	
-    	 PatientProfile patient=patientProfiletService.getPatientProfileById((id));    	
-    	 model.addAttribute("patient", patient);    	 
-    	  	 
+    	 PatientProfile patient=patientRepository.findById(id);    	
+    	 model.addAttribute("patient", patient);    	  	 
     	 
-    	 model.addAttribute("serials", patientSerialRepository.findByPatientProfile(patient));
-    	 
+    	 model.addAttribute("serials", patientSerialRepository.findByPatientProfile(patient));    	 
     	 
     	 PatientSerialDTO dto = new PatientSerialDTO();
     	 dto.setPatientProfileId(patient.getId());  
