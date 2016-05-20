@@ -8,9 +8,9 @@ import org.springframework.stereotype.Repository;
 import com.test.domain.PatientProfile;
 
 @Repository
-public interface PatientRepository extends CrudRepository<PatientProfile, Integer>{	
-	//@Query("SELECT p FROM PatientProfile p WHERE p.mobile like :mobile" )
-	//List<PatientProfile> getPatientProfilebySearch(@Param("mobile") String mobile);
+public interface PatientRepository extends CrudRepository<PatientProfile, Integer>{		
+	//List findAllByOrderByDateAsc();
+	List<PatientProfile> findTop50ByOrderByLastInsartedDateDesc();
 	List<PatientProfile> findByMobileOrNameIgnoreCase(String mobile, String name);	
 	PatientProfile findById(Integer id);
 	
