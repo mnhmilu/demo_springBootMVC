@@ -2,9 +2,10 @@ package com.test.controller;
 
 import com.test.domain.PatientProfile;
 import com.test.repositories.PatientRepository;
+import com.test.repositories.PatientSerialRepository;
 import com.test.services.PatientProfiletService;
 
-
+import java.util.Date;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -24,11 +25,13 @@ public class PatientController {
 
     private PatientProfiletService patientProfiletService;
     private PatientRepository patientRepository; 
+    private PatientSerialRepository patientSerialRepository;
 
     @Autowired
-    public void setpatientservice(PatientProfiletService patientProfiletService,PatientRepository patientRepository) {
+    public void setpatientservice(PatientProfiletService patientProfiletService,PatientRepository patientRepository,PatientSerialRepository patientSerialRepository) {
         this.patientProfiletService = patientProfiletService;
         this.patientRepository=patientRepository;
+        this.patientSerialRepository=patientSerialRepository;
     }
 
     @RequestMapping(value = "/patients", method = RequestMethod.GET)
@@ -65,10 +68,8 @@ public class PatientController {
     public String patientsearchResult(PatientProfile patient, Model model){    	
     	
     	 model.addAttribute("patients", patientRepository.findByMobileOrNameIgnoreCase(patient.getMobile(),patient.getName()));  
-         return "patients";
-      
-    }
-    
+         return "patients";      
+    }    
 
     @RequestMapping(value = "patient", method = RequestMethod.POST)
     public String savepatient(@Valid PatientProfile patient, BindingResult bindingResult){
@@ -77,6 +78,7 @@ public class PatientController {
     	{
     		 return "patientform";    		
     	}
+    	patient.setLastInsartedDate(new Date());
         patientProfiletService.savePatientProfile(patient);
         return "redirect:/patients";
       
@@ -87,6 +89,17 @@ public class PatientController {
         patientProfiletService.deletePatientProfile(id);
         return "redirect:/patients";
     }
+    
+    @RequestMapping(value = "patient/serials/{id}", method = RequestMethod.GET)
+    public String seriallist(@PathVariable Integer id,Model model){
+    	 model.addAttribute("patient", patientProfiletService.getPatientProfileById((id)));
+    	 PatientProfile patientProfilenew= new PatientProfile();
+    	 patientProfilenew.setId(id);    	 
+    	 model.addAttribute("serials", patientSerialRepository.findByPatientProfile(patientProfilenew));
+         return "patientSerialForm";
+    }
+    
+    
     
 
 

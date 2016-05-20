@@ -10,8 +10,8 @@
 <div class="container">
     <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
 
-    <h2>Patients Details</h2>
-        <div>
+    <h2>Patient Profile</h2>
+     <div>
             <form class="form-horizontal">
                 <div class="form-group">
                     <label class="col-sm-2 control-label">Patient Id:</label>
@@ -39,6 +39,24 @@
                 </div>
             </form>
     </div>
+    
+    <h2>Patient Serials</h2>
+
+			<table class="table table-striped">
+				<tr>
+					<th>Id</th>
+					<th>Serial Date</th>
+			        <th>Serial Number</th>
+					<th>Remarks</th>		
+				</tr>
+				<tr th:each="serial : ${serials}">
+					<td th:text="${serial.id}"></td>
+					<td th:text="${serial.serialDate}">Serial Date</td>
+					<td th:text="${serial.serialNumber}">Serial Number</td>
+					<td th:text="${serial.remarks}">Remarks</td>					
+				</tr>
+			</table>
+    
 </div>
 
 </body>

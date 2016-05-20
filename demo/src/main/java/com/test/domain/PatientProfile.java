@@ -7,8 +7,12 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.NotBlank;
 
 import java.math.BigDecimal;
+import java.util.Date;
+import java.util.Set;
+
 
 @Entity
+@Table(name = "patient_profile")
 public class PatientProfile {	
 	
     @Id
@@ -21,11 +25,26 @@ public class PatientProfile {
     @Column(name = "name" ,nullable = false)
     private String name;   
   
-    private Integer age;
-    
+    private Integer age;    
     
   
     private String mobile;
+    
+    
+    
+    @Temporal(TemporalType.DATE)
+    private Date lastInsartedDate;    
+    
+   
+
+	public Date getLastInsartedDate() {
+		return lastInsartedDate;
+	}
+
+
+	public void setLastInsartedDate(Date lastInsartedDate) {
+		this.lastInsartedDate = lastInsartedDate;
+	}
 
 
 	public Integer getId() {

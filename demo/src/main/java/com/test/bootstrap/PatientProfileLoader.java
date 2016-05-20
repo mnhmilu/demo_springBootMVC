@@ -7,23 +7,29 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import com.test.domain.PatientProfile;
+import com.test.domain.PatientSerials;
 import com.test.domain.Product;
 import com.test.repositories.PatientRepository;
+import com.test.repositories.PatientSerialRepository;
 import com.test.repositories.ProductRepository;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Component
 public class PatientProfileLoader implements ApplicationListener<ContextRefreshedEvent> {
 
 	
     private PatientRepository patientRepository;
+    
+    private PatientSerialRepository patientSerialRepository;
 
     private Logger log = Logger.getLogger(PatientProfileLoader.class);
 
     @Autowired
-    public void setProductRepository(PatientRepository productRepository) {
+    public void setProductRepository(PatientRepository productRepository, PatientSerialRepository patientSerialRepository) {
         this.patientRepository = productRepository;
+        this.patientSerialRepository=patientSerialRepository;
     }
 
     @Override
@@ -35,6 +41,24 @@ public class PatientProfileLoader implements ApplicationListener<ContextRefreshe
         patientOne.setMobile("01733400896");
         
         patientRepository.save(patientOne);
+        
+        PatientSerials oneSerial = new PatientSerials();
+        oneSerial.setLastInsartedDate(new Date());        
+        oneSerial.setRemarks("test");
+        oneSerial.setSerialNumber(1);
+        oneSerial.setPatientProfile(patientOne);
+        oneSerial.setSerialDate(new Date());
+        
+        patientSerialRepository.save(oneSerial);
+       
+        PatientSerials twoSerial = new PatientSerials();
+        twoSerial.setLastInsartedDate(new Date());
+        twoSerial.setRemarks("test2");
+        twoSerial.setPatientProfile(patientOne);  
+        twoSerial.setSerialNumber(4);
+        twoSerial.setSerialDate(new Date(2015,4,1));
+        patientSerialRepository.save(twoSerial);  
+        
 
         log.info("Saved patient - id: " + patientOne.getId());
 
