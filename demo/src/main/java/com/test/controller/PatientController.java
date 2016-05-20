@@ -134,16 +134,13 @@ public class PatientController {
     	PatientSerials patientSerial= new PatientSerials();
     	patientSerial.setPatientProfile(patient);    	
     	patientSerial.setSerialDate(serial.getSerialDate());
-    	patientSerial.setRemarks(serial.getRemarks());
-    	patientSerial.setSerialNumber(1);
-    	patientSerial.setLastInsartedDate(new Date());      	
-    	patientSerialRepository.save(patientSerial);
-    	
-    	//redirectAttributes.addAttribute("id",serial.getPatientProfileId().toString());
+    	patientSerial.setRemarks(serial.getRemarks());    
+    	patientSerial.setLastInsartedDate(new Date()); 	
+    	patientProfiletService.savePatientSerial(patientSerial);
     	
     	return "redirect:patient/serials/"+serial.getPatientProfileId();
     	
-       // return "redirect:/patients";
+      
       
     }
     

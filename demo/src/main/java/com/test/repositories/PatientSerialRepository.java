@@ -1,5 +1,6 @@
 package com.test.repositories;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -20,6 +21,7 @@ public interface PatientSerialRepository extends CrudRepository<PatientSerials, 
 	
 	List<PatientSerials> findByPatientProfile(PatientProfile patientProfile);
 	
+	List<PatientSerials> findBySerialDate(Date serialDate);
 	
 }
 	
