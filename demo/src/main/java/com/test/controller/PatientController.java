@@ -43,6 +43,8 @@ public class PatientController {
 
     @RequestMapping(value = "/patients", method = RequestMethod.GET)
     public String list(Model model){
+    	
+    	 model.addAttribute("patient", new PatientProfile());
         model.addAttribute("patients", patientProfiletService.listAllPatients());     
         return "patients";
     }
@@ -73,7 +75,7 @@ public class PatientController {
     }
     @RequestMapping(value = "patientsearchResult", method = RequestMethod.POST)
     public String patientsearchResult(PatientProfile patient, Model model){    	
-    	
+    	 model.addAttribute("patient", new PatientProfile());
     	 model.addAttribute("patients", patientRepository.findByMobileOrNameIgnoreCase(patient.getMobile(),patient.getName()));  
          return "patients";      
     }    
