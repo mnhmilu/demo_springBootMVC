@@ -1,6 +1,7 @@
 package com.test.controller;
 
 import com.test.domain.PatientProfile;
+import com.test.domain.PatientSerials;
 import com.test.repositories.PatientRepository;
 import com.test.repositories.PatientSerialRepository;
 import com.test.services.PatientProfiletService;
@@ -96,6 +97,7 @@ public class PatientController {
     	 PatientProfile patientProfilenew= new PatientProfile();
     	 patientProfilenew.setId(id);    	 
     	 model.addAttribute("serials", patientSerialRepository.findByPatientProfile(patientProfilenew));
+    	 model.addAttribute("serial", new PatientSerials());
          return "patientSerialForm";
     }
     
