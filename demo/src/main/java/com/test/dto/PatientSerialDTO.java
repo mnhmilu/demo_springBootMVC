@@ -11,7 +11,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class PatientSerialDTO {
 	
-    private Integer id;        
+    private Integer id;      
+    
+    private int item_no;
   
     @DateTimeFormat(pattern = "MM/dd/yyyy")
     @Temporal(TemporalType.DATE)
@@ -22,6 +24,35 @@ public class PatientSerialDTO {
     private Integer patientProfileId;    
     
     private Integer serialNumber;
+    
+    private String patientName;  
+    
+    private String mobile;    
+    
+
+	public int getItem_no() {
+		return item_no;
+	}
+
+	public void setItem_no(int item_no) {
+		this.item_no = item_no;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public String getPatientName() {
+		return patientName;
+	}
+
+	public void setPatientName(String patientName) {
+		this.patientName = patientName;
+	}
 
 	public Integer getId() {
 		return id;

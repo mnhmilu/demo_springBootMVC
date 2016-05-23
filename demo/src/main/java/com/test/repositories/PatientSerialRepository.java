@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.test.domain.PatientProfile;
 import com.test.domain.PatientSerials;
+import com.test.dto.PatientSerialDTO;
 
 @Repository
 public interface PatientSerialRepository extends CrudRepository<PatientSerials, Integer>{
@@ -15,6 +16,7 @@ public interface PatientSerialRepository extends CrudRepository<PatientSerials, 
 	List<PatientSerials> findByPatientProfile(PatientProfile patientProfile);
 	
 	List<PatientSerials> findBySerialDate(Date serialDate);
+	
 	
 }
 	

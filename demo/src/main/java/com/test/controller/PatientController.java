@@ -1,7 +1,9 @@
 package com.test.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.validation.Valid;
 
@@ -149,6 +151,39 @@ public class PatientController {
 		return "redirect:patient/serials/" + serial.getPatientProfileId();
 
 	}
+	
+	@RequestMapping(value = "patient/serialSearchIndex", method = RequestMethod.GET)
+	public String serialSearch( Model model) {		
+
+		PatientSerialDTO dto = new PatientSerialDTO();		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		Date today = new Date();
+		dateFormat.format(today);
+		dto.setSerialDate(today);
+		model.addAttribute("serial", dto);				
+		List<PatientSerialDTO> resultList = new ArrayList<PatientSerialDTO>();		
+		model.addAttribute("serials",resultList);		
+
+		return "patientSerialSearchResult";
+	}
+	
+	@RequestMapping(value = "patient/serialSearchResults", method = RequestMethod.POST)
+	public String serialSearchResults(@ModelAttribute("serial") PatientSerialDTO serial, BindingResult bindingResult,
+			Model model) {
+
+		if (bindingResult.hasErrors()) {
+			return "patientSerialSearchResult";
+		}
+		
+		List<PatientSerialDTO> resultList = new ArrayList<PatientSerialDTO>();	
+		resultList=patientProfiletService.searchPatientSerialInformationbyDate(serial.getSerialDate());
+		model.addAttribute("serials",resultList);		
+
+		return "patientSerialSearchResult";
+
+	}
+	
+	
 
 	@InitBinder
 	private void dateBinder(WebDataBinder binder) {

@@ -51,13 +51,7 @@ public class PatientProfileLoader implements ApplicationListener<ContextRefreshe
         
         patientSerialRepository.save(oneSerial);
        
-        PatientSerials twoSerial = new PatientSerials();
-        twoSerial.setLastInsartedDate(new Date());
-        twoSerial.setRemarks("test2");
-        twoSerial.setPatientProfile(patientOne);  
-        twoSerial.setSerialNumber(2);
-        twoSerial.setSerialDate(new Date());
-        patientSerialRepository.save(twoSerial);  
+      
         
 
         log.info("Saved patient - id: " + patientOne.getId());
@@ -68,6 +62,15 @@ public class PatientProfileLoader implements ApplicationListener<ContextRefreshe
         patientTwo.setMobile("01733407896");
         
         patientRepository.save(patientTwo);
+        
+        
+        PatientSerials twoSerial = new PatientSerials();
+        twoSerial.setLastInsartedDate(new Date());
+        twoSerial.setRemarks("test2");
+        twoSerial.setPatientProfile(patientTwo);  
+        twoSerial.setSerialNumber(2);
+        twoSerial.setSerialDate(new Date());
+        patientSerialRepository.save(twoSerial);  
 
 
         log.info("Saved patient - id:" + patientTwo.getId());
