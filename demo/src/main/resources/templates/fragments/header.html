@@ -12,6 +12,14 @@
 					<img src="../../static/images/ent.png" width="400"
 						th:src="@{/images/ent.png}" />
 				</div>
+
+			</div>
+			<div>
+				<h4 th:inline="text">Hello
+					[[${#httpServletRequest.remoteUser}]]!</h4>
+				<form th:action="@{/logout}" method="post">
+					<input type="submit" value="Sign Out" />
+				</form>
 			</div>
 			<nav class="navbar navbar-default">
 				<div class="container-fluid">
