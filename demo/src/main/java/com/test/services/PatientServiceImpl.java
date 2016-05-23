@@ -51,6 +51,7 @@ public class PatientServiceImpl implements PatientProfiletService {
 			dto.setSerialDate(item.getSerialDate());
 			dto.setSerialNumber(item.getSerialNumber());	
 			dto.setRemarks(item.getRemarks());
+			dto.setAge(item.getPatientProfile().getAge());
 			resultList.add(dto);
 			counter++;
 		}		

@@ -9,7 +9,46 @@
 <script>
   $(function() {
     $("#serialDate" ).datepicker();
+    
+    $(".lnk").click(function() {
+	    var $row = $(this).closest("tr");    // Find the row
+	    var $name = $row.find(".name").text(); // Find the text	 
+	    var $age = $row.find(".age").text(); 
+	    var $serial = $row.find(".serial").text(); 	    
+	    var $currentdate =  new Date().toLocaleString();
+	    PrintElem('<div>'+'<p>Name: '+$name+'</p>'+'<p>Age: '+$age+'</p>'+'<p>Serial No: '+$serial+'</p>'+'<p>Date: '+$currentdate+'</p>'+'</div>');
+	});
+    
+    
+    
+    
   });
+  
+  function PrintElem(elem)
+  {
+      Popup($(elem).html());
+  }
+
+  function Popup(data) 
+  {
+      var mywindow = window.open('', 'Prescription', 'height=400,width=600');
+      mywindow.document.write('<html><head><title></title>');
+      /*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
+      mywindow.document.write('</head><body >');
+      mywindow.document.write('<div style="margin-top:3cm">');
+      
+      mywindow.document.write(data);
+      mywindow.document.write('</div>');
+      
+      mywindow.document.write('</body></html>');
+
+      mywindow.print();
+      mywindow.close();
+
+      return true;
+  }
+  
+  
   </script>
 </head>
 <body>
@@ -53,16 +92,21 @@
 						<tr>
 							<th>No.</th>
 							<th>Patient Name</th>
+							<th>Age</th>							
 							<th>Mobile</th>								
 							<th>Serial Number</th>
 							<th>Remarks</th>
+							<th>Print</th>
+							
 						</tr>
 						<tr th:each="serial : ${serials}">
 							<td th:text="${serial.item_no}"></td>
-							<td th:text="${serial.patientName}">Name</td>
+							<td class="name" th:text="${serial.patientName}">Name</td>
+							<td class="age" th:text="${serial.age}">Age</td>							
 							<td th:text="${serial.mobile}">Mobile</td>							
-							<td th:text="${serial.serialNumber}">Serial Number</td>
+							<td class="serial" th:text="${serial.serialNumber}">Serial Number</td>
 							<td th:text="${serial.remarks}">Remarks</td>
+							<td><a href="#" class="lnk">Print</a></td>
 						</tr>
 					</table>
 				</div>

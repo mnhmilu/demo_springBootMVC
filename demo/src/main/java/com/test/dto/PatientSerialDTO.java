@@ -29,6 +29,17 @@ public class PatientSerialDTO {
     
     private String mobile;    
     
+    private Integer age;   
+    
+    
+
+	public Integer getAge() {
+		return age;
+	}
+
+	public void setAge(Integer age) {
+		this.age = age;
+	}
 
 	public int getItem_no() {
 		return item_no;

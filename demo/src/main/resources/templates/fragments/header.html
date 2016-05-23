@@ -5,29 +5,40 @@
 </head>
 <body>
 
-<div class="container">
-    <div th:fragment="header"> 
-        <div class="jumbotron">
-            <div class="row text-center">
-                <img src="../../static/images/ent.png" width="400"
-                     th:src="@{/images/ent.png}"/>
-            </div>
-        </div>
-        <nav class="navbar navbar-default">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#" th:href="@{/}">Home</a>
-                    <ul class="nav navbar-nav">
-<!--                         <li><a href="#" th:href="@{/products}">Products</a></li> -->
-                        <li><a href="#" th:href="@{/patients}">Patients</a></li>                       
-                        <li><a href="#" th:href="@{/patient/serialSearchIndex}">Reports</a></li>
-                        <li><a href="#" th:href="@{/products}">Settings</a></li>
-                    </ul>
+	<div class="container">
+		<div th:fragment="header">
+			<div class="jumbotron">
+				<div class="row text-center">
+					<img src="../../static/images/ent.png" width="400"
+						th:src="@{/images/ent.png}" />
+				</div>
+			</div>
+			<nav class="navbar navbar-default">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<a class="navbar-brand" href="#" th:href="@{/}">Home</a>
+						<ul class="nav navbar-nav">
+							<!--                         <li><a href="#" th:href="@{/products}">Products</a></li> -->
+							<li><a href="#" th:href="@{/patients}">Patients</a></li>
+							<li><a href="#" th:href="@{/patient/serialSearchIndex}">Reports</a></li>
+							<li class="dropdown"><a href="#" class="dropdown-toggle"
+								data-toggle="dropdown" role="button" aria-haspopup="true"
+								aria-expanded="false">Dropdown <span class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li><a href="#">Action</a></li>
+									<li><a href="#">Another action</a></li>
+									<li><a href="#">Something else here</a></li>
+									<li role="separator" class="divider"></li>
+									<li><a href="#">Separated link</a></li>
+									<li role="separator" class="divider"></li>
+									<li><a href="#">One more separated link</a></li>
+								</ul></li>
+						</ul>
 
-                </div>
-            </div>
-        </nav>
-    </div>
-</div>
+					</div>
+				</div>
+			</nav>
+		</div>
+	</div>
 </body>
 </html>
