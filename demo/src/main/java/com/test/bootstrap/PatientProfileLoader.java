@@ -58,7 +58,7 @@ public class PatientProfileLoader implements ApplicationListener<ContextRefreshe
 
     	PatientProfile patientTwo = new PatientProfile();
         patientTwo.setName("Karim");
-        patientTwo.setAge(345);
+        patientTwo.setAge(3);
         patientTwo.setMobile("01733407896");
         
         patientRepository.save(patientTwo);

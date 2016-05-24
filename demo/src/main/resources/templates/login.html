@@ -1,26 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head lang="en">
-  
+
+<style>
+.login {
+	width: 400px;
+	height: 200px;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+}
+
+.body {
+	background-color: #00CCFF;
+}
+</style>
+
+
 <title>Spring Framework Guru</title>
 
 </head>
-<body>
-	<div style="width: 100px;height: 100px;position: absolute; top:0; bottom: 0;  left: 0;  right: 0;margin: auto;">
+<body class="body">
+	<!-- 	<div style="width: 100px;height: 100px;position: absolute; top:0; bottom: 0;  left: 0;  right: 0;margin: auto;"> -->
+	<div class="login">
+		<h3>Welcome to Jessore ENT Center</h3>
 		<div th:if="${param.error}">Invalid username and password.</div>
 		<div th:if="${param.logout}">You have been logged out.</div>
 		<form th:action="@{/login}" method="post">
-			<div>
-				<label> User Name : <input type="text" name="username" />
-				</label>
-			</div>
-			<div>
-				<label> Password: <input type="password" name="password" />
-				</label>
-			</div>
-			<div>
-				<input type="submit" value="Sign In" />
-			</div>
+			<table>
+				<tr>
+					<td>User Name :</td>
+					<td><input type="text" name="username" /></td>
+				</tr>
+				<tr>
+					<td>Password:</td>
+					<td><input type="password" name="password" /></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><input type="submit" value="Sign In" /></td>
+				</tr>
+
+			</table>
+
+	
 		</form>
 	</div>
 </body>

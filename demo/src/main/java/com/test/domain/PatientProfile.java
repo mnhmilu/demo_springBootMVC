@@ -1,14 +1,22 @@
 package com.test.domain;
 
 
-import javax.persistence.*;
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
-
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.Set;
 
 
 @Entity
@@ -25,9 +33,20 @@ public class PatientProfile {
     @Column(name = "name" ,nullable = false)
     private String name;   
   
+    
+   
+    @Column(name = "age" ,nullable = false)    
+    @Min(1)
+    @Max(99)    
+    
+    @NotNull
     private Integer age;    
     
-  
+    
+    @NotNull
+    @NotBlank
+    @Column(name = "mobile" ,nullable = false) 
+    @Size(min=11, max=12)
     private String mobile;
     
     

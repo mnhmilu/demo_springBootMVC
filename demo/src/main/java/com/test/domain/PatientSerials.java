@@ -19,17 +19,19 @@ public class PatientSerials {
     
     
     @Temporal(TemporalType.DATE)
+    @NotNull
     private Date serialDate;  
     
     private String remarks;
     
     
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.DATE)    
     private Date lastInsartedDate;      
     
     @ManyToOne   
     private PatientProfile patientProfile;    
     
+    @NotNull
     private Integer serialNumber;   
 	
 

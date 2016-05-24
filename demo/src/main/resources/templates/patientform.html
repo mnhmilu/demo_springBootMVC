@@ -17,7 +17,7 @@
 				</h4>
 				<div>
 					<form class="form-horizontal" th:object="${patient}"
-						th:action="@{/patient}" method="post">
+						th:action="@{/patient}" method="post" action="#">
 						<input type="hidden" th:field="*{id}" />
 
 						<div class="form-group">
@@ -32,12 +32,16 @@
 							<label class="col-sm-2 control-label">Age:</label>
 							<div class="col-sm-10">
 								<input type="number" class="form-control" th:field="*{age}" />
+								<p th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Invalid
+									Age</p>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Mobile:</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" th:field="*{mobile}" />
+								<p th:if="${#fields.hasErrors('mobile')}" th:errors="*{mobile}">Invalid
+									Mobile</p>
 							</div>
 						</div>
 						<div class="form-group">

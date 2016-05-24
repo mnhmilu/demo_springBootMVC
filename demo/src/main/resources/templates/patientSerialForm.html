@@ -63,15 +63,14 @@
 					</h4>
 					<form class="form-horizontal" th:object="${serial}"
 						th:action="@{/serialEntry}" method="post">
-						<input type="hidden" th:field="*{id}" />
+<!-- 						<input type="hidden" th:field="*{id}" /> -->
 						<input type="hidden" th:field="*{patientProfileId}" />
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Serial Date:</label>
 							<div class="col-sm-10">
 							 <input type="text" id="serialDate" class="form-control" th:field="*{serialDate}"
-							 th:value="${#dates.format(serial.serialDate,'MM/dd/yyyy')}"/>
-							
-<!-- 								<input type="text" class="form-control" th:field="*{serialDate}" /> -->
+							 th:value="${#dates.format(serial.serialDate,'MM/dd/yyyy')}"/>			
+
 								<p th:if="${#fields.hasErrors('serialDate')}"
 									th:errors="*{serialDate}">Invalid Date</p>
 							</div>

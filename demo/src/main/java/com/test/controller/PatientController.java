@@ -85,9 +85,10 @@ public class PatientController {
 	}
 
 	@RequestMapping(value = "patient", method = RequestMethod.POST)
-	public String savepatient(@Valid PatientProfile patient, BindingResult bindingResult) {
+	public String savepatient(@Valid @ModelAttribute("patient")  PatientProfile patient, BindingResult bindingResult) {
 
 		if (bindingResult.hasErrors()) {
+			//model.addAttribute("patient", patient);
 			return "patientform";
 		}
 		patient.setLastInsartedDate(new Date());
@@ -132,17 +133,27 @@ public class PatientController {
 	}
 
 	@RequestMapping(value = "serialEntry", method = RequestMethod.POST)
-	public String savepatientSerial(@ModelAttribute("serial") PatientSerialDTO serial, BindingResult bindingResult,
-			RedirectAttributes redirectAttributes) {
+	public String savepatientSerial(@Valid @ModelAttribute("serial") PatientSerialDTO serial,  BindingResult bindingResult,
+			RedirectAttributes redirectAttributes,Model model) {
 
 		if (bindingResult.hasErrors()) {
+			PatientProfile patient = patientRepository.findById(serial.getPatientProfileId());
+			//model.addAttribute("patient", patient);
+			model.addAttribute("patient", patient);
+			SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+			Date today = new Date();
+
+			dateFormat.format(today);
+			serial.setSerialDate(today);
+			model.addAttribute("serial", serial);
+
 			return "patientSerialForm";
 		}
 
-		PatientProfile patient = new PatientProfile();
-		patient.setId(serial.getPatientProfileId());
+		PatientProfile patientt = new PatientProfile();
+		patientt.setId(serial.getPatientProfileId());
 		PatientSerials patientSerial = new PatientSerials();
-		patientSerial.setPatientProfile(patient);
+		patientSerial.setPatientProfile(patientt);
 		patientSerial.setSerialDate(serial.getSerialDate());
 		patientSerial.setRemarks(serial.getRemarks());
 		patientSerial.setLastInsartedDate(new Date());
@@ -168,10 +179,15 @@ public class PatientController {
 	}
 	
 	@RequestMapping(value = "patient/serialSearchResults", method = RequestMethod.POST)
-	public String serialSearchResults(@ModelAttribute("serial") PatientSerialDTO serial, BindingResult bindingResult,
+	public String serialSearchResults(@Valid @ModelAttribute("serial") PatientSerialDTO serial, BindingResult bindingResult,
 			Model model) {
 
 		if (bindingResult.hasErrors()) {
+			SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+			Date today = new Date();
+			dateFormat.format(today);
+			serial.setSerialDate(today);
+			model.addAttribute("serial", serial);		
 			return "patientSerialSearchResult";
 		}
 		
