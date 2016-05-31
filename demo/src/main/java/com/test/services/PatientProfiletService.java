@@ -12,5 +12,7 @@ public interface PatientProfiletService {
     void savePatientSerial(PatientSerials patientSerials);   
     
     List<PatientSerialDTO> searchPatientSerialInformationbyDate(Date searchDate);    
+    
+    void savePatientInfoWithSerail(PatientSerialDTO dto);
   
 }

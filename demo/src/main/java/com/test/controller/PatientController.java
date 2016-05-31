@@ -24,6 +24,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.test.domain.PatientProfile;
 import com.test.domain.PatientSerials;
 import com.test.dto.PatientSerialDTO;
+import com.test.dto.PatientSerialSearchDTO;
 import com.test.repositories.PatientRepository;
 import com.test.repositories.PatientSerialRepository;
 import com.test.services.PatientProfiletService;
@@ -53,22 +54,69 @@ public class PatientController {
 
 	@RequestMapping("patient/{id}")
 	public String showpatient(@PathVariable Integer id, Model model) {
-		model.addAttribute("patient", patientRepository.findById(id));
+		
+        PatientProfile patient = patientRepository.findById(id);
+		
+		PatientSerialSearchDTO dto = new PatientSerialSearchDTO();
+		dto.setId(patient.getId());
+		dto.setAge(patient.getAge());
+		dto.setMobile(patient.getMobile());	
+		dto.setName(patient.getName());
+		
+		model.addAttribute("patient", dto);
 
 		return "patientshow";
 	}
 
 	@RequestMapping("patient/edit/{id}")
 	public String edit(@PathVariable Integer id, Model model) {
-		model.addAttribute("patient", patientRepository.findById(id));
+		
+		PatientProfile patient = patientRepository.findById(id);
+		
+		PatientSerialSearchDTO dto = new PatientSerialSearchDTO();
+		dto.setId(patient.getId());
+		dto.setAge(patient.getAge());
+		dto.setMobile(patient.getMobile());		
+		dto.setName(patient.getName());
+		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		Date today = new Date();
+		dateFormat.format(today);
+		dto.setSerialDate(today);
+		model.addAttribute("patient",dto );
 		return "patientform";
 	}
 
 	@RequestMapping("patient/new")
 	public String newpatient(Model model) {
-		model.addAttribute("patient", new PatientProfile());
+		PatientSerialDTO dto= new PatientSerialDTO();		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		Date today = new Date();
+		dateFormat.format(today);
+		dto.setSerialDate(today);
+		model.addAttribute("patient", dto);
+		//model.addAttribute("patient", new PatientProfile());
 		return "patientform";
 	}
+	
+	@RequestMapping(value = "patient", method = RequestMethod.POST)
+	public String savepatient(@Valid @ModelAttribute("patient")  PatientSerialDTO patient, BindingResult bindingResult) {
+
+		if (bindingResult.hasErrors()) {
+			//model.addAttribute("patient", patient);
+			return "patientform";
+		}
+		
+		
+//		patient.setLastInsartedDate(new Date());
+//		patientRepository.save(patient);
+//		
+		patientProfiletService.savePatientInfoWithSerail(patient);
+		
+		
+		return "redirect:/patients";
+
+	}
+
 
 	@RequestMapping("patient/search")
 	public String searchpatient(Model model) {
@@ -84,19 +132,7 @@ public class PatientController {
 		return "patients";
 	}
 
-	@RequestMapping(value = "patient", method = RequestMethod.POST)
-	public String savepatient(@Valid @ModelAttribute("patient")  PatientProfile patient, BindingResult bindingResult) {
-
-		if (bindingResult.hasErrors()) {
-			//model.addAttribute("patient", patient);
-			return "patientform";
-		}
-		patient.setLastInsartedDate(new Date());
-		patientRepository.save(patient);
-		return "redirect:/patients";
-
-	}
-
+	
 	@RequestMapping("patient/delete/{id}")
 	public String delete(@PathVariable Integer id) {
 
@@ -166,7 +202,7 @@ public class PatientController {
 	@RequestMapping(value = "patient/serialSearchIndex", method = RequestMethod.GET)
 	public String serialSearch( Model model) {		
 
-		PatientSerialDTO dto = new PatientSerialDTO();		
+		PatientSerialSearchDTO dto = new PatientSerialSearchDTO();		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 		Date today = new Date();
 		dateFormat.format(today);
@@ -179,7 +215,7 @@ public class PatientController {
 	}
 	
 	@RequestMapping(value = "patient/serialSearchResults", method = RequestMethod.POST)
-	public String serialSearchResults(@Valid @ModelAttribute("serial") PatientSerialDTO serial, BindingResult bindingResult,
+	public String serialSearchResults(@Valid @ModelAttribute("serial") PatientSerialSearchDTO serial, BindingResult bindingResult,
 			Model model) {
 
 		if (bindingResult.hasErrors()) {

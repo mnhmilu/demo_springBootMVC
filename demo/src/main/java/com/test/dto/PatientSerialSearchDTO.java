@@ -15,7 +15,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 
 
-public class PatientSerialDTO {
+public class PatientSerialSearchDTO {
 	
     private Integer id;      
     
@@ -32,20 +32,14 @@ public class PatientSerialDTO {
     
     private Integer serialNumber;
     
-    @NotNull
-    @NotBlank
+  
     private String name;  
     
-    
-    @NotNull
-    @NotBlank  
-    @Size(min=11, max=11)
+   
     private String mobile;    
     
   
-    @Min(1)
-    @Max(99)        
-    @NotNull
+    
     private Integer age;   
     
     
@@ -75,7 +69,8 @@ public class PatientSerialDTO {
 	}
 
 	
-
+	
+	
 	public String getName() {
 		return name;
 	}
