@@ -72,6 +72,7 @@ public class PatientController {
 		dto.setName(patient.getName());
 		
 		model.addAttribute("patient", dto);
+		//git test
 
 		return "patientshow";
 	}
