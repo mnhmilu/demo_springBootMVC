@@ -82,7 +82,7 @@ public class PatientController {
 		PatientProfile patient = patientRepository.findById(id);
 		
 		PatientSerialSearchDTO dto = new PatientSerialSearchDTO();
-		dto.setId(patient.getId());
+		dto.setId(id);
 		dto.setAge(patient.getAge());
 		dto.setMobile(patient.getMobile());		
 		dto.setName(patient.getName());

@@ -1,4 +1,4 @@
-package  com.demo.services;
+package com.demo.services;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,76 +14,78 @@ import com.demo.repositories.PatientRepository;
 import com.demo.repositories.PatientSerialRepository;
 
 @Service
-public class PatientServiceImpl implements PatientProfiletService {		
-   
-    private PatientSerialRepository patientSerialRepository;
-    private PatientRepository patientRepository;
+public class PatientServiceImpl implements PatientProfiletService {
 
-    @Autowired
-    public void setPatientRepository(PatientRepository patientRepository ,PatientSerialRepository patientSerialRepository) {
-      
-        this.patientSerialRepository=patientSerialRepository;
-        this.patientRepository=patientRepository;
-    }
+	private PatientSerialRepository patientSerialRepository;
+	private PatientRepository patientRepository;
 
-	@Override
-	public void savePatientSerial(PatientSerials patientSerial) {		
-		
-		List<PatientSerials> list=patientSerialRepository.findBySerialDate(patientSerial.getSerialDate());
-		
-		patientSerial.setSerialNumber(list.size()+1);		
-		
-		patientSerialRepository.save(patientSerial);			
-		
+	@Autowired
+	public void setPatientRepository(PatientRepository patientRepository,
+			PatientSerialRepository patientSerialRepository) {
+
+		this.patientSerialRepository = patientSerialRepository;
+		this.patientRepository = patientRepository;
 	}
-	
+
 	@Override
-	public void savePatientInfoWithSerail(PatientSerialDTO dto) {		
-		
-		
+	public void savePatientSerial(PatientSerials patientSerial) {
+
+		List<PatientSerials> list = patientSerialRepository.findBySerialDate(patientSerial.getSerialDate());
+
+		patientSerial.setSerialNumber(list.size() + 1);
+
+		patientSerialRepository.save(patientSerial);
+
+	}
+
+	@Override
+	public void savePatientInfoWithSerail(PatientSerialDTO dto) {
+
 		PatientProfile patient = new PatientProfile();
-		
+		patient.setId(dto.getId());
 		patient.setAge(dto.getAge());
 		patient.setName(dto.getName());
 		patient.setMobile(dto.getMobile());
 		patient.setLastInsartedDate(new Date());
 		patientRepository.save(patient);
-		
-		List<PatientSerials> list=patientSerialRepository.findBySerialDate(dto.getSerialDate());
-		
-		PatientSerials oneSerial = new PatientSerials();
-        oneSerial.setLastInsartedDate(new Date());        
-        oneSerial.setRemarks("test");
-        oneSerial.setSerialNumber(list.size()+1);
-        oneSerial.setPatientProfile(patient);
-        oneSerial.setSerialDate(dto.getSerialDate());        
-        patientSerialRepository.save(oneSerial);		
-		
+
+		if (dto.getId() == null) {
+
+			List<PatientSerials> list = patientSerialRepository.findBySerialDate(dto.getSerialDate());
+
+			PatientSerials oneSerial = new PatientSerials();
+			oneSerial.setLastInsartedDate(new Date());
+			oneSerial.setRemarks("test");
+			oneSerial.setSerialNumber(list.size() + 1);
+			oneSerial.setPatientProfile(patient);
+			oneSerial.setSerialDate(dto.getSerialDate());
+			patientSerialRepository.save(oneSerial);
+		}
+
 	}
 
 	@Override
-	public List<PatientSerialDTO> searchPatientSerialInformationbyDate(Date searchDate) {	
-		
+	public List<PatientSerialDTO> searchPatientSerialInformationbyDate(Date searchDate) {
+
 		List<PatientSerialDTO> resultList = new ArrayList<PatientSerialDTO>();
-		
-		List<PatientSerials> list=patientSerialRepository.findBySerialDate(searchDate);		
-		
-		int counter=1;
-		
-		for (PatientSerials item: list)
-		{
-			PatientSerialDTO dto =new PatientSerialDTO();
+
+		List<PatientSerials> list = patientSerialRepository.findBySerialDate(searchDate);
+
+		int counter = 1;
+
+		for (PatientSerials item : list) {
+			PatientSerialDTO dto = new PatientSerialDTO();
 			dto.setItem_no(counter);
 			dto.setName(item.getPatientProfile().getName());
 			dto.setMobile(item.getPatientProfile().getMobile());
 			dto.setSerialDate(item.getSerialDate());
-			dto.setSerialNumber(item.getSerialNumber());	
+			dto.setSerialNumber(item.getSerialNumber());
 			dto.setRemarks(item.getRemarks());
 			dto.setAge(item.getPatientProfile().getAge());
 			resultList.add(dto);
 			counter++;
-		}		
-		
+		}
+
 		return resultList;
 	}
 }
