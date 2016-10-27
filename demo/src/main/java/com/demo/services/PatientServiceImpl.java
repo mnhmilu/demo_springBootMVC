@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.demo.controller.PatientController;
 import com.demo.domain.PatientProfile;
 import com.demo.domain.PatientSerials;
 import com.demo.dto.PatientSerialDTO;
@@ -15,6 +18,9 @@ import com.demo.repositories.PatientSerialRepository;
 
 @Service
 public class PatientServiceImpl implements PatientProfiletService {
+	
+	private final Logger slf4jLogger = LoggerFactory.getLogger(PatientController.class);
+	
 
 	private PatientSerialRepository patientSerialRepository;
 	private PatientRepository patientRepository;
@@ -29,12 +35,17 @@ public class PatientServiceImpl implements PatientProfiletService {
 
 	@Override
 	public void savePatientSerial(PatientSerials patientSerial) {
+		
+		slf4jLogger.info("PatientServiceImpl::savePatientSerial started with param  patient profile id {0}"+new Object[]{patientSerial.getPatientProfile().getId()});
+		
 
 		List<PatientSerials> list = patientSerialRepository.findBySerialDate(patientSerial.getSerialDate());
 
 		patientSerial.setSerialNumber(list.size() + 1);
 
 		patientSerialRepository.save(patientSerial);
+		
+		slf4jLogger.info("PatientServiceImpl::savePatientSerial call ended");
 
 	}
 
