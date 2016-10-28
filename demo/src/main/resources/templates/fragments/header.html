@@ -7,45 +7,50 @@
 
 	<div class="container">
 		<div th:fragment="header">
-			<div class="jumbotron">
-				<div class="row">
-					<div class="col-xs-9">
-						<img src="../../static/images/ent.png" width="400"
-							th:src="@{/images/ent.png}" />
-					</div>
+
+			<div class="row">
+				<div class="col-md-8">
+					<h1>
+						<p class="text-primary">
+							<strong>RX BD Drug Directory </strong>
+						</p>
+					</h1>
+				</div>
+				<div class="col-md-4" align="right">
+					<h5 th:inline="text">
+						Welcome [[${#httpServletRequest.remoteUser}]]!
+						<form th:action="@{/logout}" method="post">
+							<input type="submit" value="Sign Out" class="btn btn-primary" />
+						</form>
+					</h5>
 				</div>
 			</div>
-			<div align="right">
-				<table>
-					<tr>
-						<td><h5 th:inline="text">Welcome
-								[[${#httpServletRequest.remoteUser}]]!</h5></td>
-						<td><form th:action="@{/logout}" method="post">
-								<input type="submit" value="Sign Out" />
-							</form></td>
-					</tr>
-				</table>
+
+			<div class="row">
+				<ol class="breadcrumb">
+					<li><a href="#">Home</a></li>
+					<li><a href="#">Library</a></li>
+					<li class="active">Data</li>
+				</ol>
+
 			</div>
+
+
 			<nav class="navbar navbar-default">
 				<div class="container-fluid">
 					<div class="navbar-header">
 						<a class="navbar-brand" href="#" th:href="@{/}">Home</a>
 						<ul class="nav navbar-nav">
 							<!--                         <li><a href="#" th:href="@{/products}">Products</a></li> -->
-							<li><a href="#" th:href="@{/patients}">Patients</a></li>
-							<li><a href="#" th:href="@{/patient/serialSearchIndex}">Reports</a></li>
-							<li class="dropdown"><a href="#" class="dropdown-toggle"
-								data-toggle="dropdown" role="button" aria-haspopup="true"
-								aria-expanded="false">Dropdown <span class="caret"></span></a>
-								<ul class="dropdown-menu">
-									<li><a href="#">Action</a></li>
-									<li><a href="#">Another action</a></li>
-									<li><a href="#">Something else here</a></li>
-									<li role="separator" class="divider"></li>
-									<li><a href="#">Separated link</a></li>
-									<li role="separator" class="divider"></li>
-									<li><a href="#">One more separated link</a></li>
-								</ul></li>
+							<li><a href="#" th:href="@{/patients}">Durgs</a></li>
+							<li><a href="#" th:href="@{/patient/serialSearchIndex}">Doctors
+									Chamber</a></li>
+							<li><a href="#" th:href="@{/patient/serialSearchIndex}">General
+									News</a></li>
+							<li><a href="#" th:href="@{/patient/serialSearchIndex}">Pharma
+									News</a></li>
+
+
 						</ul>
 
 					</div>
