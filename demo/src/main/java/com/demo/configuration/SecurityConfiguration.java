@@ -10,18 +10,28 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @Configuration
 @EnableWebSecurity
+
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	//https://spring.io/guides/gs/securing-web/
 	
+	
+	/*
+	// enable security
+	
 	@Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
+		
+
+		
+		
 		httpSecurity
             .authorizeRequests()
                 .antMatchers("/test").permitAll()
                 .anyRequest().authenticated()
                 .and()
-            .formLogin()
+            .formLogin()           
+		
                 .loginPage("/login")
                 .permitAll()
                 .and()
@@ -30,6 +40,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         
         httpSecurity.csrf().disable();
         httpSecurity.headers().frameOptions().disable();
+        
+        
+        
+        
     }
 
     @Autowired
@@ -38,18 +52,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .inMemoryAuthentication()
                 .withUser("user").password("pass").roles("USER");
     }
+    
+    */
 
-//    @Override
-//    protected void configure(HttpSecurity httpSecurity) throws Exception {
-//        httpSecurity.authorizeRequests().antMatchers("/").permitAll().and()
-//                    .authorizeRequests().antMatchers("/console/**").permitAll();
-//
-//        httpSecurity.csrf().disable();
-//        httpSecurity.headers().frameOptions().disable();
-//        
-//        
-//        //System.out.println("Security Disabled!");
-//    }
+    @Override
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.authorizeRequests().antMatchers("/").permitAll().and()
+                    .authorizeRequests().antMatchers("/console/**").permitAll();
+
+        httpSecurity.csrf().disable();
+        httpSecurity.headers().frameOptions().disable();
+        httpSecurity.logout().logoutSuccessUrl("/index");
+        
+        
+        //System.out.println("Security Disabled!");
+    }
     
 //    @Override
 //    protected void configure(HttpSecurity http) throws Exception {
