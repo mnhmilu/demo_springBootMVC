@@ -23,10 +23,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.demo.commands.PatientSerialForm;
+import com.demo.commands.PatientSerialSearchForm;
+import com.demo.converter.PatientSerialFormToPatientData;
 import com.demo.domain.PatientProfile;
 import com.demo.domain.PatientSerials;
-import com.demo.dto.PatientSerialDTO;
-import com.demo.dto.PatientSerialSearchDTO;
 import com.demo.repositories.PatientRepository;
 import com.demo.repositories.PatientSerialRepository;
 import com.demo.services.PatientProfiletService;
@@ -40,15 +41,18 @@ public class PatientController {
 	private PatientProfiletService patientProfiletService;
 	private PatientRepository patientRepository;
 	private PatientSerialRepository patientSerialRepository;
+	private PatientSerialFormToPatientData patientSerialFormToPatientData;
+	
 
 	@Autowired
 	public void setpatientservice(PatientProfiletService patientProfiletService, PatientRepository patientRepository,
-			PatientSerialRepository patientSerialRepository) {
+			PatientSerialRepository patientSerialRepository,PatientSerialFormToPatientData patientSerialFormToPatientData) {
 		
 		
 		this.patientProfiletService = patientProfiletService;
 		this.patientRepository = patientRepository;
 		this.patientSerialRepository = patientSerialRepository;
+		this.patientSerialFormToPatientData = patientSerialFormToPatientData;
 	}
 
 	@RequestMapping(value = "/patients", method = RequestMethod.GET)
@@ -65,7 +69,7 @@ public class PatientController {
 		slf4jLogger.info("PatientController :: showpatient");
 		
         PatientProfile patient = patientRepository.findById(id);	
-		PatientSerialSearchDTO dto = new PatientSerialSearchDTO();
+		PatientSerialSearchForm dto = new PatientSerialSearchForm();
 		dto.setId(patient.getId());
 		dto.setAge(patient.getAge());
 		dto.setMobile(patient.getMobile());	
@@ -81,7 +85,7 @@ public class PatientController {
 		
 		PatientProfile patient = patientRepository.findById(id);
 		
-		PatientSerialSearchDTO dto = new PatientSerialSearchDTO();
+		PatientSerialSearchForm dto = new PatientSerialSearchForm();
 		dto.setId(id);
 		dto.setAge(patient.getAge());
 		dto.setMobile(patient.getMobile());		
@@ -100,20 +104,20 @@ public class PatientController {
 	@RequestMapping("patient/new")
 	public String newpatient(Model model) {
 		
-		PatientSerialDTO dto= new PatientSerialDTO();		
+		PatientSerialForm dto= new PatientSerialForm();		
 		setDefaultDateInPatientProfile(dto);
 		model.addAttribute("patient", dto);	
 		return "patientform";
 	}
 	
 	@RequestMapping(value = "patient", method = RequestMethod.POST)
-	public String savepatient(@Valid @ModelAttribute("patient")  PatientSerialDTO patient, BindingResult bindingResult) {
+	public String savepatient(@Valid @ModelAttribute("patient")  PatientSerialForm patientForm, BindingResult bindingResult) {
 
 		if (bindingResult.hasErrors()) {			
 			return "patientform";
 		}
 
-		patientProfiletService.savePatientInfoWithSerail(patient);
+		patientProfiletService.savePatientInfoWithSerail(patientSerialFormToPatientData.convert( patientForm),patientForm.getSerialDate());
 		return "redirect:/patients";
 
 	}
@@ -153,7 +157,7 @@ public class PatientController {
 		PatientProfile patient = patientRepository.findById(id);
 		model.addAttribute("patient", patient);
 		model.addAttribute("serials", patientSerialRepository.findByPatientProfile(patient));
-		PatientSerialDTO dto = new PatientSerialDTO();
+		PatientSerialForm dto = new PatientSerialForm();
 		dto.setPatientProfileId(patient.getId());
 		setDefaultDateInPatientProfile(dto);
 		model.addAttribute("serial", dto);
@@ -162,7 +166,7 @@ public class PatientController {
 	}
 
 	@RequestMapping(value = "serialEntry", method = RequestMethod.POST)
-	public String savepatientSerial(@Valid @ModelAttribute("serial") PatientSerialDTO serial,  BindingResult bindingResult,
+	public String savepatientSerial(@Valid @ModelAttribute("serial") PatientSerialForm serial,  BindingResult bindingResult,
 			RedirectAttributes redirectAttributes,Model model) {
 
 		if (bindingResult.hasErrors()) {
@@ -185,20 +189,20 @@ public class PatientController {
 	@RequestMapping(value = "patient/serialSearchIndex", method = RequestMethod.GET)
 	public String serialSearch( Model model) {		
 
-		PatientSerialSearchDTO dto = new PatientSerialSearchDTO();		
+		PatientSerialSearchForm dto = new PatientSerialSearchForm();		
 		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 		Date today = new Date();
 		dateFormat.format(today);
 		dto.setSerialDate(today);
 		model.addAttribute("serial", dto);				
-		List<PatientSerialDTO> resultList = new ArrayList<PatientSerialDTO>();		
+		List<PatientSerialForm> resultList = new ArrayList<PatientSerialForm>();		
 		model.addAttribute("serials",resultList);		
 
 		return "patientSerialSearchResult";
 	}
 	
 	@RequestMapping(value = "patient/serialSearchResults", method = RequestMethod.POST)
-	public String serialSearchResults(@Valid @ModelAttribute("serial") PatientSerialSearchDTO serial, BindingResult bindingResult,
+	public String serialSearchResults(@Valid @ModelAttribute("serial") PatientSerialSearchForm serial, BindingResult bindingResult,
 			Model model) {
 
 		if (bindingResult.hasErrors()) {
@@ -210,7 +214,7 @@ public class PatientController {
 			return "patientSerialSearchResult";
 		}
 		
-		List<PatientSerialDTO> resultList = new ArrayList<PatientSerialDTO>();	
+		List<PatientSerialForm> resultList = new ArrayList<PatientSerialForm>();	
 		resultList=patientProfiletService.searchPatientSerialInformationbyDate(serial.getSerialDate());
 		model.addAttribute("serials",resultList);		
 
@@ -218,14 +222,14 @@ public class PatientController {
 
 	}
 	
-	private void setDefaultDateInPatientProfile(PatientSerialDTO serial) {
+	private void setDefaultDateInPatientProfile(PatientSerialForm serial) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 		Date today = new Date();
 		dateFormat.format(today);
 		serial.setSerialDate(today);
 	}
 
-	private PatientSerials setNewPatientProfile(PatientSerialDTO serial) {
+	private PatientSerials setNewPatientProfile(PatientSerialForm serial) {
 		PatientProfile patientt = new PatientProfile();
 		patientt.setId(serial.getPatientProfileId());
 		PatientSerials patientSerial = new PatientSerials();

@@ -9,10 +9,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.demo.commands.PatientSerialForm;
 import com.demo.controller.PatientController;
 import com.demo.domain.PatientProfile;
 import com.demo.domain.PatientSerials;
-import com.demo.dto.PatientSerialDTO;
 import com.demo.repositories.PatientRepository;
 import com.demo.repositories.PatientSerialRepository;
 
@@ -50,42 +50,37 @@ public class PatientServiceImpl implements PatientProfiletService {
 	}
 
 	@Override
-	public void savePatientInfoWithSerail(PatientSerialDTO dto) {
+	public void savePatientInfoWithSerail(PatientProfile patientProfile,Date serialDate) {
 
-		PatientProfile patient = new PatientProfile();
-		patient.setId(dto.getId());
-		patient.setAge(dto.getAge());
-		patient.setName(dto.getName());
-		patient.setMobile(dto.getMobile());
-		patient.setLastInsartedDate(new Date());
-		patientRepository.save(patient);
 
-		if (dto.getId() == null) {
+		patientRepository.save(patientProfile);
 
-			List<PatientSerials> list = patientSerialRepository.findBySerialDate(dto.getSerialDate());
+		if (patientProfile.getId() == null) {
+
+			List<PatientSerials> list = patientSerialRepository.findBySerialDate(serialDate);
 
 			PatientSerials oneSerial = new PatientSerials();
 			oneSerial.setLastInsartedDate(new Date());
 			oneSerial.setRemarks("test");
 			oneSerial.setSerialNumber(list.size() + 1);
-			oneSerial.setPatientProfile(patient);
-			oneSerial.setSerialDate(dto.getSerialDate());
+			oneSerial.setPatientProfile(patientProfile);
+			oneSerial.setSerialDate(serialDate);
 			patientSerialRepository.save(oneSerial);
 		}
 
 	}
 
 	@Override
-	public List<PatientSerialDTO> searchPatientSerialInformationbyDate(Date searchDate) {
+	public List<PatientSerialForm> searchPatientSerialInformationbyDate(Date searchDate) {
 
-		List<PatientSerialDTO> resultList = new ArrayList<PatientSerialDTO>();
+		List<PatientSerialForm> resultList = new ArrayList<PatientSerialForm>();
 
 		List<PatientSerials> list = patientSerialRepository.findBySerialDate(searchDate);
 
 		int counter = 1;
 
 		for (PatientSerials item : list) {
-			PatientSerialDTO dto = new PatientSerialDTO();
+			PatientSerialForm dto = new PatientSerialForm();
 			dto.setItem_no(counter);
 			dto.setName(item.getPatientProfile().getName());
 			dto.setMobile(item.getPatientProfile().getMobile());

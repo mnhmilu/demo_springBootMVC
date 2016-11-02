@@ -1,4 +1,4 @@
-package com.demo.dto;
+package com.demo.commands;
 
 import java.util.Date;
 
@@ -15,7 +15,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 
 
-public class PatientSerialDTO {
+public class PatientSerialForm {
 	
     private Integer id;      
     
