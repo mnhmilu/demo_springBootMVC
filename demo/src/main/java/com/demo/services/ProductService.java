@@ -1,10 +1,12 @@
 package com.demo.services;
 
 
+import java.util.List;
+
 import com.demo.domain.Product;
 
 public interface ProductService {
-    Iterable<Product> listAllProducts();
+    List<Product> listAllProducts();
 
     Product getProductById(Integer id);
 

@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 
 @Entity
 
-public class Product {
+public class Product implements DomainObject {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
