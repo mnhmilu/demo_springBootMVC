@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+</head>
+<body>
+
+	<div class="container">
+		<div th:fragment="header">
+
+			<div class="row">
+				<div class="col-md-8">
+					<h1>
+						<p class="text-primary">
+							<strong>Rx MIMS Bangladesh </strong>
+						</p>
+					</h1>
+				</div>
+				<div class="col-md-4" align="right">
+					<h5 th:inline="text">
+						<a class="navbar-brand" href="#" th:href="@{/manager}">Manager
+							Home</a> Welcome [[${#httpServletRequest.remoteUser}]]!
+						<form th:action="@{/logout}" method="post">
+							<input type="submit" value="Sign Out" class="btn btn-primary" />
+						</form>
+					</h5>
+				</div>
+			</div>
+
+			<nav class="navbar navbar-default">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<a class="navbar-brand" href="#" th:href="@{/}">Home</a>
+						<ul class="nav navbar-nav">
+							<!--                         <li><a href="#" th:href="@{/products}">Products</a></li> -->
+							<li><a href="#" th:href="@{/patients}">Drugs</a></li>
+							<li><a href="#" th:href="@{/patient/serialSearchIndex}">Doctors
+									</a></li>
+							
+						</ul>
+						<ul class="nav navbar-nav">
+							<li class="dropdown"><a href="#" class="dropdown-toggle"
+								data-toggle="dropdown" role="button" aria-haspopup="true"
+								aria-expanded="false">News <span class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li><a href="#">General</a></li>
+									<li><a href="#">Pharmaceuticals</a></li>
+									
+								</ul></li>
+						</ul>
+						<ul class="nav navbar-nav navbar-right">
+							<li class="dropdown"><a href="#" class="dropdown-toggle"
+								data-toggle="dropdown" role="button" aria-haspopup="true"
+								aria-expanded="false">Settings <span class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li><a href="#">Brand</a></li>
+									<li><a href="#">Generic</a></li>
+									<li><a href="#">Registration</a></li>
+									<li role="separator" class="divider"></li>
+									<li><a href="#">Advertisements</a></li>
+								</ul></li>
+						</ul>
+
+					</div>
+				</div>
+			</nav>
+		</div>
+	</div>
+</body>
+</html>
