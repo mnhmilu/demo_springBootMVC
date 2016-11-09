@@ -53,6 +53,16 @@ public class DrugController {
 		
 	}
 	
+	@RequestMapping("drug/new")
+	public String newpatient(Model model) {
+		DrugForm form = new DrugForm();
+		model.addAttribute("generics",drugGenericDaoService.findAll());
+		model.addAttribute("brands",drugBrandDaoServiec.findAll());
+		model.addAttribute("drug", form);	
+		return "drugs/drugForm";
+	}
+	
+	
 	/*
 
 	@RequestMapping("drug/{id}")
@@ -93,14 +103,7 @@ public class DrugController {
 		return "patientform";
 	}
 
-	@RequestMapping("patient/new")
-	public String newpatient(Model model) {
-		
-		PatientSerialForm dto= new PatientSerialForm();		
-		setDefaultDateInPatientProfile(dto);
-		model.addAttribute("patient", dto);	
-		return "patientform";
-	}
+
 	
 	@RequestMapping(value = "patient", method = RequestMethod.POST)
 	public String savepatient(@Valid @ModelAttribute("patient")  PatientSerialForm patientForm, BindingResult bindingResult) {

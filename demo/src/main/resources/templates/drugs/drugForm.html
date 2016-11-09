@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+<title th:text="#{index.page.title}">Page Title</title>
+
+
+<!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+<script>
+	$(function() {
+		$("#serialDate").datepicker();
+	});
+</script>
+</head>
+<body>
+	<div class="container">
+		<!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<h4>
+					<span class="label label-primary">Enter Drug Information</span>
+				</h4>
+				<div>
+					<form class="form-horizontal" th:object="${drug}"
+						th:action="@{/drug}" method="post" action="#">
+						<input type="hidden" th:field="*{id}" />
+
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Drug Name:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" th:field="*{drugName}" />
+								<p th:if="${#fields.hasErrors('drugName')}"
+									th:errors="*{drugName}">Invalid Name</p>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Generic</label>
+							<div class="col-sm-10">
+								<div
+									th:if="${generics != null and not #lists.isEmpty(generics)}">
+									<select th:field="*{genericName}" class="form-control">
+										<option value="NONE" label="--- Select ---" />
+										<option th:each="generic : ${generics}"
+											th:value="${generic.id}" th:text="${generic.genericName}">Select
+											Generic</option>
+									</select>
+								</div>
+
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Brand</label>
+							<div class="col-sm-10">
+								<div th:if="${brands != null and not #lists.isEmpty(brands)}">
+									<select th:field="*{brandName}" class="form-control">
+										<option value="NONE" label="--- Select ---" />
+										<option th:each="brand : ${brands}" th:value="${brand.id}"
+											th:text="${brand.brandName}">Select Brand</option>
+									</select>
+								</div>
+
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Overview:</label>
+							<div class="col-sm-10">
+								<textarea class="form-control" rows="8"
+									style="margin-top: 10px;"
+									placeholder="Write about drug overview here......."
+									name="overView" th:inline="text" th:field="*{overView}">
+                            </textarea>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Side effects:</label>
+							<div class="col-sm-10">
+								<textarea class="form-control" rows="8"
+									style="margin-top: 10px;"
+									placeholder="Write about drug overview here......."
+									name="sideEffects" th:inline="text" th:field="*{sideEffects}">
+                            </textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Dosages:</label>
+							<div class="col-sm-10">
+								<textarea class="form-control" rows="8"
+									style="margin-top: 10px;"
+									placeholder="Write about drug overview here......."
+									name="dosages" th:inline="text" th:field="*{dosages}">
+                            </textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Interaction:</label>
+							<div class="col-sm-10">
+								<textarea class="form-control" rows="8"
+									style="margin-top: 10px;"
+									placeholder="Write about drug overview here......."
+									name="interaction" th:inline="text" th:field="*{interaction}">
+                            </textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Professionals:</label>
+							<div class="col-sm-10">
+								<textarea class="form-control" rows="8"
+									style="margin-top: 10px;"
+									placeholder="Write about drug overview here......."
+									name="professionals" th:inline="text"
+									th:field="*{professionals}">
+                            </textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-10">
+								<button type="submit" class="btn btn-primary">Submit</button>
+							</div>
+						</div>
+
+					</form>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
