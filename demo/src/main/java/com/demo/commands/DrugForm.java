@@ -14,15 +14,15 @@ public class DrugForm {
   
     private Integer id;    
     
-    @NotNull
-    @NotBlank 
+    //@NotNull
+   // @NotBlank 
     private Integer genericId;  
     
     private String genericName;
     
     
-    @NotNull
-    @NotBlank
+   // @NotNull
+   // @NotBlank
     private Integer brandId; 
     
     private String brandName;

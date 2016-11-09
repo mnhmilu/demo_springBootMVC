@@ -25,6 +25,14 @@ public class DrugFormToDrugData implements Converter<DrugForm,Drug> {
         entity.setProfessionals(formData.getProfessionals());
         entity.setSideEffects(formData.getSideEffects());
         entity.setInsertDate(new Date());		
+        
+        DrugBrand brand = new DrugBrand();
+        brand.setId(formData.getBrandId());
+        entity.setDrugBrand(brand);
+        
+        DrugGeneric generic = new DrugGeneric();
+        generic.setId(formData.getGenericId());
+        entity.setDrugGeneric(generic);      
 		
 		return entity;
 	}

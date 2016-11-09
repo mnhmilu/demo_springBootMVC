@@ -1,10 +1,14 @@
 package com.demo.controller;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -26,6 +30,7 @@ public class DrugController {
 	private DrugFormToDrugData drugFormToDrugData;
 	private DrugBrandRepository drugBrandDaoServiec;
 	private DrugGenericRepository drugGenericDaoService;
+	
 	
 	
 
@@ -61,6 +66,21 @@ public class DrugController {
 		model.addAttribute("drug", form);	
 		return "drugs/drugForm";
 	}
+	
+	@RequestMapping(value = "drug", method = RequestMethod.POST)
+	public String savepatient(@Valid @ModelAttribute("drug")  DrugForm form, BindingResult bindingResult) {
+
+		if (bindingResult.hasErrors()) {			
+			return "drugs/drugForm";
+		}
+		
+		drugDaoService.save(drugFormToDrugData.convert(form));
+
+	//	drugService.savePatientInfoWithSerail(patientSerialFormToPatientData.convert( patientForm),patientForm.getSerialDate());
+		return "redirect:/drugList";
+
+	}
+
 	
 	
 	/*

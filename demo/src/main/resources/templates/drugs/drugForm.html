@@ -40,7 +40,7 @@
 							<div class="col-sm-10">
 								<div
 									th:if="${generics != null and not #lists.isEmpty(generics)}">
-									<select th:field="*{genericName}" class="form-control">
+									<select th:field="*{genericId}" class="form-control">
 										<option value="NONE" label="--- Select ---" />
 										<option th:each="generic : ${generics}"
 											th:value="${generic.id}" th:text="${generic.genericName}">Select
@@ -55,7 +55,7 @@
 							<label class="col-sm-2 control-label">Brand</label>
 							<div class="col-sm-10">
 								<div th:if="${brands != null and not #lists.isEmpty(brands)}">
-									<select th:field="*{brandName}" class="form-control">
+									<select th:field="*{brandId}" class="form-control">
 										<option value="NONE" label="--- Select ---" />
 										<option th:each="brand : ${brands}" th:value="${brand.id}"
 											th:text="${brand.brandName}">Select Brand</option>
