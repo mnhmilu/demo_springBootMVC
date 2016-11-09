@@ -12,7 +12,7 @@ import com.demo.domain.Drug;
 @Repository
 public interface DrugRepository extends CrudRepository<Drug, Integer>{
 	
-	List<Drug> findDrugByGenericNameOrBrandNameOrDrugName(String genericName, String brandName,String drugName);	
+	//List<Drug> findDrugByGenericNameOrBrandNameOrDrugName(String genericName, String brandName,String drugName);	
 	List<Drug> findTop50ByOrderByInsertDateDesc();
 	
 	

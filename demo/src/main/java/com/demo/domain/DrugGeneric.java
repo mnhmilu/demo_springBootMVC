@@ -14,8 +14,8 @@ import org.hibernate.validator.constraints.NotBlank;
 
 
 @Entity
-@Table(name = "drug_brand")
-public class DrugBrand {	
+@Table(name = "drug_generic")
+public class DrugGeneric {	
 	
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,9 +24,19 @@ public class DrugBrand {
     
     @NotNull
     @NotBlank
-    @Column(name = "brand_name" ,nullable = false)
-    private String brandName;  
+    @Column(name = "generic_name" ,nullable = false)
+    private String genericName;
+   
 
+
+	public String getGenericName() {
+		return genericName;
+	}
+
+
+	public void setGenericName(String genericName) {
+		this.genericName = genericName;
+	}
 
 
 	public Integer getId() {
@@ -37,19 +47,6 @@ public class DrugBrand {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-
-	public String getBrandName() {
-		return brandName;
-	}
-
-
-	public void setBrandName(String brandName) {
-		this.brandName = brandName;
-	} 
-    
-  
-	
 	
     
    

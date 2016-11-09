@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 
 import com.demo.commands.DrugForm;
 import com.demo.domain.Drug;
+import com.demo.domain.DrugBrand;
+import com.demo.domain.DrugGeneric;
 
 @Component
 public class DrugFormToDrugData implements Converter<DrugForm,Drug> {
@@ -15,11 +17,9 @@ public class DrugFormToDrugData implements Converter<DrugForm,Drug> {
 	public Drug	 convert(DrugForm formData) {
 	
 		Drug entity = new Drug();
-		entity.setId(formData.getId());
-		entity.setBrandName(formData.getBrandName());
+		entity.setId(formData.getId());		
 		entity.setDosages(formData.getDosages());
-		entity.setDrugName(formData.getDrugName());
-        entity.setGenericName(formData.getGenericName());
+		entity.setDrugName(formData.getDrugName());       
         entity.setInteraction(formData.getInteraction());
         entity.setOverView(formData.getOverView());
         entity.setProfessionals(formData.getProfessionals());

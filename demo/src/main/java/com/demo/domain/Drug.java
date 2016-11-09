@@ -8,15 +8,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Type;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 
@@ -27,20 +26,8 @@ public class Drug {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;  
-  
-    
-    @NotNull
-    @NotBlank
-    @Column(name = "generic_name" ,nullable = false)
-    private String genericName;  
     
     
-    @NotNull
-    @NotBlank
-    @Column(name = "brand_name" ,nullable = false)
-    private String brandName; 
-    
-  
     @NotNull
     @NotBlank
     @Column(name = "drug_name" ,nullable = false)
@@ -69,8 +56,34 @@ public class Drug {
     @Type(type="yes_no")
     @Column(name = "discontinued")
     private Boolean discontinued;
-    	
     
+    
+    @OneToOne
+    private DrugGeneric drugGeneric;
+    	
+    @OneToOne
+    private DrugBrand drugBrand;    
+    
+
+	public DrugGeneric getDrugGeneric() {
+		return drugGeneric;
+	}
+
+
+	public void setDrugGeneric(DrugGeneric drugGeneric) {
+		this.drugGeneric = drugGeneric;
+	}
+
+
+	public DrugBrand getDrugBrand() {
+		return drugBrand;
+	}
+
+
+	public void setDrugBrand(DrugBrand drugBrand) {
+		this.drugBrand = drugBrand;
+	}
+
 
 	public Integer getId() {
 		return id;
@@ -79,26 +92,15 @@ public class Drug {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}	
+
+	public Boolean getDiscontinued() {
+		return discontinued;
 	}
 
 
-	public String getGenericName() {
-		return genericName;
-	}
-
-
-	public void setGenericName(String genericName) {
-		this.genericName = genericName;
-	}
-
-
-	public String getBrandName() {
-		return brandName;
-	}
-
-
-	public void setBrandName(String brandName) {
-		this.brandName = brandName;
+	public void setDiscontinued(Boolean discontinued) {
+		this.discontinued = discontinued;
 	}
 
 

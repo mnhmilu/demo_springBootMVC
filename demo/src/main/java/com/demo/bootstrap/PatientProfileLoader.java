@@ -10,7 +10,9 @@ import org.springframework.stereotype.Component;
 
 import com.demo.domain.Drug;
 import com.demo.domain.DrugBrand;
+import com.demo.domain.DrugGeneric;
 import com.demo.repositories.DrugBrandRepository;
+import com.demo.repositories.DrugGenericRepository;
 import com.demo.repositories.DrugRepository;
 
 @Component
@@ -18,15 +20,18 @@ public class PatientProfileLoader implements ApplicationListener<ContextRefreshe
     
     private DrugBrandRepository drugBrandDaoServiec;
     
+    private DrugGenericRepository drugGenericRepository;
+    
     private DrugRepository drugRepository;
 
     private Logger log = Logger.getLogger(PatientProfileLoader.class);
 
     @Autowired
-    public void setProductRepository(DrugRepository drugRepository,DrugBrandRepository drugBrandDaoServiec) {
+    public void setProductRepository(DrugRepository drugRepository,DrugBrandRepository drugBrandDaoServiec,DrugGenericRepository drugGenericRepository) {
        
         this.drugRepository =drugRepository;
         this.drugBrandDaoServiec=drugBrandDaoServiec;
+        this.drugGenericRepository=drugGenericRepository;
     }
 
     @Override
@@ -76,16 +81,7 @@ public class PatientProfileLoader implements ApplicationListener<ContextRefreshe
         */
         
         
-        Drug newDrug = new Drug();
-        
-        newDrug.setBrandName("brnd X");
-        newDrug.setGenericName("gen y");
-        newDrug.setDrugName("NAPA");
-        newDrug.setInsertDate(new Date());       
-        
-        drugRepository.save(newDrug);      
-        
-        
+
         
         DrugBrand brand = new DrugBrand();
         brand.setBrandName("Brand A");
@@ -94,7 +90,29 @@ public class PatientProfileLoader implements ApplicationListener<ContextRefreshe
         DrugBrand brand2 = new DrugBrand();
         brand2.setBrandName("Brand B");
         drugBrandDaoServiec.save(brand2);
+        
+        DrugGeneric generic = new DrugGeneric();
+        generic.setGenericName("Generic X");
+        drugGenericRepository.save(generic);
+            
                 
+        
+        
+        
+      Drug newDrug = new Drug();
+      
+      newDrug.setDrugBrand(brand);
+      
+      newDrug.setDrugGeneric(generic);
+      newDrug.setDrugName("NAPA");
+      newDrug.setInsertDate(new Date());      
+      
+     
+      
+      drugRepository.save(newDrug);      
+      
+      
+        
         
         
         

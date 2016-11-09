@@ -5,6 +5,9 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.demo.domain.DrugBrand;
+import com.demo.domain.DrugGeneric;
+
 
 
 public class DrugForm {		
@@ -13,12 +16,16 @@ public class DrugForm {
     
     @NotNull
     @NotBlank 
-    private String genericName;  
+    private Integer genericId;  
+    
+    private String genericName;
     
     
     @NotNull
     @NotBlank
-    private String brandName; 
+    private Integer brandId; 
+    
+    private String brandName;
     
   
     @NotNull
@@ -32,13 +39,37 @@ public class DrugForm {
 
     private String dosages;
     
-    private String interaction;
-    
+    private String interaction;    
  
     private String professionals;      
     
     private Boolean discontinued;  
     
+    
+
+	public String getGenericName() {
+		return genericName;
+	}
+
+
+	public void setGenericName(String genericName) {
+		this.genericName = genericName;
+	}
+
+	
+	
+
+
+
+	public String getBrandName() {
+		return brandName;
+	}
+
+
+	public void setBrandName(String brandName) {
+		this.brandName = brandName;
+	}
+
 
 	public Boolean getDiscontinued() {
 		return discontinued;
@@ -60,23 +91,23 @@ public class DrugForm {
 	}
 
 
-	public String getGenericName() {
-		return genericName;
+	public Integer getGenericId() {
+		return genericId;
 	}
 
 
-	public void setGenericName(String genericName) {
-		this.genericName = genericName;
+	public void setGenericId(Integer genericId) {
+		this.genericId = genericId;
 	}
 
 
-	public String getBrandName() {
-		return brandName;
+	public Integer getBrandId() {
+		return brandId;
 	}
 
 
-	public void setBrandName(String brandName) {
-		this.brandName = brandName;
+	public void setBrandId(Integer brandId) {
+		this.brandId = brandId;
 	}
 
 

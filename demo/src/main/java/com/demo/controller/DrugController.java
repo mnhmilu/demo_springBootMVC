@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.demo.commands.DrugForm;
 import com.demo.converter.DrugFormToDrugData;
 import com.demo.repositories.DrugBrandRepository;
+import com.demo.repositories.DrugGenericRepository;
 import com.demo.repositories.DrugRepository;
 import com.demo.services.DrugService;
 
@@ -24,17 +25,19 @@ public class DrugController {
 	private DrugRepository drugDaoService;
 	private DrugFormToDrugData drugFormToDrugData;
 	private DrugBrandRepository drugBrandDaoServiec;
+	private DrugGenericRepository drugGenericDaoService;
 	
 	
 
 	@Autowired
 	public void setservices( 
 	 DrugRepository drugDaoService,
-	 DrugFormToDrugData drugFormToDrugData,DrugBrandRepository drugBrandDaoServiec) {
+	 DrugFormToDrugData drugFormToDrugData,DrugBrandRepository drugBrandDaoServiec,DrugGenericRepository drugGenericDaoService) {
 		
 		this.drugDaoService = drugDaoService;
 		this.drugFormToDrugData = drugFormToDrugData;
 		this.drugBrandDaoServiec = drugBrandDaoServiec;
+		this.drugGenericDaoService =drugGenericDaoService;
 		
 	}
 
@@ -44,6 +47,8 @@ public class DrugController {
 		model.addAttribute("drug", new DrugForm());
 		model.addAttribute("drugs", drugDaoService.findTop50ByOrderByInsertDateDesc());
 		model.addAttribute("brands",drugBrandDaoServiec.findAll());
+		model.addAttribute("generics",drugGenericDaoService.findAll());
+			
 		return "drugs/drugs";
 		
 	}
