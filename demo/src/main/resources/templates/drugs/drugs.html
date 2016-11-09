@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+<title th:text="#{index.page.title}">Page Title</title>
+
+<!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+	<div class="container">
+		<!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<h4>
+					<span class="label label-primary">Drug Search</span>
+				</h4>
+				<form class="form-inline" th:object="${drug}"
+					th:action="@{/drugSearch}" method="post">
+
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Generic</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" th:field="*{genericName}" />
+						</div>
+					</div>		
+
+					<div class="form-group">
+						<label class="col-md-3 control-label">Brand</label>
+						<div class="col-md-5">
+							<div th:if="${brands != null and not #lists.isEmpty(brands)}">
+								
+								 <select th:field="*{brandName}" class="form-control">
+								    <option value="NONE" label="--- Select ---" />
+									<option th:each="brand : ${brands}" th:value="${brand.id}"
+										th:text="${brand.brandName}" >Select Brand</option>
+								</select>
+							</div>
+							<!-- 							<div th:if="${brands == null or lists.isEmpty(brands)}"> -->
+							<!-- 								<div>"No Brand were found, please create some first"</div> -->
+							<!-- 							</div> -->
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Name</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" th:field="*{drugName}" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-10">
+							<button type="submit" class="btn btn-primary">Search</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-body">
+
+				<a href="/drug/new" class="btn btn-success" role="button">Add
+					New Drug</a>
+			</div>
+		</div>
+		<div th:if="${not #lists.isEmpty(drugs)}">
+
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<h4>
+						<span class="label label-primary">Drug List</span>
+					</h4>
+					<table class="table table-striped">
+						<tr>
+							<th>Id</th>
+							<th>Drug Name</th>
+							<th>Generic Name</th>
+							<th>Brand Name</th>
+							<th>View</th>
+							<th>Edit</th>
+							<th>Delete</th>
+						</tr>
+						<tr th:each="drug : ${drugs}">
+							<td th:text="${drug.id}"><a href="/drug/${drug.id}">Id</a></td>
+							<td th:text="${drug.drugName}">Drug Name</td>
+							<td th:text="${drug.genericName}">Generic Name</td>
+							<td th:text="${drug.brandName}">Brand Name</td>
+							<td><a th:href="${'/drug/' + drug.id}">Details</a></td>
+							<td><a th:href="${'/drug/edit/' + drug.id}">Edit</a></td>
+							<td><a th:href="${'/drug/delete/' + drug.id}">Delete</a></td>
+						</tr>
+					</table>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+</body>
+</html>

@@ -1,40 +1,38 @@
 package com.demo.bootstrap;
 
+import java.util.Date;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
-import com.demo.domain.PatientProfile;
-import com.demo.domain.PatientSerials;
-import com.demo.domain.Product;
-import com.demo.repositories.PatientRepository;
-import com.demo.repositories.PatientSerialRepository;
-import com.demo.repositories.ProductRepository;
-
-import java.math.BigDecimal;
-import java.util.Date;
+import com.demo.domain.Drug;
+import com.demo.domain.DrugBrand;
+import com.demo.repositories.DrugBrandRepository;
+import com.demo.repositories.DrugRepository;
 
 @Component
 public class PatientProfileLoader implements ApplicationListener<ContextRefreshedEvent> {
-
-	
-    private PatientRepository patientRepository;
     
-    private PatientSerialRepository patientSerialRepository;
+    private DrugBrandRepository drugBrandDaoServiec;
+    
+    private DrugRepository drugRepository;
 
     private Logger log = Logger.getLogger(PatientProfileLoader.class);
 
     @Autowired
-    public void setProductRepository(PatientRepository productRepository, PatientSerialRepository patientSerialRepository) {
-        this.patientRepository = productRepository;
-        this.patientSerialRepository=patientSerialRepository;
+    public void setProductRepository(DrugRepository drugRepository,DrugBrandRepository drugBrandDaoServiec) {
+       
+        this.drugRepository =drugRepository;
+        this.drugBrandDaoServiec=drugBrandDaoServiec;
     }
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
 
+    	/*
     	PatientProfile patientOne = new PatientProfile();
         patientOne.setName("Nahid");
         patientOne.setAge(35);
@@ -74,5 +72,31 @@ public class PatientProfileLoader implements ApplicationListener<ContextRefreshe
 
 
         log.info("Saved patient - id:" + patientTwo.getId());
+        
+        */
+        
+        
+        Drug newDrug = new Drug();
+        
+        newDrug.setBrandName("brnd X");
+        newDrug.setGenericName("gen y");
+        newDrug.setDrugName("NAPA");
+        newDrug.setInsertDate(new Date());       
+        
+        drugRepository.save(newDrug);      
+        
+        
+        
+        DrugBrand brand = new DrugBrand();
+        brand.setBrandName("Brand A");
+        drugBrandDaoServiec.save(brand);
+        
+        DrugBrand brand2 = new DrugBrand();
+        brand2.setBrandName("Brand B");
+        drugBrandDaoServiec.save(brand2);
+                
+        
+        
+        
     }
 }
