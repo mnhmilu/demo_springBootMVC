@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.demo.commands.DrugForm;
 import com.demo.converter.DrugDataToDrugForm;
 import com.demo.converter.DrugFormToDrugData;
+import com.demo.domain.Drug;
+import com.demo.domain.DrugBrand;
+import com.demo.domain.DrugGeneric;
 import com.demo.repositories.DrugBrandRepository;
 import com.demo.repositories.DrugGenericRepository;
 import com.demo.repositories.DrugRepository;
@@ -67,6 +70,8 @@ public class DrugController {
 		DrugForm form = new DrugForm();
 		model.addAttribute("generics",drugGenericDaoService.findAll());
 		model.addAttribute("brands",drugBrandDaoServiec.findAll());
+		model.addAttribute("drugBrand",new DrugBrand());
+		model.addAttribute("drugGeneric",new DrugGeneric());		 
 		model.addAttribute("drug", form);	
 		return "drugs/drugForm";
 	}
@@ -78,9 +83,10 @@ public class DrugController {
 			return "drugs/drugForm";
 		}
 		
-		drugDaoService.save(drugFormToDrugData.convert(form));
+		Drug drug = drugFormToDrugData.convert(form);
+		
+		drugDaoService.save(drug);
 
-	//	drugService.savePatientInfoWithSerail(patientSerialFormToPatientData.convert( patientForm),patientForm.getSerialDate());
 		return "redirect:/drugList";
 
 	}
@@ -89,16 +95,47 @@ public class DrugController {
 	@RequestMapping("drug/{id}")
 	public String showDrug(@PathVariable Integer id, Model model) {
 		
-		slf4jLogger.info("DrugController :: showDrug");
-		
+		slf4jLogger.info("DrugController :: showDrug");		
 
 		DrugForm form = drugDataToDrugForm.convert(drugDaoService.findById(id));
-		
-		model.addAttribute("drug", form);
-
+		model.addAttribute("drug", form);		
 		return "drugs/drugshow";
 	}
 
+	
+	
+	@RequestMapping("drug/edit/{id}")
+	public String edit(@PathVariable Integer id, Model model) {		
+		
+		DrugForm form = drugDataToDrugForm.convert(drugDaoService.findById(id));	
+		model.addAttribute("generics",drugGenericDaoService.findAll());
+		model.addAttribute("brands",drugBrandDaoServiec.findAll());		
+		
+		
+		model.addAttribute("drug", form);	
+		
+		
+		DrugGeneric generic = new DrugGeneric();
+        generic.setGenericName(form.getGenericName());
+        generic.setId(form.getGenericId());
+    	model.addAttribute("drugGeneric", generic);	
+    	
+    	
+    	 DrugBrand brand2 = new DrugBrand();
+         brand2.setBrandName(form.getBrandName());
+         brand2.setId(form.getBrandId());
+         model.addAttribute("drugBrand", brand2);	
+         
+		
+		
+		
+		return "drugs/drugForm";		
+		
+	}
+
+	
+	
+	
 	
 	
 	
@@ -107,27 +144,7 @@ public class DrugController {
 	/*
 
 	
-	@RequestMapping("patient/edit/{id}")
-	public String edit(@PathVariable Integer id, Model model) {
-		
-		PatientProfile patient = drugDaoService.findById(id);
-		
-		PatientSerialSearchForm dto = new PatientSerialSearchForm();
-		dto.setId(id);
-		dto.setAge(patient.getAge());
-		dto.setMobile(patient.getMobile());		
-		dto.setName(patient.getName());
-		
-		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
-		Date today = new Date();
-		dateFormat.format(today);
-		dto.setSerialDate(today);
-		
-		
-		model.addAttribute("patient",dto );
-		return "patientform";
-	}
-
+	
 
 	
 	@RequestMapping(value = "patient", method = RequestMethod.POST)

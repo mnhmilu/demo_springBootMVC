@@ -95,6 +95,9 @@ public class PatientProfileLoader implements ApplicationListener<ContextRefreshe
         generic.setGenericName("Generic X");
         drugGenericRepository.save(generic);
             
+        DrugGeneric generic2= new DrugGeneric();
+        generic2.setGenericName("Generic Y");
+        drugGenericRepository.save(generic2);
                 
         
         

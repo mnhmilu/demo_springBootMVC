@@ -24,8 +24,7 @@
 				<div>
 					<form class="form-horizontal" th:object="${drug}"
 						th:action="@{/drug}" method="post" action="#">
-						<input type="hidden" th:field="*{id}" />
-
+						<input type="hidden" th:field="*{id}" /> 
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Drug Name:</label>
 							<div class="col-sm-10">
@@ -37,11 +36,14 @@
 
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Generic</label>
+
+
 							<div class="col-sm-10">
 								<div
 									th:if="${generics != null and not #lists.isEmpty(generics)}">
-									<select th:field="*{genericId}" class="form-control">
-										<option value="NONE" label="--- Select ---" />
+									<select th:field="*{genericId}" th:remove="all-but-first"
+										class="form-control">
+
 										<option th:each="generic : ${generics}"
 											th:value="${generic.id}" th:text="${generic.genericName}">Select
 											Generic</option>
@@ -53,12 +55,14 @@
 
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Brand</label>
+
+
 							<div class="col-sm-10">
 								<div th:if="${brands != null and not #lists.isEmpty(brands)}">
 									<select th:field="*{brandId}" class="form-control">
-										<option value="NONE" label="--- Select ---" />
-										<option th:each="brand : ${brands}" th:value="${brand.id}"
-											th:text="${brand.brandName}">Select Brand</option>
+										<option th:each="brand : ${brands}" th:value="${{brand.id}}"
+											th:text="${brand.brandName}">Select
+											Brand</option>
 									</select>
 								</div>
 

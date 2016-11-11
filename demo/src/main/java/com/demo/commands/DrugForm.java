@@ -31,8 +31,12 @@ public class DrugForm {
     @NotNull
     @NotBlank
     private String drugName; 
-
-
+    
+    
+    private DrugBrand drugBrand;
+    
+    private DrugGeneric drugGeneric;
+    
     private String overView;
 
     private String sideEffects;    
@@ -43,9 +47,30 @@ public class DrugForm {
  
     private String professionals;      
     
-    private Boolean discontinued;  
+    private Boolean discontinued;     
     
     
+    
+
+	public DrugBrand getDrugBrand() {
+		return drugBrand;
+	}
+
+
+	public void setDrugBrand(DrugBrand drugBrand) {
+		this.drugBrand = drugBrand;
+	}
+
+
+	public DrugGeneric getDrugGeneric() {
+		return drugGeneric;
+	}
+
+
+	public void setDrugGeneric(DrugGeneric drugGeneric) {
+		this.drugGeneric = drugGeneric;
+	}
+
 
 	public String getGenericName() {
 		return genericName;

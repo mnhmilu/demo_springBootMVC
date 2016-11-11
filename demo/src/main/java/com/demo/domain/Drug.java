@@ -59,11 +59,27 @@ public class Drug {
     
     
     @OneToOne
+    @NotNull
     private DrugGeneric drugGeneric;
     	
     @OneToOne
+    @NotNull
     private DrugBrand drugBrand;    
     
+    @Temporal(TemporalType.DATE)
+    private Date lastUpdatedDate;     
+    
+    
+
+	public Date getLastUpdatedDate() {
+		return lastUpdatedDate;
+	}
+
+
+	public void setLastUpdatedDate(Date lastUpdatedDate) {
+		this.lastUpdatedDate = lastUpdatedDate;
+	}
+
 
 	public DrugGeneric getDrugGeneric() {
 		return drugGeneric;
