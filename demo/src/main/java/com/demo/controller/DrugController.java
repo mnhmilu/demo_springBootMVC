@@ -9,10 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.demo.commands.DrugForm;
+import com.demo.converter.DrugDataToDrugForm;
 import com.demo.converter.DrugFormToDrugData;
 import com.demo.repositories.DrugBrandRepository;
 import com.demo.repositories.DrugGenericRepository;
@@ -30,6 +32,7 @@ public class DrugController {
 	private DrugFormToDrugData drugFormToDrugData;
 	private DrugBrandRepository drugBrandDaoServiec;
 	private DrugGenericRepository drugGenericDaoService;
+	private DrugDataToDrugForm drugDataToDrugForm;
 	
 	
 	
@@ -37,12 +40,13 @@ public class DrugController {
 	@Autowired
 	public void setservices( 
 	 DrugRepository drugDaoService,
-	 DrugFormToDrugData drugFormToDrugData,DrugBrandRepository drugBrandDaoServiec,DrugGenericRepository drugGenericDaoService) {
+	 DrugFormToDrugData drugFormToDrugData,DrugBrandRepository drugBrandDaoServiec,DrugGenericRepository drugGenericDaoService, DrugDataToDrugForm drugDataToDrugForm) {
 		
 		this.drugDaoService = drugDaoService;
 		this.drugFormToDrugData = drugFormToDrugData;
 		this.drugBrandDaoServiec = drugBrandDaoServiec;
 		this.drugGenericDaoService =drugGenericDaoService;
+		this.drugDataToDrugForm=drugDataToDrugForm;
 		
 	}
 
@@ -59,7 +63,7 @@ public class DrugController {
 	}
 	
 	@RequestMapping("drug/new")
-	public String newpatient(Model model) {
+	public String newDrug(Model model) {
 		DrugForm form = new DrugForm();
 		model.addAttribute("generics",drugGenericDaoService.findAll());
 		model.addAttribute("brands",drugBrandDaoServiec.findAll());
@@ -68,7 +72,7 @@ public class DrugController {
 	}
 	
 	@RequestMapping(value = "drug", method = RequestMethod.POST)
-	public String savepatient(@Valid @ModelAttribute("drug")  DrugForm form, BindingResult bindingResult) {
+	public String saveDrug(@Valid @ModelAttribute("drug")  DrugForm form, BindingResult bindingResult) {
 
 		if (bindingResult.hasErrors()) {			
 			return "drugs/drugForm";
@@ -82,26 +86,27 @@ public class DrugController {
 	}
 
 	
-	
-	/*
-
 	@RequestMapping("drug/{id}")
 	public String showDrug(@PathVariable Integer id, Model model) {
 		
-		slf4jLogger.info("PatientController :: showpatient");
+		slf4jLogger.info("DrugController :: showDrug");
 		
-        PatientProfile patient = drugDaoService.findById(id);	
-		PatientSerialSearchForm dto = new PatientSerialSearchForm();
-		dto.setId(patient.getId());
-		dto.setAge(patient.getAge());
-		dto.setMobile(patient.getMobile());	
-		dto.setName(patient.getName());
-		
-		model.addAttribute("patient", dto);
 
-		return "patientshow";
+		DrugForm form = drugDataToDrugForm.convert(drugDaoService.findById(id));
+		
+		model.addAttribute("drug", form);
+
+		return "drugs/drugshow";
 	}
 
+	
+	
+	
+	
+	
+	/*
+
+	
 	@RequestMapping("patient/edit/{id}")
 	public String edit(@PathVariable Integer id, Model model) {
 		

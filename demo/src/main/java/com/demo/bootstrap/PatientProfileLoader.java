@@ -105,9 +105,13 @@ public class PatientProfileLoader implements ApplicationListener<ContextRefreshe
       
       newDrug.setDrugGeneric(generic);
       newDrug.setDrugName("NAPA");
-      newDrug.setInsertDate(new Date());      
-      
-     
+      newDrug.setInsertDate(new Date());    
+      newDrug.setDosages("Sample Dosages");
+      newDrug.setInteraction("Sample Interaction");
+      newDrug.setOverView("Sample Overview");
+      newDrug.setProfessionals("Sample Professionals");
+      newDrug.setInteraction("Sample Interactions");
+      newDrug.setSideEffects("Sample Sideeffects");
       
       drugRepository.save(newDrug);      
       

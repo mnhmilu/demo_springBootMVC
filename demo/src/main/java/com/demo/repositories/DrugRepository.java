@@ -6,6 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import com.demo.domain.Drug;
+import com.demo.domain.PatientProfile;
 
 
 
@@ -14,6 +15,7 @@ public interface DrugRepository extends CrudRepository<Drug, Integer>{
 	
 	//List<Drug> findDrugByGenericNameOrBrandNameOrDrugName(String genericName, String brandName,String drugName);	
 	List<Drug> findTop50ByOrderByInsertDateDesc();
+	Drug findById(Integer id);
 	
 	
 }
