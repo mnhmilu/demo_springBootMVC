@@ -17,31 +17,31 @@
 				<form class="form-inline" th:object="${drug}"
 					th:action="@{/drugSearch}" method="post">
 
-				<div class="form-group">
+					<div class="form-group">
 						<label class="col-md-3 control-label">Generic</label>
 						<div class="col-md-5">
-							<div th:if="${generics != null and not #lists.isEmpty(generics)}">								
-								 <select th:field="*{genericName}" class="form-control">
-								    <option value="NONE" label="--- Select ---" />
-									<option th:each="generic : ${generics}" th:value="${generic.id}"
-										th:text="${generic.genericName}" >Select Generic</option>
+							<div th:if="${generics != null and not #lists.isEmpty(generics)}">
+								<select th:field="*{genericId}" class="form-control">
+									<option value="0" label="---Select ---" />
+									<option th:each="generic : ${generics}"
+										th:value="${generic.id}" th:text="${generic.genericName}">Select
+										Generic</option>
 								</select>
 							</div>
-					
+
 						</div>
-					</div>	
+					</div>
 
 					<div class="form-group">
 						<label class="col-md-3 control-label">Brand</label>
 						<div class="col-md-5">
-							<div th:if="${brands != null and not #lists.isEmpty(brands)}">								
-								 <select th:field="*{brandName}" class="form-control">
-								    <option value="NONE" label="--- Select ---" />
-									<option th:each="brand : ${brands}" th:value="${brand.id}"
-										th:text="${brand.brandName}" >Select Brand</option>
+							<div th:if="${brands != null and not #lists.isEmpty(brands)}">
+								<select th:field="*{brandId}" class="form-control">
+									<option value="0" label="--- Select ---" />
+									<option th:each="brand : ${brands}" th:value="${{brand.id}}"
+										th:text="${brand.brandName}">Select Brand</option>
 								</select>
 							</div>
-					
 						</div>
 					</div>
 					<div class="form-group">
@@ -56,6 +56,13 @@
 							<button type="submit" class="btn btn-primary">Search</button>
 						</div>
 					</div>
+					<div class="form-group">
+						<a href="/drugList" class="btn btn-success" role="button">Reset
+							</a>
+
+					</div>
+
+
 				</form>
 			</div>
 		</div>
