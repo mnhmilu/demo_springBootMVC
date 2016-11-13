@@ -81,7 +81,7 @@ public class DrugController {
 		
 		if (form.getGenericId() != 0) {
 			generic = new DrugGeneric();
-			generic.setId(form.getGenericId());
+			generic.setIdGeneric(form.getGenericId());
 			genericId = form.getGenericId();
 			model.addAttribute("drugGeneric", generic);
 
@@ -103,7 +103,7 @@ public class DrugController {
 
 		
         List<Drug> drugsSearchResult =drugDaoService
-				.findDrugByDrugBrandOrDrugName(brandId, form.getDrugName());
+				.findDrugByDrugBrandOrByDrugGenericOrDrugName(brandId,genericId, form.getDrugName());
 
 		
 		model.addAttribute("drugs",drugsSearchResult );
@@ -162,7 +162,7 @@ public class DrugController {
 
 		DrugGeneric generic = new DrugGeneric();
 		generic.setGenericName(form.getGenericName());
-		generic.setId(form.getGenericId());
+		generic.setIdGeneric(form.getGenericId());
 		model.addAttribute("drugGeneric", generic);
 
 		DrugBrand brand2 = new DrugBrand();

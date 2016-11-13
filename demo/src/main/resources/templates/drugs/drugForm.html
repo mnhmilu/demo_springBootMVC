@@ -45,7 +45,7 @@
 										class="form-control">
 
 										<option th:each="generic : ${generics}"
-											th:value="${generic.id}" th:text="${generic.genericName}">Select
+											th:value="${generic.idGeneric}" th:text="${generic.genericName}">Select
 											Generic</option>
 									</select>
 									<p th:if="${#fields.hasErrors('genericId')}"

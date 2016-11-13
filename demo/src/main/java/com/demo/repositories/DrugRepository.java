@@ -24,8 +24,8 @@ public interface DrugRepository extends CrudRepository<Drug, Integer>{
 	
 	//@Query("select u.userName from User u inner join u.area ar where ar.idArea = :idArea")
 	
-	@Query("select d from Drug d inner join d.drugBrand br where br.idBrand=:idBrand or lower(d.drugName) LIKE lower (:drugName)")
-	List<Drug> findDrugByDrugBrandOrDrugName(@Param("idBrand") Integer idBrand,@Param("drugName") String drugName);	
+	@Query("select d from Drug d inner join d.drugBrand br inner join d.drugGeneric dg where br.idBrand=:idBrand or dg.idGeneric=:idGeneric or lower(d.drugName) LIKE lower (:drugName)")
+	List<Drug> findDrugByDrugBrandOrByDrugGenericOrDrugName(@Param("idBrand") Integer idBrand,@Param("idGeneric") Integer idGeneric,@Param("drugName") String drugName);	
 	
 	
 }

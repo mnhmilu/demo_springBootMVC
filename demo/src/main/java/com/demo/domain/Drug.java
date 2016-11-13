@@ -60,7 +60,7 @@ public class Drug {
     
     @OneToOne
     @NotNull
-    @JoinColumn(name="idGeneric")
+    @JoinColumn(name="idgeneric")
     private DrugGeneric drugGeneric;
     	
     @OneToOne
