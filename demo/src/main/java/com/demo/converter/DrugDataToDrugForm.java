@@ -21,7 +21,7 @@ public class DrugDataToDrugForm implements Converter<Drug,DrugForm> {
         frm.setProfessionals(data.getProfessionals());
         frm.setSideEffects(data.getSideEffects());
         
-        frm.setBrandId(data.getDrugBrand().getId());
+        frm.setBrandId(data.getDrugBrand().getIdBrand());
         frm.setBrandName(data.getDrugBrand().getBrandName());
         
         frm.setGenericId(data.getDrugGeneric().getId());

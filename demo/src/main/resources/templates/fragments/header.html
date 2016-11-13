@@ -19,40 +19,29 @@
 				<div class="col-md-4" align="right">
 					<h5 th:inline="text">
 						<a class="navbar-brand" href="#" th:href="@{/manager}">Manager Home</a>
-						Welcome [[${#httpServletRequest.remoteUser}]]!
-						<form th:action="@{/logout}" method="post">
-							<input type="submit" value="Sign Out" class="btn btn-primary" />
-						</form>
+<!-- 						Welcome [[${#httpServletRequest.remoteUser}]]! -->
+<!-- 						<form th:action="@{/logout}" method="post"> -->
+<!-- 							<input type="submit" value="Sign Out" class="btn btn-primary" /> -->
+<!-- 						</form> -->
 					</h5>
 				</div>
 			</div>
 
-			<div class="row">
-				<ol class="breadcrumb">
-					<li><a href="#">Home</a></li>
-					<li><a href="#">Library</a></li>
-					<li class="active">Data</li>
-				</ol>
+<!-- 			<div class="row"> -->
+<!-- 				<ol class="breadcrumb"> -->
+<!-- 					<li><a href="#">Home</a></li> -->
+<!-- 					<li><a href="#">Library</a></li> -->
+<!-- 					<li class="active">Data</li> -->
+<!-- 				</ol> -->
 
-			</div>
+<!-- 			</div> -->
 
 
 			<nav class="navbar navbar-default">
 				<div class="container-fluid">
 					<div class="navbar-header">
 						<a class="navbar-brand" href="#" th:href="@{/}">Home</a>
-						<ul class="nav navbar-nav">
-							<!--                         <li><a href="#" th:href="@{/products}">Products</a></li> -->
-							<li><a href="#" th:href="@{/patients}">Drugs</a></li>
-							<li><a href="#" th:href="@{/patient/serialSearchIndex}">Doctors
-									Chamber</a></li>
-							<li><a href="#" th:href="@{/patient/serialSearchIndex}">General
-									News</a></li>
-							<li><a href="#" th:href="@{/patient/serialSearchIndex}">Pharma
-									News</a></li>
-
-
-						</ul>
+					
 
 					</div>
 				</div>

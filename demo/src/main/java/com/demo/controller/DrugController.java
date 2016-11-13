@@ -1,5 +1,7 @@
 package com.demo.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -63,34 +65,48 @@ public class DrugController {
 	}
 
 	@RequestMapping(value = "/drugSearch", method = RequestMethod.POST)
-	public String drugSearch(DrugSearchForm form,BindingResult bindingResult, Model model) {
+	public String drugSearch(DrugSearchForm form, BindingResult bindingResult, Model model) {
 
-		if (form.getDrugName() == null && form.getBrandId() == null && form.getGenericId() == null) {
+		if (form.getDrugName() == null && form.getBrandId() == 0 && form.getGenericId() == 0) {
 			return "redirect:/drugList";
 
 		}
 
-		DrugGeneric generic = new DrugGeneric();
+		DrugGeneric generic = null;
+		DrugBrand brand2 = null;
+		
+		Integer brandId =null;
+		Integer genericId= null;
+		
+		
+		if (form.getGenericId() != 0) {
+			generic = new DrugGeneric();
+			generic.setId(form.getGenericId());
+			genericId = form.getGenericId();
+			model.addAttribute("drugGeneric", generic);
 
-		DrugBrand brand2 = new DrugBrand();
+		}
+		if(form.getBrandId()!=0)
+		{
+			brand2 = new DrugBrand();
+			brand2.setIdBrand(form.getBrandId());
+			brandId = form.getBrandId();
+			model.addAttribute("drugBrand", brand2);
+			
+		}
+
+		
 
 		model.addAttribute("drug", form);
 		model.addAttribute("brands", drugBrandDaoServiec.findAll());
 		model.addAttribute("generics", drugGenericDaoService.findAll());
 
-		if (form.getGenericId() != null) {
+		
+        List<Drug> drugsSearchResult =drugDaoService
+				.findDrugByDrugBrandOrDrugName(brandId, form.getDrugName());
 
-			generic.setId(form.getGenericId());
-			model.addAttribute("drugGeneric", generic);
-		}
-		if (form.getBrandId() != null) {
-
-			brand2.setId(form.getBrandId());
-			model.addAttribute("drugBrand", brand2);
-		}
-
-		model.addAttribute("drugs",
-				drugDaoService.findDrugByDrugGenericOrDrugBrandOrDrugNameContainingIgnoreCase(generic, brand2, form.getDrugName()));
+		
+		model.addAttribute("drugs",drugsSearchResult );
 		return "drugs/drugs";
 	}
 
@@ -106,9 +122,14 @@ public class DrugController {
 	}
 
 	@RequestMapping(value = "drug", method = RequestMethod.POST)
-	public String saveDrug(@Valid @ModelAttribute("drug") DrugForm form, BindingResult bindingResult) {
+	public String saveDrug(@Valid @ModelAttribute("drug") DrugForm form, BindingResult bindingResult, Model model) {
 
 		if (bindingResult.hasErrors()) {
+
+			model.addAttribute("generics", drugGenericDaoService.findAll());
+			model.addAttribute("brands", drugBrandDaoServiec.findAll());
+			model.addAttribute("drug", form);
+
 			return "drugs/drugForm";
 		}
 
@@ -146,7 +167,7 @@ public class DrugController {
 
 		DrugBrand brand2 = new DrugBrand();
 		brand2.setBrandName(form.getBrandName());
-		brand2.setId(form.getBrandId());
+		brand2.setIdBrand(form.getBrandId());
 		model.addAttribute("drugBrand", brand2);
 
 		return "drugs/drugForm";

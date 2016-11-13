@@ -38,7 +38,7 @@
 							<div th:if="${brands != null and not #lists.isEmpty(brands)}">
 								<select th:field="*{brandId}" class="form-control">
 									<option value="0" label="--- Select ---" />
-									<option th:each="brand : ${brands}" th:value="${{brand.id}}"
+									<option th:each="brand : ${brands}" th:value="${{brand.idBrand}}"
 										th:text="${brand.brandName}">Select Brand</option>
 								</select>
 							</div>
