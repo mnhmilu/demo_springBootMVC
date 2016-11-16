@@ -17,7 +17,7 @@ import com.test.repositories.PatientRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = {RepositoryConfiguration.class})
-public class PatientRepositoryTest {
+public class PatientRepositoryITest {
 	
 	private PatientRepository patientRepository;
 	 
