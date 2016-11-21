@@ -8,16 +8,15 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-//import org.springframework.data.repository.config.RepositoryConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.test.configuration.RepositoryConfiguration;
+import com.demo.configuration.TestConfiguration;
 import com.test.domain.PatientProfile;
 import com.test.repositories.PatientRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = {RepositoryConfiguration.class})
-public class PatientRepositoryITest {
+@SpringApplicationConfiguration(classes = {TestConfiguration.class})
+public class PatientRepositoryIntegrationTest {
 	
 	private PatientRepository patientRepository;
 	 
@@ -55,14 +54,14 @@ public class PatientRepositoryITest {
         patientRepository.save(fetchedPatient);
  
         //get from DB, should be updated
-        PatientProfile fetchedUpdatedProduct = patientRepository.findOne(fetchedPatient.getId());
-        assertEquals(fetchedPatient.getName(), fetchedUpdatedProduct.getName());       
+        PatientProfile fetchedUpdatedPatientProfile = patientRepository.findOne(fetchedPatient.getId());
+        assertEquals(fetchedPatient.getName(), fetchedUpdatedPatientProfile.getName());       
  
         //verify count of patients in DB
         long patientCount = patientRepository.count();
-        assertEquals(patientCount, 1);
+        assertEquals(patientCount, 3);
  
-        //get all products, list should only have one
+        //get all products, list should only have three
         Iterable<PatientProfile> patients = patientRepository.findAll();
  
         int count = 0;
@@ -71,7 +70,7 @@ public class PatientRepositoryITest {
             count++;
         }
  
-        assertEquals(count, 1);
+        assertEquals(count, 3);
     }
 	
 	

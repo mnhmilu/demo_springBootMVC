@@ -43,8 +43,7 @@ public class PatientController {
 
 	@Autowired
 	public void setpatientservice(PatientProfiletService patientProfiletService, PatientRepository patientRepository,
-			PatientSerialRepository patientSerialRepository) {
-		
+			PatientSerialRepository patientSerialRepository) {		
 		
 		this.patientProfiletService = patientProfiletService;
 		this.patientRepository = patientRepository;

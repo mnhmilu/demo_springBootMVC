@@ -16,16 +16,9 @@ import com.test.services.PatientServiceImpl;
 @EnableJpaRepositories(basePackages = {"com.test.repositories"})
 @EnableTransactionManagement
 @ComponentScan("com.test")
-public class RepositoryConfiguration {
+public class TestConfiguration {
 	
-	
-//	@Bean
-//	public PatientServiceImpl patientServiceImpl()
-//	{
-//		return new PatientServiceImpl();
-//		
-//	}
-	
+
 	
 	
 }
