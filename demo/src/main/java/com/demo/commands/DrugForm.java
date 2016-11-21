@@ -5,102 +5,66 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import com.demo.domain.DrugBrand;
 import com.demo.domain.DrugGeneric;
 
 
 
 public class DrugForm {		
   
-    private Integer id;    
-    
+    private Integer id;        
 
     private Integer genericId;  
     
-    private String genericName;   
+    private String genericName;    
     
-  
-    private Integer brandId; 
+    private String manufacturer;    
     
-    private String brandName;
-    
-  
+    private Integer manufacturerId;
+      
     @NotNull
     @NotBlank
     private String drugName; 
+
+    private DrugGeneric drugGeneric;       
     
+
+    private String composition;
+    
+
+    private String indication;
+    
+
+    private String dosagesAdministration;
+       
  
-    private DrugBrand drugBrand;
+    private String contraindication;
     
 
-    private DrugGeneric drugGeneric;
+    private String sideEffect;          
     
-    private String overView;
-
-    private String sideEffects;    
-
-    private String dosages;
+   
+    private String specialWarningPrecautions;    
     
-    private String interaction;    
- 
-    private String professionals;      
+  
+    private String drugInteraction;        
     
-    private Boolean discontinued;     
-    
-    
+  
+    private String storage;  
     
 
-	public DrugBrand getDrugBrand() {
-		return drugBrand;
+    private String pregnancyLactation;    
+    
+
+    private Integer drugprice;  
+
+
+	public Integer getManufacturerId() {
+		return manufacturerId;
 	}
 
 
-	public void setDrugBrand(DrugBrand drugBrand) {
-		this.drugBrand = drugBrand;
-	}
-
-
-	public DrugGeneric getDrugGeneric() {
-		return drugGeneric;
-	}
-
-
-	public void setDrugGeneric(DrugGeneric drugGeneric) {
-		this.drugGeneric = drugGeneric;
-	}
-
-
-	public String getGenericName() {
-		return genericName;
-	}
-
-
-	public void setGenericName(String genericName) {
-		this.genericName = genericName;
-	}
-
-	
-	
-
-
-
-	public String getBrandName() {
-		return brandName;
-	}
-
-
-	public void setBrandName(String brandName) {
-		this.brandName = brandName;
-	}
-
-
-	public Boolean getDiscontinued() {
-		return discontinued;
-	}
-
-
-	public void setDiscontinued(Boolean discontinued) {
-		this.discontinued = discontinued;
+	public void setManufacturerId(Integer manufacturerId) {
+		this.manufacturerId = manufacturerId;
 	}
 
 
@@ -124,13 +88,13 @@ public class DrugForm {
 	}
 
 
-	public Integer getBrandId() {
-		return brandId;
+	public String getGenericName() {
+		return genericName;
 	}
 
 
-	public void setBrandId(Integer brandId) {
-		this.brandId = brandId;
+	public void setGenericName(String genericName) {
+		this.genericName = genericName;
 	}
 
 
@@ -144,53 +108,130 @@ public class DrugForm {
 	}
 
 
-	public String getOverView() {
-		return overView;
+	public DrugGeneric getDrugGeneric() {
+		return drugGeneric;
 	}
 
 
-	public void setOverView(String overView) {
-		this.overView = overView;
+	public void setDrugGeneric(DrugGeneric drugGeneric) {
+		this.drugGeneric = drugGeneric;
 	}
 
 
-	public String getSideEffects() {
-		return sideEffects;
+	public String getComposition() {
+		return composition;
 	}
 
 
-	public void setSideEffects(String sideEffects) {
-		this.sideEffects = sideEffects;
+	public void setComposition(String composition) {
+		this.composition = composition;
 	}
 
 
-	public String getDosages() {
-		return dosages;
+	public String getIndication() {
+		return indication;
 	}
 
 
-	public void setDosages(String dosages) {
-		this.dosages = dosages;
+	public void setIndication(String indication) {
+		this.indication = indication;
 	}
 
 
-	public String getInteraction() {
-		return interaction;
+	public String getDosagesAdministration() {
+		return dosagesAdministration;
 	}
 
 
-	public void setInteraction(String interaction) {
-		this.interaction = interaction;
+	public void setDosagesAdministration(String dosagesAdministration) {
+		this.dosagesAdministration = dosagesAdministration;
 	}
 
 
-	public String getProfessionals() {
-		return professionals;
+	public String getContraindication() {
+		return contraindication;
 	}
 
 
-	public void setProfessionals(String professionals) {
-		this.professionals = professionals;
+	public void setContraindication(String contraindication) {
+		this.contraindication = contraindication;
+	}
+
+
+	public String getSideEffect() {
+		return sideEffect;
+	}
+
+
+	public void setSideEffect(String sideEffect) {
+		this.sideEffect = sideEffect;
+	}
+
+
+	public String getSpecialWarningPrecautions() {
+		return specialWarningPrecautions;
+	}
+
+
+	public void setSpecialWarningPrecautions(String specialWarningPrecautions) {
+		this.specialWarningPrecautions = specialWarningPrecautions;
+	}
+
+
+	public String getDrugInteraction() {
+		return drugInteraction;
+	}
+
+
+	public void setDrugInteraction(String drugInteraction) {
+		this.drugInteraction = drugInteraction;
+	}
+
+
+	public String getStorage() {
+		return storage;
+	}
+
+
+	public void setStorage(String storage) {
+		this.storage = storage;
+	}
+
+
+	public String getManufacturer() {
+		return manufacturer;
+	}
+
+
+	public void setManufacturer(String manufacturer) {
+		this.manufacturer = manufacturer;
+	}
+
+
+	public String getPregnancyLactation() {
+		return pregnancyLactation;
+	}
+
+
+	public void setPregnancyLactation(String pregnancyLactation) {
+		this.pregnancyLactation = pregnancyLactation;
+	}
+
+
+	public Integer getDrugprice() {
+		return drugprice;
+	}
+
+
+	public void setDrugprice(Integer drugprice) {
+		this.drugprice = drugprice;
 	}    
-   
+    
+    
+    
+       
+    
+    
+
+    
 }

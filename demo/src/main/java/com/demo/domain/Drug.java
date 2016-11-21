@@ -26,29 +26,47 @@ public class Drug {
 	
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;  
-    
+    private Integer id;      
     
     @NotNull
     @NotBlank
     @Column(name = "drugName" ,nullable = false)
     private String drugName; 
 
-    @Column(name = "overview",columnDefinition="LONGTEXT")
-    private String overView;
+    @Column(name = "composition",columnDefinition="LONGTEXT")
+    private String composition;
     
-    @Column(name = "side_effects",columnDefinition="LONGTEXT")
-    private String sideEffects;
+    @Column(name = "indication",columnDefinition="LONGTEXT")
+    private String indication;
     
-    @Column(name = "dosages",columnDefinition="LONGTEXT")
-    private String dosages;
+    @Column(name = "dosagesAdministration",columnDefinition="LONGTEXT")
+    private String dosagesAdministration;
        
     
-    @Column(name = "interaction",columnDefinition="LONGTEXT")
-    private String interaction;
+    @Column(name = "contraindication",columnDefinition="LONGTEXT")
+    private String contraindication;
     
-    @Column(name = "professionals",columnDefinition="LONGTEXT")
-    private String professionals;      
+    @Column(name = "sideEffect",columnDefinition="LONGTEXT")
+    private String sideEffect;      
+    
+    
+    @Column(name = "specialWarningPrecautions",columnDefinition="LONGTEXT")
+    private String specialWarningPrecautions;    
+    
+    @Column(name = "drugInteraction",columnDefinition="LONGTEXT")
+    private String drugInteraction;    
+    
+    
+    @Column(name = "storage",columnDefinition="LONGTEXT")
+    private String storage;    
+    
+ 
+    
+    @Column(name = "dosageFormStrengthPackSize",columnDefinition="LONGTEXT")
+    private String pregnancyLactation;    
+    
+    @Column(name = "drugPrice")
+    private Integer drugprice;    
        
     
     @Temporal(TemporalType.DATE)
@@ -62,45 +80,28 @@ public class Drug {
     @OneToOne
     @NotNull
     @JoinColumn(name="idgeneric")
-    private DrugGeneric drugGeneric;
-    	
+    private DrugGeneric drugGeneric;    	
+    
+    
     @OneToOne
     @NotNull
-    @JoinColumn(name="idbrand")
-    private DrugBrand drugBrand;    
+    @JoinColumn(name="idManufacturer")
+    private DrugManufacturer drugManufacturer;    	
+     
     
     @Temporal(TemporalType.DATE)
-    private Date lastUpdatedDate;     
+    private Date lastUpdatedDate;    
     
     
 
-	public Date getLastUpdatedDate() {
-		return lastUpdatedDate;
+
+	public DrugManufacturer getDrugManufacturer() {
+		return drugManufacturer;
 	}
 
 
-	public void setLastUpdatedDate(Date lastUpdatedDate) {
-		this.lastUpdatedDate = lastUpdatedDate;
-	}
-
-
-	public DrugGeneric getDrugGeneric() {
-		return drugGeneric;
-	}
-
-
-	public void setDrugGeneric(DrugGeneric drugGeneric) {
-		this.drugGeneric = drugGeneric;
-	}
-
-
-	public DrugBrand getDrugBrand() {
-		return drugBrand;
-	}
-
-
-	public void setDrugBrand(DrugBrand drugBrand) {
-		this.drugBrand = drugBrand;
+	public void setDrugManufacturer(DrugManufacturer drugManufacturer) {
+		this.drugManufacturer = drugManufacturer;
 	}
 
 
@@ -111,15 +112,6 @@ public class Drug {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}	
-
-	public Boolean getDiscontinued() {
-		return discontinued;
-	}
-
-
-	public void setDiscontinued(Boolean discontinued) {
-		this.discontinued = discontinued;
 	}
 
 
@@ -133,53 +125,104 @@ public class Drug {
 	}
 
 
-	public String getOverView() {
-		return overView;
+	public String getComposition() {
+		return composition;
 	}
 
 
-	public void setOverView(String overView) {
-		this.overView = overView;
+	public void setComposition(String composition) {
+		this.composition = composition;
 	}
 
 
-	public String getSideEffects() {
-		return sideEffects;
+	public String getIndication() {
+		return indication;
 	}
 
 
-	public void setSideEffects(String sideEffects) {
-		this.sideEffects = sideEffects;
+	public void setIndication(String indication) {
+		this.indication = indication;
 	}
 
 
-	public String getDosages() {
-		return dosages;
+	public String getDosagesAdministration() {
+		return dosagesAdministration;
 	}
 
 
-	public void setDosages(String dosages) {
-		this.dosages = dosages;
+	public void setDosagesAdministration(String dosagesAdministration) {
+		this.dosagesAdministration = dosagesAdministration;
 	}
 
 
-	public String getInteraction() {
-		return interaction;
+	public String getContraindication() {
+		return contraindication;
 	}
 
 
-	public void setInteraction(String interaction) {
-		this.interaction = interaction;
+	public void setContraindication(String contraindication) {
+		this.contraindication = contraindication;
 	}
 
 
-	public String getProfessionals() {
-		return professionals;
+	public String getSideEffect() {
+		return sideEffect;
 	}
 
 
-	public void setProfessionals(String professionals) {
-		this.professionals = professionals;
+	public void setSideEffect(String sideEffect) {
+		this.sideEffect = sideEffect;
+	}
+
+
+	public String getSpecialWarningPrecautions() {
+		return specialWarningPrecautions;
+	}
+
+
+	public void setSpecialWarningPrecautions(String specialWarningPrecautions) {
+		this.specialWarningPrecautions = specialWarningPrecautions;
+	}
+
+
+	public String getDrugInteraction() {
+		return drugInteraction;
+	}
+
+
+	public void setDrugInteraction(String drugInteraction) {
+		this.drugInteraction = drugInteraction;
+	}
+
+
+	public String getStorage() {
+		return storage;
+	}
+
+
+	public void setStorage(String storage) {
+		this.storage = storage;
+	}
+
+
+
+	public String getPregnancyLactation() {
+		return pregnancyLactation;
+	}
+
+
+	public void setPregnancyLactation(String pregnancyLactation) {
+		this.pregnancyLactation = pregnancyLactation;
+	}
+
+
+	public Integer getDrugprice() {
+		return drugprice;
+	}
+
+
+	public void setDrugprice(Integer drugprice) {
+		this.drugprice = drugprice;
 	}
 
 
@@ -191,10 +234,35 @@ public class Drug {
 	public void setInsertDate(Date insertDate) {
 		this.insertDate = insertDate;
 	}
-	
-	
-	
-	
-    
+
+
+	public Boolean getDiscontinued() {
+		return discontinued;
+	}
+
+
+	public void setDiscontinued(Boolean discontinued) {
+		this.discontinued = discontinued;
+	}
+
+
+	public DrugGeneric getDrugGeneric() {
+		return drugGeneric;
+	}
+
+
+	public void setDrugGeneric(DrugGeneric drugGeneric) {
+		this.drugGeneric = drugGeneric;
+	}
+
+
+	public Date getLastUpdatedDate() {
+		return lastUpdatedDate;
+	}
+
+
+	public void setLastUpdatedDate(Date lastUpdatedDate) {
+		this.lastUpdatedDate = lastUpdatedDate;
+	}     
    
 }

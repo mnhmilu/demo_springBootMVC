@@ -45,8 +45,8 @@
 										class="form-control">
 
 										<option th:each="generic : ${generics}"
-											th:value="${generic.idGeneric}" th:text="${generic.genericName}">Select
-											Generic</option>
+											th:value="${generic.idGeneric}"
+											th:text="${generic.genericName}">Select Generic</option>
 									</select>
 									<p th:if="${#fields.hasErrors('genericId')}"
 										th:errors="*{genericId}">Invalid Generic</p>
@@ -56,71 +56,132 @@
 						</div>
 
 						<div class="form-group">
-							<label class="col-sm-2 control-label">Brand</label>
+							<label class="col-sm-2 control-label">Manufacturer</label>
 
 
 							<div class="col-sm-10">
 								<div th:if="${brands != null and not #lists.isEmpty(brands)}">
-									<select th:field="*{brandId}" class="form-control">
-										<option th:each="brand : ${brands}" th:value="${{brand.idBrand}}"
-											th:text="${brand.brandName}">Select Brand</option>
+									<select th:field="*{manufacturerId}" class="form-control">
+										<option th:each="brand : ${brands}"
+											th:value="${{brand.manufacturerId}}"
+											th:text="${brand.manufacturer}">Select Manufacturer</option>
 									</select>
 								</div>
 
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-2 control-label">Overview:</label>
+							<label class="col-sm-2 control-label">Composition:</label>
 							<div class="col-sm-10">
 								<textarea class="form-control" rows="8"
 									style="margin-top: 10px;"
-									placeholder="Write about drug overview here......."
-									name="overView" th:inline="text" th:field="*{overView}">
+									placeholder="Write about composition  here......."
+									name="composition" th:inline="text" th:field="*{composition}">
                             </textarea>
 							</div>
 						</div>
 
 						<div class="form-group">
-							<label class="col-sm-2 control-label">Side effects:</label>
+							<label class="col-sm-2 control-label">Indication:</label>
 							<div class="col-sm-10">
 								<textarea class="form-control" rows="8"
 									style="margin-top: 10px;"
-									placeholder="Write about drug overview here......."
-									name="sideEffects" th:inline="text" th:field="*{sideEffects}">
+									placeholder="Write about drug indication here......."
+									name="indication" th:inline="text" th:field="*{indication}">
                             </textarea>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-2 control-label">Dosages:</label>
+							<label class="col-sm-2 control-label">Dosages and
+								Administration:</label>
 							<div class="col-sm-10">
 								<textarea class="form-control" rows="8"
 									style="margin-top: 10px;"
-									placeholder="Write about drug overview here......."
-									name="dosages" th:inline="text" th:field="*{dosages}">
+									placeholder="Write about drug dosages and administration here......."
+									name="dosagesAdministration" th:inline="text"
+									th:field="*{dosagesAdministration}">
                             </textarea>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-2 control-label">Interaction:</label>
+							<label class="col-sm-2 control-label">Contra indication:</label>
 							<div class="col-sm-10">
 								<textarea class="form-control" rows="8"
 									style="margin-top: 10px;"
-									placeholder="Write about drug overview here......."
-									name="interaction" th:inline="text" th:field="*{interaction}">
+									placeholder="Write about drug contra indication here......."
+									name="contraindication" th:inline="text"
+									th:field="*{contraindication}">
                             </textarea>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-2 control-label">Professionals:</label>
+							<label class="col-sm-2 control-label">Side Effects:</label>
 							<div class="col-sm-10">
 								<textarea class="form-control" rows="8"
 									style="margin-top: 10px;"
-									placeholder="Write about drug overview here......."
-									name="professionals" th:inline="text"
-									th:field="*{professionals}">
+									placeholder="Write about drug sideEffects here......."
+									name="sideEffect" th:inline="text" th:field="*{sideEffect}">
                             </textarea>
 							</div>
 						</div>
+
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Special Warning and
+								Precautions:</label>
+							<div class="col-sm-10">
+								<textarea class="form-control" rows="8"
+									style="margin-top: 10px;"
+									placeholder="Write about drug special warning and precautions here......."
+									name="specialWarningPrecautions" th:inline="text"
+									th:field="*{specialWarningPrecautions}">
+                            </textarea>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Drug Interaction:</label>
+							<div class="col-sm-10">
+								<textarea class="form-control" rows="8"
+									style="margin-top: 10px;"
+									placeholder="Write about drug drugInteraction here......."
+									name="drugInteraction" th:inline="text"
+									th:field="*{drugInteraction}">
+                            </textarea>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Storage:</label>
+							<div class="col-sm-10">
+								<textarea class="form-control" rows="8"
+									style="margin-top: 10px;"
+									placeholder="Write about drug storage here......."
+									name="storage" th:inline="text" th:field="*{storage}">
+                            </textarea>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Pregnancy and
+								Lactation:</label>
+							<div class="col-sm-10">
+								<textarea class="form-control" rows="8"
+									style="margin-top: 10px;"
+									placeholder="Write about drug pregnancy and lactation here......."
+									name="pregnancyLactation" th:inline="text"
+									th:field="*{pregnancyLactation}">
+                            </textarea>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Drug price:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" th:field="*{drugprice}" />
+							</div>
+						</div>
+
+
 						<div class="form-group">
 							<div class="col-sm-10">
 								<button type="submit" class="btn btn-primary">Submit</button>

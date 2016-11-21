@@ -13,20 +13,23 @@ public class DrugDataToDrugForm implements Converter<Drug,DrugForm> {
 	public DrugForm	 convert(Drug data) {
 	
 		DrugForm frm = new DrugForm();
-		frm.setId(data.getId());		
-		frm.setDosages(data.getDosages());
-		frm.setDrugName(data.getDrugName());       
-        frm.setInteraction(data.getInteraction());
-        frm.setOverView(data.getOverView());
-        frm.setProfessionals(data.getProfessionals());
-        frm.setSideEffects(data.getSideEffects());
-        
-        frm.setBrandId(data.getDrugBrand().getIdBrand());
-        frm.setBrandName(data.getDrugBrand().getBrandName());
-        
+		frm.setId(data.getId());	
+		frm.setDrugName(data.getDrugName());    
         frm.setGenericId(data.getDrugGeneric().getIdGeneric());
         frm.setGenericName(data.getDrugGeneric().getGenericName());  
-        
+        frm.setManufacturerId(data.getDrugManufacturer().getManufacturerId());
+        frm.setManufacturer(data.getDrugManufacturer().getManufacturer());
+        frm.setComposition(data.getComposition());
+        frm.setContraindication(data.getContraindication());
+        frm.setDosagesAdministration(data.getDosagesAdministration());
+        frm.setDrugInteraction(data.getDrugInteraction());
+        frm.setDrugprice(data.getDrugprice());
+        frm.setIndication(data.getIndication());
+        frm.setPregnancyLactation(data.getPregnancyLactation());
+        frm.setSideEffect(data.getSideEffect());
+        frm.setSpecialWarningPrecautions(data.getSpecialWarningPrecautions());
+        frm.setStorage(data.getStorage());
+        frm.setSideEffect(data.getSideEffect());        
         
 		return frm;
 	}

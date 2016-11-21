@@ -1,8 +1,8 @@
 package com.demo.commands;
 
 
-import com.demo.domain.DrugBrand;
 import com.demo.domain.DrugGeneric;
+import com.demo.domain.DrugManufacturer;
 
 
 
@@ -13,16 +13,15 @@ public class DrugSearchForm {
     private String drugName; 
     
     
-    private DrugBrand drugBrand;
+    private DrugManufacturer drugBrand;
     
     private DrugGeneric drugGeneric;
     
     private Integer genericId;  
     
     
-    private Integer brandId;   
-    
-    
+    private Integer manufacturerId;   
+        
 
 	public Integer getGenericId() {
 		return genericId;
@@ -32,13 +31,6 @@ public class DrugSearchForm {
 		this.genericId = genericId;
 	}
 
-	public Integer getBrandId() {
-		return brandId;
-	}
-
-	public void setBrandId(Integer brandId) {
-		this.brandId = brandId;
-	}
 
 	public String getDrugName() {
 		return drugName;
@@ -48,12 +40,21 @@ public class DrugSearchForm {
 		this.drugName = drugName;
 	}
 
-	public DrugBrand getDrugBrand() {
+	public DrugManufacturer getDrugBrand() {
 		return drugBrand;
 	}
 
-	public void setDrugBrand(DrugBrand drugBrand) {
+	public void setDrugBrand(DrugManufacturer drugBrand) {
 		this.drugBrand = drugBrand;
+	}	
+	
+
+	public Integer getManufacturerId() {
+		return manufacturerId;
+	}
+
+	public void setManufacturerId(Integer manufacturerId) {
+		this.manufacturerId = manufacturerId;
 	}
 
 	public DrugGeneric getDrugGeneric() {

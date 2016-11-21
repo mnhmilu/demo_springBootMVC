@@ -20,10 +20,10 @@ import com.demo.commands.DrugSearchForm;
 import com.demo.converter.DrugDataToDrugForm;
 import com.demo.converter.DrugFormToDrugData;
 import com.demo.domain.Drug;
-import com.demo.domain.DrugBrand;
 import com.demo.domain.DrugGeneric;
-import com.demo.repositories.DrugBrandRepository;
+import com.demo.domain.DrugManufacturer;
 import com.demo.repositories.DrugGenericRepository;
+import com.demo.repositories.DrugManufacturerRepository;
 import com.demo.repositories.DrugRepository;
 import com.demo.services.DrugService;
 
@@ -35,18 +35,18 @@ public class DrugController {
 	private DrugService drugService;
 	private DrugRepository drugDaoService;
 	private DrugFormToDrugData drugFormToDrugData;
-	private DrugBrandRepository drugBrandDaoServiec;
+	private DrugManufacturerRepository drugManufacturerDaoServie;
 	private DrugGenericRepository drugGenericDaoService;
 	private DrugDataToDrugForm drugDataToDrugForm;
 
 	@Autowired
 	public void setservices(DrugRepository drugDaoService, DrugFormToDrugData drugFormToDrugData,
-			DrugBrandRepository drugBrandDaoServiec, DrugGenericRepository drugGenericDaoService,
+			DrugManufacturerRepository drugManufacturerDaoServiec, DrugGenericRepository drugGenericDaoService,
 			DrugDataToDrugForm drugDataToDrugForm) {
 
 		this.drugDaoService = drugDaoService;
 		this.drugFormToDrugData = drugFormToDrugData;
-		this.drugBrandDaoServiec = drugBrandDaoServiec;
+		this.drugManufacturerDaoServie = drugManufacturerDaoServiec;
 		this.drugGenericDaoService = drugGenericDaoService;
 		this.drugDataToDrugForm = drugDataToDrugForm;
 
@@ -57,7 +57,7 @@ public class DrugController {
 
 		model.addAttribute("drug", new DrugSearchForm());
 		model.addAttribute("drugs", drugDaoService.findTop50ByOrderByInsertDateDesc());
-		model.addAttribute("brands", drugBrandDaoServiec.findAll());
+		model.addAttribute("brands", drugManufacturerDaoServie.findAll());
 		model.addAttribute("generics", drugGenericDaoService.findAll());
 
 		return "drugs/drugs";
@@ -67,13 +67,13 @@ public class DrugController {
 	@RequestMapping(value = "/drugSearch", method = RequestMethod.POST)
 	public String drugSearch(DrugSearchForm form, BindingResult bindingResult, Model model) {
 
-		if (form.getDrugName() == null && form.getBrandId() == 0 && form.getGenericId() == 0) {
+		if (form.getDrugName() == null && form.getManufacturerId() == 0 && form.getGenericId() == 0) {
 			return "redirect:/drugList";
 
 		}
 
 		DrugGeneric generic = null;
-		DrugBrand brand2 = null;
+		DrugManufacturer brand2 = null;
 		
 		Integer brandId =null;
 		Integer genericId= null;
@@ -86,11 +86,11 @@ public class DrugController {
 			model.addAttribute("drugGeneric", generic);
 
 		}
-		if(form.getBrandId()!=0)
+		if(form.getManufacturerId()!=0)
 		{
-			brand2 = new DrugBrand();
-			brand2.setIdBrand(form.getBrandId());
-			brandId = form.getBrandId();
+			brand2 = new DrugManufacturer();
+			brand2.setManufacturerId(form.getManufacturerId());
+			brandId = form.getManufacturerId();
 			model.addAttribute("drugBrand", brand2);
 			
 		}
@@ -98,12 +98,12 @@ public class DrugController {
 		
 
 		model.addAttribute("drug", form);
-		model.addAttribute("brands", drugBrandDaoServiec.findAll());
+		model.addAttribute("brands", drugManufacturerDaoServie.findAll());
 		model.addAttribute("generics", drugGenericDaoService.findAll());
 
 		
         List<Drug> drugsSearchResult =drugDaoService
-				.findDrugByDrugBrandOrByDrugGenericOrDrugName(brandId,genericId, form.getDrugName());
+				.findDrugByDrugManufacturerOrByDrugGenericOrDrugName(brandId,genericId, form.getDrugName());
 
 		
 		model.addAttribute("drugs",drugsSearchResult );
@@ -114,8 +114,8 @@ public class DrugController {
 	public String newDrug(Model model) {
 		DrugForm form = new DrugForm();
 		model.addAttribute("generics", drugGenericDaoService.findAll());
-		model.addAttribute("brands", drugBrandDaoServiec.findAll());
-		model.addAttribute("drugBrand", new DrugBrand());
+		model.addAttribute("brands", drugManufacturerDaoServie.findAll());
+		model.addAttribute("drugBrand", new DrugManufacturer());
 		model.addAttribute("drugGeneric", new DrugGeneric());
 		model.addAttribute("drug", form);
 		return "drugs/drugForm";
@@ -127,7 +127,7 @@ public class DrugController {
 		if (bindingResult.hasErrors()) {
 
 			model.addAttribute("generics", drugGenericDaoService.findAll());
-			model.addAttribute("brands", drugBrandDaoServiec.findAll());
+			model.addAttribute("brands", drugManufacturerDaoServie.findAll());
 			model.addAttribute("drug", form);
 
 			return "drugs/drugForm";
@@ -156,7 +156,7 @@ public class DrugController {
 
 		DrugForm form = drugDataToDrugForm.convert(drugDaoService.findById(id));
 		model.addAttribute("generics", drugGenericDaoService.findAll());
-		model.addAttribute("brands", drugBrandDaoServiec.findAll());
+		model.addAttribute("brands", drugManufacturerDaoServie.findAll());
 
 		model.addAttribute("drug", form);
 
@@ -165,9 +165,9 @@ public class DrugController {
 		generic.setIdGeneric(form.getGenericId());
 		model.addAttribute("drugGeneric", generic);
 
-		DrugBrand brand2 = new DrugBrand();
-		brand2.setBrandName(form.getBrandName());
-		brand2.setIdBrand(form.getBrandId());
+		DrugManufacturer brand2 = new DrugManufacturer();
+		brand2.setManufacturer(form.getManufacturer());
+		brand2.setManufacturerId(form.getManufacturerId());
 		model.addAttribute("drugBrand", brand2);
 
 		return "drugs/drugForm";

@@ -6,12 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
 import com.demo.domain.Drug;
-import com.demo.domain.DrugBrand;
-import com.demo.domain.DrugGeneric;
-import com.demo.domain.PatientProfile;
 
 
 
@@ -24,8 +20,8 @@ public interface DrugRepository extends CrudRepository<Drug, Integer>{
 	
 	//@Query("select u.userName from User u inner join u.area ar where ar.idArea = :idArea")
 	
-	@Query("select d from Drug d inner join d.drugBrand br inner join d.drugGeneric dg where br.idBrand=:idBrand or dg.idGeneric=:idGeneric or lower(d.drugName) LIKE lower (:drugName)")
-	List<Drug> findDrugByDrugBrandOrByDrugGenericOrDrugName(@Param("idBrand") Integer idBrand,@Param("idGeneric") Integer idGeneric,@Param("drugName") String drugName);	
+	@Query("select d from Drug d inner join d.drugManufacturer br inner join d.drugGeneric dg where br.manufacturerId=:manufacturerId or dg.idGeneric=:idGeneric or lower(d.drugName) LIKE lower (:drugName)")
+	List<Drug> findDrugByDrugManufacturerOrByDrugGenericOrDrugName(@Param("manufacturerId") Integer manufacturerId,@Param("idGeneric") Integer idGeneric,@Param("drugName") String drugName);	
 	
 	
 }

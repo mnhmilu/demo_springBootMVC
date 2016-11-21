@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 
 import com.demo.commands.DrugForm;
 import com.demo.domain.Drug;
-import com.demo.domain.DrugBrand;
 import com.demo.domain.DrugGeneric;
+import com.demo.domain.DrugManufacturer;
 
 @Component
 public class DrugFormToDrugData implements Converter<DrugForm,Drug> {
@@ -18,17 +18,23 @@ public class DrugFormToDrugData implements Converter<DrugForm,Drug> {
 	
 		Drug entity = new Drug();
 		entity.setId(formData.getId());		
-		entity.setDosages(formData.getDosages());
-		entity.setDrugName(formData.getDrugName());       
-        entity.setInteraction(formData.getInteraction());
-        entity.setOverView(formData.getOverView());
-        entity.setProfessionals(formData.getProfessionals());
-        entity.setSideEffects(formData.getSideEffects());
+		
+		entity.setDrugName(formData.getDrugName());
+		entity.setComposition(formData.getComposition());
+		entity.setContraindication(formData.getContraindication());
+		entity.setDosagesAdministration(formData.getDosagesAdministration());
+		entity.setDrugInteraction(formData.getDrugInteraction());
+		entity.setDrugprice(formData.getDrugprice());
+		entity.setIndication(formData.getIndication());
+		entity.setPregnancyLactation(formData.getPregnancyLactation());
+		entity.setSideEffect(formData.getSideEffect());
+		entity.setSpecialWarningPrecautions(formData.getSpecialWarningPrecautions());
+		entity.setStorage(formData.getStorage());		
         entity.setInsertDate(new Date());		
         
-        DrugBrand brand = new DrugBrand();
-        brand.setIdBrand(formData.getBrandId());
-        entity.setDrugBrand(brand);
+        DrugManufacturer manufacturer = new DrugManufacturer();
+        manufacturer.setManufacturerId(formData.getManufacturerId());
+        entity.setDrugManufacturer(manufacturer);
         
         DrugGeneric generic = new DrugGeneric();
         generic.setIdGeneric(formData.getGenericId());

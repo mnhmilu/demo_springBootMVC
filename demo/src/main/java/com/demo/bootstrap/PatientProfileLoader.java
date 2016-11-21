@@ -9,119 +9,76 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import com.demo.domain.Drug;
-import com.demo.domain.DrugBrand;
 import com.demo.domain.DrugGeneric;
-import com.demo.repositories.DrugBrandRepository;
+import com.demo.domain.DrugManufacturer;
 import com.demo.repositories.DrugGenericRepository;
+import com.demo.repositories.DrugManufacturerRepository;
 import com.demo.repositories.DrugRepository;
 
 @Component
 public class PatientProfileLoader implements ApplicationListener<ContextRefreshedEvent> {
-    
-    private DrugBrandRepository drugBrandDaoServiec;
-    
-    private DrugGenericRepository drugGenericRepository;
-    
-    private DrugRepository drugRepository;
 
-    private Logger log = Logger.getLogger(PatientProfileLoader.class);
+	private DrugManufacturerRepository drugManufacturerDaoService;
 
-    @Autowired
-    public void setProductRepository(DrugRepository drugRepository,DrugBrandRepository drugBrandDaoServiec,DrugGenericRepository drugGenericRepository) {
-       
-        this.drugRepository =drugRepository;
-        this.drugBrandDaoServiec=drugBrandDaoServiec;
-        this.drugGenericRepository=drugGenericRepository;
-    }
+	private DrugGenericRepository drugGenericRepository;
 
-    @Override
-    public void onApplicationEvent(ContextRefreshedEvent event) {
+	private DrugRepository drugRepository;
 
-    	/*
-    	PatientProfile patientOne = new PatientProfile();
-        patientOne.setName("Nahid");
-        patientOne.setAge(35);
-        patientOne.setMobile("01733400896");
-        
-        patientRepository.save(patientOne);
-        
-        PatientSerials oneSerial = new PatientSerials();
-        oneSerial.setLastInsartedDate(new Date());        
-        oneSerial.setRemarks("test");
-        oneSerial.setSerialNumber(1);
-        oneSerial.setPatientProfile(patientOne);
-        oneSerial.setSerialDate(new Date());
-        
-        patientSerialRepository.save(oneSerial);
-       
-      
-        
+	private Logger log = Logger.getLogger(PatientProfileLoader.class);
 
-        log.info("Saved patient - id: " + patientOne.getId());
+	@Autowired
+	public void setProductRepository(DrugRepository drugRepository,
+			DrugManufacturerRepository drugManufacturerDaoService, DrugGenericRepository drugGenericRepository) {
 
-    	PatientProfile patientTwo = new PatientProfile();
-        patientTwo.setName("Karim");
-        patientTwo.setAge(3);
-        patientTwo.setMobile("01733407896");
-        
-        patientRepository.save(patientTwo);
-        
-        
-        PatientSerials twoSerial = new PatientSerials();
-        twoSerial.setLastInsartedDate(new Date());
-        twoSerial.setRemarks("test2");
-        twoSerial.setPatientProfile(patientTwo);  
-        twoSerial.setSerialNumber(2);
-        twoSerial.setSerialDate(new Date());
-        patientSerialRepository.save(twoSerial);  
+		this.drugRepository = drugRepository;
+		this.drugManufacturerDaoService = drugManufacturerDaoService;
+		this.drugGenericRepository = drugGenericRepository;
+	}
 
+	@Override
+	public void onApplicationEvent(ContextRefreshedEvent event) {
 
-        log.info("Saved patient - id:" + patientTwo.getId());
-        
-        */
-        
-        
+		DrugManufacturer manufacturer = new DrugManufacturer();
+		manufacturer.setManufacturer("ESKAYEF");
+		drugManufacturerDaoService.save(manufacturer);
 
-        
-        DrugBrand brand = new DrugBrand();
-        brand.setBrandName("Brand A");
-        drugBrandDaoServiec.save(brand);
-        
-        DrugBrand brand2 = new DrugBrand();
-        brand2.setBrandName("Brand B");
-        drugBrandDaoServiec.save(brand2);
-        
-        DrugGeneric generic = new DrugGeneric();
-        generic.setGenericName("Generic X");
-        drugGenericRepository.save(generic);
-            
-        DrugGeneric generic2= new DrugGeneric();
-        generic2.setGenericName("Generic Y");
-        drugGenericRepository.save(generic2);
-                
-        
-        
-        
-      Drug newDrug = new Drug();
-      
-      newDrug.setDrugBrand(brand);
-      
-      newDrug.setDrugGeneric(generic);
-      newDrug.setDrugName("NAPA");
-      newDrug.setInsertDate(new Date());    
-      newDrug.setDosages("Sample Dosages");
-      newDrug.setInteraction("Sample Interaction");
-      newDrug.setOverView("Sample Overview");
-      newDrug.setProfessionals("Sample Professionals");
-      newDrug.setInteraction("Sample Interactions");
-      newDrug.setSideEffects("Sample Sideeffects");
-      
-      drugRepository.save(newDrug);      
-      
-      
-        
-        
-        
-        
-    }
+		DrugManufacturer manufacturer2 = new DrugManufacturer();
+		manufacturer2.setManufacturer("Sanofe");
+		drugManufacturerDaoService.save(manufacturer2);
+
+		DrugGeneric generic = new DrugGeneric();
+		generic.setGenericName("Generic X");
+		drugGenericRepository.save(generic);
+
+		DrugGeneric generic2 = new DrugGeneric();
+		generic2.setGenericName("Generic Y");
+		drugGenericRepository.save(generic2);
+
+		Drug newDrug = new Drug();
+
+		newDrug.setDrugManufacturer(manufacturer);
+		newDrug.setDrugGeneric(generic);
+		newDrug.setDrugName("Alben");
+		newDrug.setIndication("Alben is indicated in single and mixed infestations of:"
+				+ "Enterobius vermicularis: Pinworm or threadworm" + "Trichuris trichiura: Whipworm"
+				+ "Ascaris lumbricoides: Large roundworm" + "Ancylostoma duodenale: Hookworm"
+				+ "Necator americanus: Hookworm" + "Taenia spp." + "Strongyloides stercoralis: Tapeworm");
+		newDrug.setContraindication(
+				"Because albendazole was found to be embryotoxic and teratogenic in rat and rabbit, its use is contraindicated in pregnant "
+						+ "women or those likely to be pregnant. For women of childbearing age (15-45 years), "
+						+ "Alben should be administered within 7 days of the start of normal menstruation");
+
+		newDrug.setDosagesAdministration(
+				"Adults of children over 2 years of age: 400 mg (2 Alben tablets or 1 Alben-DS tablet or 10 ml suspension) as a single dose in cases of Enterobius vermicularis, "
+						+ "Trichuris trichiura, Ascaris lumbricoides, Ancylostoma duodenale and Necator americanus. In cases of strongyloidiasis or taeniasis, 400 mg (1 Alben-DS tablet or 10 ml suspension) as a single dose should be given for 3 consecutive days."
+						+ "If the patient is not cured on follow-up after three weeks, a second course of treatment is indicated. Alben tablets may be chewed or swallowed but Alben – DS tablet must be chewed. Both the preparations may be crushed and mixed with food."
+						+ " No specific procedures such as fasting or purging are required."
+						+ "Children of 1-2 years: Recommended dose is a single dose of 200mg (1 Alben tablet or 1/2 Alben-DS tablet or 5 ml suspension)."
+						+ "Children under 1 years: Not recommended");
+
+		newDrug.setInsertDate(new Date());
+
+		drugRepository.save(newDrug);
+
+	}
 }
