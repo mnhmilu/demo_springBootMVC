@@ -7,12 +7,12 @@ import com.demo.domain.DrugManufacturer;
 
 
 public class DrugSearchForm {		 
-    
- 
+     
 
     private String drugName; 
-    
-    
+        
+    private String genericName;
+        
     private DrugManufacturer drugBrand;
     
     private DrugGeneric drugGeneric;
@@ -20,8 +20,16 @@ public class DrugSearchForm {
     private Integer genericId;  
     
     
-    private Integer manufacturerId;   
+    private Integer manufacturerId;      
+       
         
+	public String getGenericName() {
+		return genericName;
+	}
+
+	public void setGenericName(String genericName) {
+		this.genericName = genericName;
+	}
 
 	public Integer getGenericId() {
 		return genericId;

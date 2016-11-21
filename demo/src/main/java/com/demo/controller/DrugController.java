@@ -58,7 +58,7 @@ public class DrugController {
 		model.addAttribute("drug", new DrugSearchForm());
 		model.addAttribute("drugs", drugDaoService.findTop50ByOrderByInsertDateDesc());
 		model.addAttribute("brands", drugManufacturerDaoServie.findAll());
-		model.addAttribute("generics", drugGenericDaoService.findAll());
+		//model.addAttribute("generics", drugGenericDaoService.findAll());
 
 		return "drugs/drugs";
 
@@ -67,25 +67,19 @@ public class DrugController {
 	@RequestMapping(value = "/drugSearch", method = RequestMethod.POST)
 	public String drugSearch(DrugSearchForm form, BindingResult bindingResult, Model model) {
 
-		if (form.getDrugName() == null && form.getManufacturerId() == 0 && form.getGenericId() == 0) {
+		if (form.getDrugName() == null && form.getManufacturerId() == 0 && form.getGenericName()== null) {
 			return "redirect:/drugList";
 
 		}
 
-		DrugGeneric generic = null;
+		//DrugGeneric generic = null;
 		DrugManufacturer brand2 = null;
 		
 		Integer brandId =null;
-		Integer genericId= null;
+		//Integer genericId= null;
 		
 		
-		if (form.getGenericId() != 0) {
-			generic = new DrugGeneric();
-			generic.setIdGeneric(form.getGenericId());
-			genericId = form.getGenericId();
-			model.addAttribute("drugGeneric", generic);
-
-		}
+		
 		if(form.getManufacturerId()!=0)
 		{
 			brand2 = new DrugManufacturer();
@@ -99,11 +93,11 @@ public class DrugController {
 
 		model.addAttribute("drug", form);
 		model.addAttribute("brands", drugManufacturerDaoServie.findAll());
-		model.addAttribute("generics", drugGenericDaoService.findAll());
+		//model.addAttribute("generics", drugGenericDaoService.findAll());
 
 		
         List<Drug> drugsSearchResult =drugDaoService
-				.findDrugByDrugManufacturerOrByDrugGenericOrDrugName(brandId,genericId, form.getDrugName());
+				.findDrugByDrugManufacturerOrByDrugGenericOrDrugName(brandId,form.getGenericName(), form.getDrugName());
 
 		
 		model.addAttribute("drugs",drugsSearchResult );
