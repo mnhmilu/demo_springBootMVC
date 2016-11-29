@@ -70,5 +70,20 @@ public class IndexController {
 		model.addAttribute("drug", form);
 		return "drugs/drugDetailsGeneral";
 	}
+	
+	@RequestMapping("/index/drugByGeneric/{key}")
+	public String showDrugByGeneric(@PathVariable String key, Model model) {
+
+		slf4jLogger.info("DrugController :: showDrugByGeneric");
+		List<Drug> drugsSearchResult =drugDaoService.findDrugByDrugGeneric(key);
+		model.addAttribute("drugs", drugsSearchResult);
+		return "drugs/drugsGenericSearch";
+	}
+	
+	
+	
+	
+	
+	
 
 }

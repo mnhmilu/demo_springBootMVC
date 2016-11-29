@@ -21,6 +21,13 @@ public interface DrugRepository extends CrudRepository<Drug, Integer>{
 	List<Drug> findDrugByDrugManufacturerOrByDrugGenericOrDrugName(@Param("manufacturerId") Integer manufacturerId,@Param("genericName") String genericName,@Param("drugName") String drugName);	
 	
 	
+	@Query("select d from Drug d inner join d.drugManufacturer br inner join d.drugGeneric dg where lower(dg.genericName) like lower( :genericName||'%') ")
+	List<Drug> findDrugByDrugGeneric(@Param("genericName") String genericName);	
+
+	
+	
+	
+	
 }
 	
 	
