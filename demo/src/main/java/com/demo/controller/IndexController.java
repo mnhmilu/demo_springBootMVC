@@ -64,7 +64,7 @@ public class IndexController {
 	@RequestMapping("/index/drugDeatails/{id}")
 	public String showDrug(@PathVariable Integer id, Model model) {
 
-		slf4jLogger.info("DrugController :: showDrug");
+		slf4jLogger.info("IndexController :: showDrug");
 
 		DrugForm form = drugDataToDrugForm.convert(drugDaoService.findById(id));
 		model.addAttribute("drug", form);
@@ -74,8 +74,17 @@ public class IndexController {
 	@RequestMapping("/index/drugByGeneric/{key}")
 	public String showDrugByGeneric(@PathVariable String key, Model model) {
 
-		slf4jLogger.info("DrugController :: showDrugByGeneric");
+		slf4jLogger.info("IndexController :: showDrugByGeneric");
 		List<Drug> drugsSearchResult =drugDaoService.findDrugByDrugGeneric(key);
+		model.addAttribute("drugs", drugsSearchResult);
+		return "drugs/drugsGenericSearch";
+	}
+	
+	@RequestMapping("/index/drugByBrand/{key}")
+	public String showDrugByBrand(@PathVariable String key, Model model) {
+
+		slf4jLogger.info("IndexController :: showDrugByBrand");
+		List<Drug> drugsSearchResult =drugDaoService.findDrugByDrugBrand(key);
 		model.addAttribute("drugs", drugsSearchResult);
 		return "drugs/drugsGenericSearch";
 	}
