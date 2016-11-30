@@ -77,9 +77,11 @@
 					<table class="table table-striped">
 						<tr>
 							<th>Id</th>
-							<th>Drug Name</th>
+							<th>Brand Name</th>
 							<th>Generic Name</th>
 							<th>Manufacturer Name</th>
+							<th>Price</th>
+							
 							<th>View</th>
 							<th>Edit</th>
 							<th>Delete</th>
@@ -90,6 +92,8 @@
 							<td th:text="${drug.drugGeneric.genericName}">Generic Name</td>
 							<td th:text="${drug.drugManufacturer.manufacturer}">Manufacturer
 								Name</td>
+							<td th:text="${drug.drugprice}">Price</td>
+								
 							<td><a th:href="${'/drug/' + drug.id}">Details</a></td>
 							<td><a th:href="${'/drug/edit/' + drug.id}">Edit</a></td>
 							<td><a th:href="${'/drug/delete/' + drug.id}">Delete</a></td>

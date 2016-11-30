@@ -55,7 +55,19 @@ public class DrugForm {
     private String pregnancyLactation;    
     
 
-    private Integer drugprice;  
+    private String packSize;
+    
+    private Double drugprice;      
+
+
+	public String getPackSize() {
+		return packSize;
+	}
+
+
+	public void setPackSize(String packSize) {
+		this.packSize = packSize;
+	}
 
 
 	public Integer getManufacturerId() {
@@ -218,12 +230,12 @@ public class DrugForm {
 	}
 
 
-	public Integer getDrugprice() {
+	public Double getDrugprice() {
 		return drugprice;
 	}
 
 
-	public void setDrugprice(Integer drugprice) {
+	public void setDrugprice(Double drugprice) {
 		this.drugprice = drugprice;
 	}    
     

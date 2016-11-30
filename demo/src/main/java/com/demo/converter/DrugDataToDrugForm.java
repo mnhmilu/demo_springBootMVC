@@ -29,7 +29,8 @@ public class DrugDataToDrugForm implements Converter<Drug,DrugForm> {
         frm.setSideEffect(data.getSideEffect());
         frm.setSpecialWarningPrecautions(data.getSpecialWarningPrecautions());
         frm.setStorage(data.getStorage());
-        frm.setSideEffect(data.getSideEffect());        
+        frm.setSideEffect(data.getSideEffect());    
+        frm.setPackSize(data.getPackSize());   
         
 		return frm;
 	}

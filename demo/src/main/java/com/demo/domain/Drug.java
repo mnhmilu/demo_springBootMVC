@@ -65,8 +65,11 @@ public class Drug {
     @Column(name = "dosageFormStrengthPackSize",columnDefinition="LONGTEXT")
     private String pregnancyLactation;    
     
-    @Column(name = "drugPrice")
-    private Integer drugprice;    
+    @Column(name = "packSize")    
+    private String packSize;
+    
+    @Column(name = "drugPrice",precision=10, scale=2)
+    private Double drugprice;    
        
     
     @Temporal(TemporalType.DATE)
@@ -90,9 +93,17 @@ public class Drug {
      
     
     @Temporal(TemporalType.DATE)
-    private Date lastUpdatedDate;    
-    
-    
+    private Date lastUpdatedDate;       
+
+
+	public String getPackSize() {
+		return packSize;
+	}
+
+
+	public void setPackSize(String packSize) {
+		this.packSize = packSize;
+	}
 
 
 	public DrugManufacturer getDrugManufacturer() {
@@ -216,12 +227,12 @@ public class Drug {
 	}
 
 
-	public Integer getDrugprice() {
+	public Double getDrugprice() {
 		return drugprice;
 	}
 
 
-	public void setDrugprice(Integer drugprice) {
+	public void setDrugprice(Double drugprice) {
 		this.drugprice = drugprice;
 	}
 

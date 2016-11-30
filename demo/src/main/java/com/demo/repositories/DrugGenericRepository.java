@@ -14,7 +14,7 @@ import com.demo.domain.DrugGeneric;
 public interface DrugGenericRepository extends CrudRepository<DrugGeneric, Integer>{
 
 	DrugGeneric findByIdGeneric(Integer id);
-	List<DrugGeneric> findDrugGenericByGenericName(@Param("genericName") String genericName);
+	List<DrugGeneric> findDrugGenericByGenericNameIgnoreCase(@Param("genericName") String genericName);
 	List<DrugGeneric> findTop50ByOrderByInsertDateDesc();
 	
 }

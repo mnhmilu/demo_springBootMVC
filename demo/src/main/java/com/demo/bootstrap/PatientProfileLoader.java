@@ -77,6 +77,8 @@ public class PatientProfileLoader implements ApplicationListener<ContextRefreshe
 						+ "Children under 1 years: Not recommended");
 
 		newDrug.setInsertDate(new Date());
+		newDrug.setDrugprice(56.87);
+		newDrug.setPackSize("5X5 size");
 
 		drugRepository.save(newDrug);
 

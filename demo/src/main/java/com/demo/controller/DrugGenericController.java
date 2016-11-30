@@ -56,7 +56,7 @@ public class DrugGenericController {
 		model.addAttribute("drugGeneric", form);
 
 		List<DrugGeneric> drugsGenericSearchResult = drugGenericDaoService
-				.findDrugGenericByGenericName(form.getGenericName());
+				.findDrugGenericByGenericNameIgnoreCase(form.getGenericName());
 
 		model.addAttribute("drugGenerics", drugsGenericSearchResult);
 		return "drugGeneric/drugsGenerics";
@@ -75,14 +75,15 @@ public class DrugGenericController {
 
 		if (bindingResult.hasErrors()) {
 
-			model.addAttribute("drug", form);
+			model.addAttribute("drugGeneric", form);
 
-			return "drugs/drugForm";
+			return "drugs/drugGenericForm";
 		}
 
 		DrugGeneric generic = new DrugGeneric();
 		generic.setGenericName(form.getGenericName());
 		generic.setRemarks(form.getRemarks());
+		generic.setIdGeneric(form.getIdGeneric());
 		generic.setInsertDate(new Date());
 		drugGenericDaoService.save(generic);
 
@@ -90,12 +91,13 @@ public class DrugGenericController {
 
 	}
 
-	@RequestMapping("generic/edit/{id}")
-	public String editGeneric(@PathVariable Integer id, Model model) {
+	@RequestMapping("generic/edit/{idGeneric}")
+	public String editGeneric(@PathVariable Integer idGeneric, Model model) {
 		DrugGenericForm form = new DrugGenericForm();
-		DrugGeneric generic = drugGenericDaoService.findByIdGeneric(id);
+		DrugGeneric generic = drugGenericDaoService.findByIdGeneric(idGeneric);
 		form.setGenericName(generic.getGenericName());
 		form.setRemarks(generic.getRemarks());
+		form.setIdGeneric(generic.getIdGeneric());
 		model.addAttribute("drugGeneric", form);
 		return "drugGeneric/drugGenericForm";
 

@@ -31,6 +31,7 @@ public class DrugFormToDrugData implements Converter<DrugForm,Drug> {
 		entity.setSpecialWarningPrecautions(formData.getSpecialWarningPrecautions());
 		entity.setStorage(formData.getStorage());		
         entity.setInsertDate(new Date());		
+        entity.setPackSize(formData.getPackSize());
         
         DrugManufacturer manufacturer = new DrugManufacturer();
         manufacturer.setManufacturerId(formData.getManufacturerId());
