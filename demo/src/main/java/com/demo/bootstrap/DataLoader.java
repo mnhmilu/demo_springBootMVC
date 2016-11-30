@@ -16,7 +16,7 @@ import com.demo.repositories.DrugManufacturerRepository;
 import com.demo.repositories.DrugRepository;
 
 @Component
-public class PatientProfileLoader implements ApplicationListener<ContextRefreshedEvent> {
+public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
 	private DrugManufacturerRepository drugManufacturerDaoService;
 
@@ -24,7 +24,7 @@ public class PatientProfileLoader implements ApplicationListener<ContextRefreshe
 
 	private DrugRepository drugRepository;
 
-	private Logger log = Logger.getLogger(PatientProfileLoader.class);
+	private Logger log = Logger.getLogger(DataLoader.class);
 
 	@Autowired
 	public void setProductRepository(DrugRepository drugRepository,
@@ -81,6 +81,85 @@ public class PatientProfileLoader implements ApplicationListener<ContextRefreshe
 		newDrug.setPackSize("5X5 size");
 
 		drugRepository.save(newDrug);
+		
+		newDrug.setId(0);
+		newDrug.setDrugName("Captoril");
+		
+		drugRepository.save(newDrug);
+		
+		
+		newDrug.setId(0);
+		newDrug.setDrugName("Daptoril");
+		
+		drugRepository.save(newDrug);
+		
+		
+		newDrug.setId(0);
+		newDrug.setDrugName("Eaptoril");
+		
+		drugRepository.save(newDrug);
+		
+		newDrug.setId(0);
+		newDrug.setDrugName("Faptoril");
+		
+		drugRepository.save(newDrug);
+		
+		newDrug.setId(0);
+		newDrug.setDrugName("Gaptoril");
+		
+		drugRepository.save(newDrug);
+		
+		newDrug.setId(0);
+		newDrug.setDrugName("Haptoril");
+		
+		
+		drugRepository.save(newDrug);
+		
+		newDrug.setId(0);
+		newDrug.setDrugName("Iaptoril");
+		
+		
+		drugRepository.save(newDrug);
+		
+		
+		newDrug.setId(0);
+		newDrug.setDrugName("Japtoril");
+		
+		drugRepository.save(newDrug);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 
 	}
 }

@@ -8,4 +8,9 @@ insert into drug_generic (generic_name) values ('INSULIN');
 insert into drug_generic (generic_name) values ('MANNITOL');
 insert into drug_generic (generic_name) values ('NEFOPAM');
 insert into drug_generic (generic_name) values ('ORLISTAT');
+
+
+
+
+
 commit;
