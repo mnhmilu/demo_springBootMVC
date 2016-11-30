@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+<title th:text="#{index.page.title}">Page Title</title>
+
+
+<!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+<script>
+	$(function() {
+		$("#serialDate").datepicker();
+	});
+</script>
+</head>
+<body>
+	<div class="container">
+		<!--/*/ <th:block th:include="fragments/headerForManager :: header"></th:block> /*/-->
+
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<h4>
+					<span class="label label-primary">Enter Drug Generic Information</span>
+				</h4>
+				<div>
+					<form class="form-horizontal" th:object="${drugGeneric}"
+						th:action="@{/generics}" method="post" action="#">
+						<input type="hidden" th:field="*{idGeneric}" />
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Drug Generic Name:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" th:field="*{genericName}" />
+								<p th:if="${#fields.hasErrors('genericName')}"
+									th:errors="*{drugName}">Invalid Drug Generic Name</p>
+							</div>
+						</div>						
+					
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Remarks:</label>
+							<div class="col-sm-10">
+								<textarea class="form-control" rows="8"
+									style="margin-top: 10px;"
+									placeholder="Write remarks  here......."
+									name="composition" th:inline="text" th:field="*{remarks}">
+                            </textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-10">
+								<button type="submit" class="btn btn-primary">Submit</button>
+							</div>
+						</div>
+
+					</form>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
