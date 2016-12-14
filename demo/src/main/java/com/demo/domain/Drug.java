@@ -33,36 +33,36 @@ public class Drug {
     @Column(name = "drugName" ,nullable = false)
     private String drugName; 
 
-    @Column(name = "composition",columnDefinition="LONGTEXT")
+    @Column(name = "composition",columnDefinition="TEXT")
     private String composition;
     
-    @Column(name = "indication",columnDefinition="LONGTEXT")
+    @Column(name = "indication",columnDefinition="TEXT")
     private String indication;
     
-    @Column(name = "dosagesAdministration",columnDefinition="LONGTEXT")
+    @Column(name = "dosagesAdministration",columnDefinition="TEXT")
     private String dosagesAdministration;
        
     
-    @Column(name = "contraindication",columnDefinition="LONGTEXT")
+    @Column(name = "contraindication",columnDefinition="TEXT")
     private String contraindication;
     
-    @Column(name = "sideEffect",columnDefinition="LONGTEXT")
+    @Column(name = "sideEffect",columnDefinition="TEXT")
     private String sideEffect;      
     
     
-    @Column(name = "specialWarningPrecautions",columnDefinition="LONGTEXT")
+    @Column(name = "specialWarningPrecautions",columnDefinition="TEXT")
     private String specialWarningPrecautions;    
     
-    @Column(name = "drugInteraction",columnDefinition="LONGTEXT")
+    @Column(name = "drugInteraction",columnDefinition="TEXT")
     private String drugInteraction;    
     
     
-    @Column(name = "storage",columnDefinition="LONGTEXT")
+    @Column(name = "storage",columnDefinition="TEXT")
     private String storage;    
     
  
     
-    @Column(name = "dosageFormStrengthPackSize",columnDefinition="LONGTEXT")
+    @Column(name = "dosageFormStrengthPackSize",columnDefinition="TEXT")
     private String pregnancyLactation;    
     
     @Column(name = "packSize")    
