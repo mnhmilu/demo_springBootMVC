@@ -26,50 +26,45 @@ public class DoctorsInfoController {
 
 	private final Logger slf4jLogger = LoggerFactory.getLogger(DoctorsInfoController.class);
 
-	
 	private DoctorsInfoRepository doctorsInfoRepository;
-	
+
 	private DoctorsSpecializaitonRepository doctorsSpecializaitonRepository;
 
-
 	@Autowired
-	public void setservices(DoctorsInfoRepository doctorsInfoRepository,DoctorsSpecializaitonRepository doctorsSpecializaitonRepository) {
+	public void setservices(DoctorsInfoRepository doctorsInfoRepository,
+			DoctorsSpecializaitonRepository doctorsSpecializaitonRepository) {
 
-		this.doctorsInfoRepository=doctorsInfoRepository;
-		this.doctorsSpecializaitonRepository=doctorsSpecializaitonRepository;
+		this.doctorsInfoRepository = doctorsInfoRepository;
+		this.doctorsSpecializaitonRepository = doctorsSpecializaitonRepository;
 
 	}
-	
+
 	@RequestMapping(value = "/specializations", method = RequestMethod.GET)
 	public String spcializationlist(Model model) {
-		
-		model.addAttribute("specializations", doctorsSpecializaitonRepository.findAll());	
+
+		model.addAttribute("specializations", doctorsSpecializaitonRepository.findAll());
 		return "doctors/specializations";
 
-	}	
+	}
 
 	@RequestMapping(value = "/doctorsList/{idSpecialization}/{specializationName}", method = RequestMethod.GET)
-	public String doctorlist(Model model,@PathVariable Integer idSpecialization,@PathVariable String specializationName) {
+	public String doctorlist(Model model, @PathVariable Integer idSpecialization,
+			@PathVariable String specializationName) {
 
 		List<DoctorsInfo> list = doctorsInfoRepository.findDoctorsInfoByDoctorsSpecialization(idSpecialization);
-		
-		
-		model.addAttribute("doctors",list );		
-		model.addAttribute("specialization",specializationName);
-		
 
-	
-		
-		
+		model.addAttribute("doctors", list);
+		model.addAttribute("specialization", specializationName);
+
 		return "doctors/doctors";
 
-	}	
+	}
 
 	@RequestMapping("doctor/new")
 	public String newDrug(Model model) {
 		DoctorForm form = new DoctorForm();
-		model.addAttribute("specializations", doctorsSpecializaitonRepository.findAll());	
-		model.addAttribute("doctorsSpecialization",new DoctorsSpecialization());
+		model.addAttribute("specializations", doctorsSpecializaitonRepository.findAll());
+		model.addAttribute("doctorsSpecialization", new DoctorsSpecialization());
 		model.addAttribute("doctor", form);
 		return "doctors/doctorForm";
 	}
@@ -78,48 +73,36 @@ public class DoctorsInfoController {
 	public String saveDrug(@Valid @ModelAttribute("doctor") DoctorForm form, BindingResult bindingResult, Model model) {
 
 		if (bindingResult.hasErrors()) {
-			
-			model.addAttribute("specializations", doctorsSpecializaitonRepository.findAll());	
+
+			model.addAttribute("specializations", doctorsSpecializaitonRepository.findAll());
 			model.addAttribute("doctor", form);
 			return "doctors/doctorForm";
-		}		
-		
+		}
+
 		DoctorsInfo entity = new DoctorsInfo();
 		entity.setChamber(form.getChamber());
 		entity.setDoctorDetails(form.getDoctorDetails());
 		entity.setDoctorName(form.getDoctorName());
-		
+		entity.setId(form.getId());
+
 		DoctorsSpecialization speciality = new DoctorsSpecialization();
-		speciality.setIdSpecialization(form.getIdSpecialization());		
-		entity.setDoctorsSpecialization(speciality);		
+		speciality.setIdSpecialization(form.getIdSpecialization());
+		entity.setDoctorsSpecialization(speciality);
 
 		doctorsInfoRepository.save(entity);
 
-		return "redirect:/doctorsList";
+		if (form.getId() == null) {
+			return "redirect:/doctor/new";
+		} else {
+			return "redirect:/doctorsList/" + form.getIdSpecialization() + "/" + doctorsSpecializaitonRepository
+					.findByIdSpecialization(form.getIdSpecialization()).getSpecializationName();
+		}
 
-	}
-
-	@RequestMapping("doctor/{id}")
-	public String showDrug(@PathVariable Integer id, Model model) {
-
-		slf4jLogger.info("DoctorController :: showDrug");		
-		
-		DoctorsInfo entity = doctorsInfoRepository.findById(id);		
-		DoctorForm form = new DoctorForm();
-		form.setChamber(entity.getChamber());
-		form.setDoctorDetails(entity.getDoctorDetails());
-		form.setDoctorName(entity.getDoctorName());
-		form.setId(entity.getId());
-		form.setIdSpecialization(entity.getDoctorsSpecialization().getIdSpecialization());
-		form.setSpecializationName(entity.getDoctorsSpecialization().getSpecializationName());		
-		
-		model.addAttribute("doctor", form);
-		return "doctors/doctorshow";
 	}
 
 	@RequestMapping("doctor/edit/{id}")
 	public String edit(@PathVariable Integer id, Model model) {
-		
+
 		DoctorsInfo entity = doctorsInfoRepository.findById(id);
 		DoctorForm form = new DoctorForm();
 		form.setChamber(entity.getChamber());
@@ -127,18 +110,17 @@ public class DoctorsInfoController {
 		form.setDoctorName(entity.getDoctorName());
 		form.setId(entity.getId());
 		form.setIdSpecialization(entity.getDoctorsSpecialization().getIdSpecialization());
-		form.setSpecializationName(entity.getDoctorsSpecialization().getSpecializationName());		
-		
-		model.addAttribute("specializations", doctorsSpecializaitonRepository.findAll());			
+		form.setSpecializationName(entity.getDoctorsSpecialization().getSpecializationName());
 
-		model.addAttribute("doctor", form);		
-		
+		model.addAttribute("specializations", doctorsSpecializaitonRepository.findAll());
+
+		model.addAttribute("doctor", form);
+
 		DoctorsSpecialization speciality = new DoctorsSpecialization();
-		speciality.setIdSpecialization(form.getIdSpecialization());		
-		entity.setDoctorsSpecialization(speciality);	
-		
-		model.addAttribute("doctorsSpecialization",speciality);
+		speciality.setIdSpecialization(form.getIdSpecialization());
+		entity.setDoctorsSpecialization(speciality);
 
+		model.addAttribute("doctorsSpecialization", speciality);
 
 		return "doctors/doctorForm";
 
@@ -146,14 +128,18 @@ public class DoctorsInfoController {
 
 	@RequestMapping("doctor/delete/{id}")
 	public String delete(@PathVariable Integer id) {
+		DoctorsInfo entity = doctorsInfoRepository.findById(id);
 		try {
 
 			doctorsInfoRepository.delete(id);
-			return "redirect:/doctorsList";
+
+			return "redirect:/doctorsList/" + entity.getDoctorsSpecialization().getIdSpecialization() + "/"
+					+ entity.getDoctorsSpecialization().getSpecializationName();
 
 		} catch (Exception ex) {
 
-			return "redirect:/doctorsList";
+			return "redirect:/doctorsList/" + entity.getDoctorsSpecialization().getIdSpecialization() + "/"
+					+ entity.getDoctorsSpecialization().getSpecializationName();
 
 		}
 	}

@@ -9,27 +9,38 @@
 <body>
 	<div class="container">
 		<!--/*/ <th:block th:include="fragments/headerForManager :: header"></th:block> /*/-->
+		<div class="panel panel-default">
+			<div class="panel-body">
 
+				<a href="/doctor/new" class="btn btn-success" role="button">Add
+					Doctor</a>
+			</div>
+		</div>
 		<div th:if="${not #lists.isEmpty(specializations)}">
 			<div class="panel panel-default">
 				<div class="panel-body">
+
+					<button class="btn btn-primary" type="button">
+						Newly added Doctors <span class="badge">4</span>
+					</button>
+
 					<h4>
-						<span class="label label-primary">Specializations </span>
+						<span class="label label-primary">Specialists </span>
 					</h4>
-					<ul class="list-group">
-						<li class="list-group-item"><span class="badge">14</span> New
-							doctors </li>							
-					</ul>
+
+				</div>
+				<div class="panel-body">
 
 					<table class="table table-striped">
 						<tr>
-							<th>Specialization</th>
-							<th>Doctors</th>
+							<th>Doctors by Specialization</th>
+							<th></th>
 						</tr>
 						<tr th:each="specialization : ${specializations}">
 							<td th:text="${specialization.specializationName}">Specialization
 								Name</td>
-							<td><a th:href="${'/doctorsList/' + specialization.idSpecialization+'/'+specialization.specializationName}">Doctors</a></td>
+							<td><a
+								th:href="${'/doctorsList/' + specialization.idSpecialization+'/'+specialization.specializationName}">Doctors</a></td>
 						</tr>
 					</table>
 

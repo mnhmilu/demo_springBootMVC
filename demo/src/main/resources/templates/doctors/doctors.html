@@ -17,7 +17,8 @@
 					<span class="label label-primary" th:text="${specialization}">
 					</span>
 				</h4>
-				<div th:if="${not #lists.isEmpty(doctors)}">
+				<div th:if="${not #lists.isEmpty(doctors)}"
+					style="overflow-y: scroll; height: 600px;">
 
 					<div class="list-group">
 						<th:block th:each="item : ${doctors}">
@@ -25,7 +26,11 @@
 								<h4 class="list-group-item-heading" th:text="${item.doctorName}">List
 									group item heading</h4>
 								<p class="list-group-item-text" th:text="${item.doctorDetails}">...</p>
-								<p class="list-group-item-text" th:text="|cham: ${item.chamber}|">...</p>
+								<p class="list-group-item-text"
+									th:text="|cham: ${item.chamber}|">...</p> <a
+								th:href="${'/doctor/edit/' + item.id}">Edit</a> <a
+								th:href="${'/doctor/delete/' + item.id}">Delete</a>
+
 							</a>
 						</th:block>
 					</div>
