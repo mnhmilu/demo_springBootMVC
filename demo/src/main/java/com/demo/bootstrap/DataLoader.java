@@ -27,22 +27,24 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 	private DrugGenericRepository drugGenericRepository;
 
 	private DrugRepository drugRepository;
-	
+
 	private DoctorsInfoRepository doctorsInfoRepository;
-	
+
 	private DoctorsSpecializaitonRepository doctorsSpecializaitonRepository;
 
 	private Logger log = Logger.getLogger(DataLoader.class);
 
 	@Autowired
 	public void setProductRepository(DrugRepository drugRepository,
-			DrugManufacturerRepository drugManufacturerDaoService, DrugGenericRepository drugGenericRepository,DoctorsInfoRepository doctorsInfoRepository,DoctorsSpecializaitonRepository doctorsSpecializaitonRepository) {
+			DrugManufacturerRepository drugManufacturerDaoService, DrugGenericRepository drugGenericRepository,
+			DoctorsInfoRepository doctorsInfoRepository,
+			DoctorsSpecializaitonRepository doctorsSpecializaitonRepository) {
 
 		this.drugRepository = drugRepository;
 		this.drugManufacturerDaoService = drugManufacturerDaoService;
 		this.drugGenericRepository = drugGenericRepository;
-		this.doctorsInfoRepository =doctorsInfoRepository;
-		this.doctorsSpecializaitonRepository=doctorsSpecializaitonRepository;
+		this.doctorsInfoRepository = doctorsInfoRepository;
+		this.doctorsSpecializaitonRepository = doctorsSpecializaitonRepository;
 	}
 
 	@Override
@@ -91,71 +93,68 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		newDrug.setPackSize("5X5 size");
 
 		drugRepository.save(newDrug);
-		
+
 		newDrug.setId(0);
 		newDrug.setDrugName("Captoril");
-		
+
 		drugRepository.save(newDrug);
-		
-		
+
 		newDrug.setId(0);
 		newDrug.setDrugName("Daptoril");
-		
+
 		drugRepository.save(newDrug);
-		
-		
+
 		newDrug.setId(0);
 		newDrug.setDrugName("Eaptoril");
-		
+
 		drugRepository.save(newDrug);
-		
+
 		newDrug.setId(0);
 		newDrug.setDrugName("Faptoril");
-		
+
 		drugRepository.save(newDrug);
-		
+
 		newDrug.setId(0);
 		newDrug.setDrugName("Gaptoril");
-		
+
 		drugRepository.save(newDrug);
-		
+
 		newDrug.setId(0);
 		newDrug.setDrugName("Haptoril");
-		
-		
+
 		drugRepository.save(newDrug);
-		
+
 		newDrug.setId(0);
 		newDrug.setDrugName("Iaptoril");
-		
-		
+
 		drugRepository.save(newDrug);
-		
-		
+
 		newDrug.setId(0);
 		newDrug.setDrugName("Japtoril");
-		
+
 		drugRepository.save(newDrug);
-		
-		
+
 		DoctorsSpecialization specialization = new DoctorsSpecialization();
 		specialization.setSpecializationName("PHYCIATRIST");
-		doctorsSpecializaitonRepository.save(specialization);		
-		
-		
+		doctorsSpecializaitonRepository.save(specialization);
+
 		DoctorsInfo doctor = new DoctorsInfo();
 		doctor.setDoctorName("Dr.Zahid Akbar");
 		doctor.setChamber("i) Mirpur Diagonistic Center ii) Gulshan");
 		doctor.setDoctorDetails("MBBS,FCPS");
 		doctor.setDoctorsSpecialization(specialization);
-		doctorsInfoRepository.save(doctor);		
-		
-		doctor.setDoctorName("Dr.Dilruba Ferdous");
-		doctor.setId(0);
-		doctor.setChamber("i) Rampura Diagonistic Center ii) Banani");
-		doctor.setDoctorDetails("MBBS,PGT");
-		doctorsInfoRepository.save(doctor);		
-		
+		doctorsInfoRepository.save(doctor);
+
+		for (int a = 0; a < 50; a++) {
+
+			doctor.setDoctorName("Dr Iqbal "+a);
+			doctor.setId(0);
+			doctor.setChamber("i) Rampura Diagonistic Center ii) Banani");
+			doctor.setDoctorDetails("MBBS,PGT,MBBS, FAEM (CMC, Vellore), FDP (George Washington University, USA), MEM (India), "
+					+ "MMSc EM (Texila American University, Guyana), Examiner Royal College of Emergency Medicine (UK),"
+					+ "	Consultant");
+			doctorsInfoRepository.save(doctor);
+		}
 
 	}
 }

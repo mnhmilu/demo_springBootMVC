@@ -8,7 +8,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.demo.domain.DoctorsInfo;
-import com.demo.domain.Drug;
 
 
 
@@ -21,8 +20,8 @@ public interface DoctorsInfoRepository extends CrudRepository<DoctorsInfo, Integ
 	DoctorsInfo findById(Integer id);
 		
 	
-	@Query("select d from DoctorsInfo d inner join d.doctorsSpecialization ds  where lower(d.doctorsSpecialization) like lower( :doctorsSpecialization||'%') ")
-	List<Drug> findDoctorsInfoByDoctorsSpecialization(@Param("doctorsSpecialization") String doctorsSpecialization);	
+	@Query("select d from DoctorsInfo d inner join d.doctorsSpecialization ds  where ds.id =:idspecialization ")
+	List<DoctorsInfo> findDoctorsInfoByDoctorsSpecialization(@Param("idspecialization") Integer idspecialization);	
 	
 	
 	

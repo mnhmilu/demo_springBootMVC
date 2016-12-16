@@ -1,5 +1,7 @@
 package com.demo.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -46,10 +48,19 @@ public class DoctorsInfoController {
 
 	}	
 
-	@RequestMapping(value = "/doctorsList/{idSpecialization}", method = RequestMethod.GET)
-	public String doctorlist(Model model,@PathVariable Integer idSpecialization) {
+	@RequestMapping(value = "/doctorsList/{idSpecialization}/{specializationName}", method = RequestMethod.GET)
+	public String doctorlist(Model model,@PathVariable Integer idSpecialization,@PathVariable String specializationName) {
 
-		model.addAttribute("doctors", doctorsInfoRepository.findTop50ByOrderByInsertDateDesc());		
+		List<DoctorsInfo> list = doctorsInfoRepository.findDoctorsInfoByDoctorsSpecialization(idSpecialization);
+		
+		
+		model.addAttribute("doctors",list );		
+		model.addAttribute("specialization",specializationName);
+		
+
+	
+		
+		
 		return "doctors/doctors";
 
 	}	

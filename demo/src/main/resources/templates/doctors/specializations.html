@@ -18,23 +18,18 @@
 					</h4>
 					<ul class="list-group">
 						<li class="list-group-item"><span class="badge">14</span> New
-							doctors </li>
-							<li class="list-group-item"><span class="badge">1</span> New
-							specialization </li>
+							doctors </li>							
 					</ul>
 
 					<table class="table table-striped">
 						<tr>
-<!-- 							<th>Id</th> -->
 							<th>Specialization</th>
 							<th>Doctors</th>
 						</tr>
 						<tr th:each="specialization : ${specializations}">
-<!-- 							<td th:text="${specialization.idSpecialization}"><a -->
-<!-- 								href="/doctors/${doctor.id}">Id</a></td> -->
 							<td th:text="${specialization.specializationName}">Specialization
 								Name</td>
-							<td><a th:href="${'/doctorsList/' + specialization.idSpecialization}">Doctors</a></td>
+							<td><a th:href="${'/doctorsList/' + specialization.idSpecialization+'/'+specialization.specializationName}">Doctors</a></td>
 						</tr>
 					</table>
 
