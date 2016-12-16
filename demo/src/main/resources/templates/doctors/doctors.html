@@ -9,9 +9,9 @@
 <body>
 	<div class="container">
 		<!--/*/ <th:block th:include="fragments/headerForManager :: header"></th:block> /*/-->
-	
 
-	
+
+
 		<div th:if="${not #lists.isEmpty(doctors)}">
 
 			<div class="panel panel-default">
@@ -19,25 +19,39 @@
 					<h4>
 						<span class="label label-primary">Child Specialist </span>
 					</h4>
-					<table class="table table-striped">
-						<tr>
-							<th>Id</th>
-							<th>Doctor Name</th>
-							<th>Details </th>
-							<th>Chamber </th>		
-							<th>Edit</th>
-							<th>Delete</th>
-						</tr>
-						<tr th:each="item : ${doctors}">
-							<td th:text="${item.id}"><a href="/drug/${drug.id}">Id</a></td>
-							<td th:text="${item.doctorName}">Doctor Name</td>
-							<td th:text="${item.doctorDetails}">Details</td>
-							<td th:text="${item.chamber}">Chamber</td>									
-							
-<!-- 							<td><a th:href="${'/drug/edit/' + drug.id}">Edit</a></td> -->
-<!-- 							<td><a th:href="${'/drug/delete/' + drug.id}">Delete</a></td> -->
-						</tr>
-					</table>
+
+					<div class="list-group">
+						<th:block th:each="item : ${doctors}">
+							<a href="#" class="list-group-item">
+								<h4 class="list-group-item-heading" th:text="${item.doctorName}">List
+									group item heading</h4>
+								<p class="list-group-item-text" th:text="${item.doctorDetails}">...</p>
+								<p class="list-group-item-text" th:text="${item.chamber}">...</p>					
+							</a>
+						</th:block>
+					</div>
+
+
+
+<!-- 					<table class="table table-striped"> -->
+<!-- 						<tr> -->
+<!-- 							<th>Id</th> -->
+<!-- 							<th>Doctor Name</th> -->
+<!-- 							<th>Details</th> -->
+<!-- 							<th>Chamber</th> -->
+<!-- 							<th>Edit</th> -->
+<!-- 							<th>Delete</th> -->
+<!-- 						</tr> -->
+<!-- 						<tr th:each="item : ${doctors}"> -->
+<!-- 							<td th:text="${item.id}"><a href="/drug/${drug.id}">Id</a></td> -->
+<!-- 							<td th:text="${item.doctorName}">Doctor Name</td> -->
+<!-- 							<td th:text="${item.doctorDetails}">Details</td> -->
+<!-- 							<td th:text="${item.chamber}">Chamber</td> -->
+
+<!-- 														<td><a th:href="${'/drug/edit/' + drug.id}">Edit</a></td> -->
+<!-- 														<td><a th:href="${'/drug/delete/' + drug.id}">Delete</a></td> -->
+<!-- 						</tr> -->
+<!-- 					</table> -->
 
 				</div>
 			</div>

@@ -144,12 +144,17 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		
 		
 		DoctorsInfo doctor = new DoctorsInfo();
-		doctor.setDoctorName("Md.Zahid Akbar");
+		doctor.setDoctorName("Dr.Zahid Akbar");
 		doctor.setChamber("i) Mirpur Diagonistic Center ii) Gulshan");
 		doctor.setDoctorDetails("MBBS,FCPS");
 		doctor.setDoctorsSpecialization(specialization);
 		doctorsInfoRepository.save(doctor);		
 		
+		doctor.setDoctorName("Dr.Dilruba Ferdous");
+		doctor.setId(0);
+		doctor.setChamber("i) Rampura Diagonistic Center ii) Banani");
+		doctor.setDoctorDetails("MBBS,PGT");
+		doctorsInfoRepository.save(doctor);		
 		
 
 	}
