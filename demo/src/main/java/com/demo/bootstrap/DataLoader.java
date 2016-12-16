@@ -8,9 +8,13 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import com.demo.domain.DoctorsInfo;
+import com.demo.domain.DoctorsSpecialization;
 import com.demo.domain.Drug;
 import com.demo.domain.DrugGeneric;
 import com.demo.domain.DrugManufacturer;
+import com.demo.repositories.DoctorsInfoRepository;
+import com.demo.repositories.DoctorsSpecializaitonRepository;
 import com.demo.repositories.DrugGenericRepository;
 import com.demo.repositories.DrugManufacturerRepository;
 import com.demo.repositories.DrugRepository;
@@ -23,16 +27,22 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 	private DrugGenericRepository drugGenericRepository;
 
 	private DrugRepository drugRepository;
+	
+	private DoctorsInfoRepository doctorsInfoRepository;
+	
+	private DoctorsSpecializaitonRepository doctorsSpecializaitonRepository;
 
 	private Logger log = Logger.getLogger(DataLoader.class);
 
 	@Autowired
 	public void setProductRepository(DrugRepository drugRepository,
-			DrugManufacturerRepository drugManufacturerDaoService, DrugGenericRepository drugGenericRepository) {
+			DrugManufacturerRepository drugManufacturerDaoService, DrugGenericRepository drugGenericRepository,DoctorsInfoRepository doctorsInfoRepository,DoctorsSpecializaitonRepository doctorsSpecializaitonRepository) {
 
 		this.drugRepository = drugRepository;
 		this.drugManufacturerDaoService = drugManufacturerDaoService;
 		this.drugGenericRepository = drugGenericRepository;
+		this.doctorsInfoRepository =doctorsInfoRepository;
+		this.doctorsSpecializaitonRepository=doctorsSpecializaitonRepository;
 	}
 
 	@Override
@@ -128,36 +138,17 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		drugRepository.save(newDrug);
 		
 		
+		DoctorsSpecialization specialization = new DoctorsSpecialization();
+		specialization.setSpecializationName("PHYCIATRIST");
+		doctorsSpecializaitonRepository.save(specialization);		
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		DoctorsInfo doctor = new DoctorsInfo();
+		doctor.setDoctorName("Md.Zahid Akbar");
+		doctor.setChamber("i) Mirpur Diagonistic Center ii) Gulshan");
+		doctor.setDoctorDetails("MBBS,FCPS");
+		doctor.setDoctorsSpecialization(specialization);
+		doctorsInfoRepository.save(doctor);		
 		
 		
 

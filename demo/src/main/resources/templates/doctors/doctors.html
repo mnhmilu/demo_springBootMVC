@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+<title th:text="#{index.page.title}">Page Title</title>
+
+<!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+	<div class="container">
+		<!--/*/ <th:block th:include="fragments/headerForManager :: header"></th:block> /*/-->
+	
+
+	
+		<div th:if="${not #lists.isEmpty(doctors)}">
+
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<h4>
+						<span class="label label-primary">Child Specialist </span>
+					</h4>
+					<table class="table table-striped">
+						<tr>
+							<th>Id</th>
+							<th>Doctor Name</th>
+							<th>Details </th>
+							<th>Chamber </th>		
+							<th>Edit</th>
+							<th>Delete</th>
+						</tr>
+						<tr th:each="item : ${doctors}">
+							<td th:text="${item.id}"><a href="/drug/${drug.id}">Id</a></td>
+							<td th:text="${item.doctorName}">Doctor Name</td>
+							<td th:text="${item.doctorDetails}">Details</td>
+							<td th:text="${item.chamber}">Chamber</td>									
+							
+<!-- 							<td><a th:href="${'/drug/edit/' + drug.id}">Edit</a></td> -->
+<!-- 							<td><a th:href="${'/drug/delete/' + drug.id}">Delete</a></td> -->
+						</tr>
+					</table>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+</body>
+</html>

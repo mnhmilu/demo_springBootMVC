@@ -37,13 +37,20 @@ public class DoctorsInfoController {
 		this.doctorsSpecializaitonRepository=doctorsSpecializaitonRepository;
 
 	}
-
-	@RequestMapping(value = "/doctorsList", method = RequestMethod.GET)
-	public String list(Model model) {
-
-		model.addAttribute("doctors", doctorsInfoRepository.findTop50ByOrderByInsertDateDesc());
+	
+	@RequestMapping(value = "/specializations", method = RequestMethod.GET)
+	public String spcializationlist(Model model) {
+		
 		model.addAttribute("specializations", doctorsSpecializaitonRepository.findAll());	
-		return "doctors/doctorsList";
+		return "doctors/specializations";
+
+	}	
+
+	@RequestMapping(value = "/doctorsList/{idSpecialization}", method = RequestMethod.GET)
+	public String doctorlist(Model model,@PathVariable Integer idSpecialization) {
+
+		model.addAttribute("doctors", doctorsInfoRepository.findTop50ByOrderByInsertDateDesc());		
+		return "doctors/doctors";
 
 	}	
 
