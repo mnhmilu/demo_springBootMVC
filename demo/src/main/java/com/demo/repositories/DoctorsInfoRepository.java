@@ -25,6 +25,9 @@ public interface DoctorsInfoRepository extends CrudRepository<DoctorsInfo, Integ
 	
 	
 	
+	
+	
+	
 }
 	
 	

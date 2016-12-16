@@ -21,6 +21,7 @@ import com.demo.domain.DoctorsSpecialization;
 import com.demo.repositories.DoctorsInfoRepository;
 import com.demo.repositories.DoctorsSpecializaitonRepository;
 
+
 @Controller
 public class DoctorsInfoController {
 
@@ -42,7 +43,10 @@ public class DoctorsInfoController {
 	@RequestMapping(value = "/specializations", method = RequestMethod.GET)
 	public String spcializationlist(Model model) {
 
-		model.addAttribute("specializations", doctorsSpecializaitonRepository.findAll());
+		model.addAttribute("specializations", doctorsSpecializaitonRepository.findAll());	
+		
+		model.addAttribute("doctorCount", doctorsInfoRepository.count());	
+		
 		return "doctors/specializations";
 
 	}
