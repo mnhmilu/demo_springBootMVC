@@ -16,6 +16,7 @@ import com.demo.commands.DrugForm;
 import com.demo.commands.DrugSearchForm;
 import com.demo.converter.DrugDataToDrugForm;
 import com.demo.domain.Drug;
+import com.demo.repositories.DrugGenericRepository;
 import com.demo.repositories.DrugRepository;
 
 import scala.annotation.meta.getter;
@@ -25,15 +26,17 @@ public class IndexController {
 
 	private DrugRepository drugDaoService;
 	private DrugDataToDrugForm drugDataToDrugForm;
+	private DrugGenericRepository drugGenericDaoService;
 	
 	private final Logger slf4jLogger = LoggerFactory.getLogger(DrugController.class);
 	
 
 	@Autowired
-	public void setservices(DrugRepository drugDaoService,DrugDataToDrugForm drugDataToDrugForm) {
+	public void setservices(DrugRepository drugDaoService,DrugDataToDrugForm drugDataToDrugForm,DrugGenericRepository drugGenericDaoService) {
 
 		this.drugDaoService = drugDaoService;
 		this.drugDataToDrugForm = drugDataToDrugForm;
+		this.drugGenericDaoService=drugGenericDaoService;
 
 	}
 
@@ -41,6 +44,8 @@ public class IndexController {
 	public String index(Model model) {
 
 		model.addAttribute("drug", new DrugSearchForm());
+		model.addAttribute("drugCount", drugDaoService.count());
+		model.addAttribute("genericCount", drugGenericDaoService.count());
 		return "index";
 
 	}
