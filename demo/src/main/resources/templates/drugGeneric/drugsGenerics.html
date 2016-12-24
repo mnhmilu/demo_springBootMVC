@@ -74,6 +74,11 @@
 			</div>
 
 		</div>
+		<div th:if="${#lists.isEmpty(drugGenerics)}">
+
+			<div class="alert alert-info" role="alert">No Data Found</div>
+
+		</div>
 	</div>
 
 </body>

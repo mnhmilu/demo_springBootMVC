@@ -8,7 +8,7 @@
 </head>
 <body>
 	<div class="container">
-			<!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+		<!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
 
 
 		<div th:if="${not #lists.isEmpty(drugs)}">
@@ -25,7 +25,7 @@
 							<th>Generic Name</th>
 							<th>Manufacturer Name</th>
 							<th>View</th>
-							
+
 						</tr>
 						<tr th:each="drug : ${drugs}">
 							<td th:text="${drug.id}"><a href="/drug/${drug.id}">Id</a></td>
@@ -34,12 +34,17 @@
 							<td th:text="${drug.drugManufacturer.manufacturer}">Manufacturer
 								Name</td>
 							<td><a th:href="${'/index/drugDeatails/' + drug.id}">Details</a></td>
-							
+
 						</tr>
 					</table>
 
 				</div>
 			</div>
+
+		</div>
+		<div th:if="${#lists.isEmpty(drugs)}">
+
+			<div class="alert alert-info" role="alert">No Data Found</div>
 
 		</div>
 	</div>
