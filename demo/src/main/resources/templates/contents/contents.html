@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+<title th:text="#{index.page.title}">Page Title</title>
+
+<!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+	<div class="container">
+		<!--/*/ <th:block th:include="fragments/headerForManager :: header"></th:block> /*/-->
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<h4>
+					<span class="label label-primary">Content Search</span>
+				</h4>
+				<form class="form-inline" th:object="${content}"
+					th:action="@{/contentSearch}" method="post">
+
+					<div class="form-group">
+						<label class="col-sm-4 control-label">Content Typee</label>
+						<div class="col-sm-5">							
+								<select th:field="*{contentType}" class="form-control">
+									<option value="0" label="--- Select ---" />
+									<option value="1" label="Advertisement" />
+									<option value="2" label="News" />
+									<option value="3" label="Product Update" />
+								</select>				
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="col-sm-10">
+							<button type="submit" class="btn btn-primary">Search</button>
+						</div>
+					</div>
+					<div class="form-group">
+						<a href="/drugList" class="btn btn-success" role="button">Reset
+						</a>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-body">
+
+				<a href="/content/new" class="btn btn-success" role="button">Add
+					New Content</a>
+			</div>
+		</div>
+		<div th:if="${not #lists.isEmpty(contents)}">
+
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<h4>
+						<span class="label label-primary">Content List</span>
+					</h4>
+					<table class="table table-striped">
+						<tr>							
+							<th>Content Type</th>
+							<th>Content Header</th>
+							<th>Advertisement Section</th>	
+							<th>View</th>
+							<th>Edit</th>
+							<th>Delete</th>
+						</tr>
+						<tr th:each="content : ${contents}">							
+							<td th:text="${content.contentType}">Content Type</td>
+							<td th:text="${content.header}">Header</td>
+							<td th:text="${content.add_section}">Advertisement Section
+								Name</td>				
+
+							<td><a th:href="${'/content/' + content.id}">Details</a></td>
+							<td><a th:href="${'/content/edit/' + content.id}">Edit</a></td>
+							<td><a th:href="${'/content/delete/' + content.id}">Delete</a></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+
+		</div>
+		<div th:if="${#lists.isEmpty(contents)}">
+
+			<div class="alert alert-info" role="alert">No Data Found</div>
+
+		</div>
+	</div>
+
+</body>
+</html>
