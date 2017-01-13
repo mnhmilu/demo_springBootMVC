@@ -52,6 +52,10 @@ public class Content {
     @Column(name = "imageURL")
     private String imageURL;
     
+    @Column(name = "originalFileName")
+    private String originalFileName;
+    
+    
     @Temporal(TemporalType.DATE)
     private Date insertDate;    
        
@@ -62,6 +66,16 @@ public class Content {
     
     @Temporal(TemporalType.DATE)
     private Date lastUpdatedDate;
+
+
+	public String getOriginalFileName() {
+		return originalFileName;
+	}
+
+
+	public void setOriginalFileName(String originalFileName) {
+		this.originalFileName = originalFileName;
+	}
 
 
 	public Integer getId() {

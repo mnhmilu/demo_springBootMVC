@@ -46,6 +46,8 @@ public class IndexController {
 		model.addAttribute("drug", new DrugSearchForm());
 		model.addAttribute("drugCount", drugDaoService.count());
 		model.addAttribute("genericCount", drugGenericDaoService.count());
+		model.addAttribute("imageURL","A1.jpg");
+	
 		return "index";
 
 	}

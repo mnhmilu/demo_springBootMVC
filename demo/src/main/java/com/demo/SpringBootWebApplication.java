@@ -1,15 +1,20 @@
 package com.demo;
 
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 
 import com.demo.utility.fileUploader.StorageProperties;
+import com.demo.utility.fileUploader.StorageService;
 
 @SpringBootApplication
 @EnableConfigurationProperties(StorageProperties.class)
-public class SpringBootWebApplication {
+public class SpringBootWebApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
 
@@ -17,5 +22,27 @@ public class SpringBootWebApplication {
 
 		ApplicationContext ctx = SpringApplication.run(SpringBootWebApplication.class, args);
 
+	}
+	
+	
+	
+	
+	// when need to package as war
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+		// TODO Auto-generated method stub
+		return builder.sources(SpringBootWebApplication.class);
+	}
+
+
+
+
+
+	@Bean
+	CommandLineRunner init(StorageService storageService) {
+		return (args) -> {
+            //storageService.deleteAll();
+            storageService.init();
+		};
 	}
 }

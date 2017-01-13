@@ -18,13 +18,13 @@
 					th:action="@{/contentSearch}" method="post">
 
 					<div class="form-group">
-						<label class="col-sm-4 control-label">Content Typee</label>
+						<label class="col-sm-4 control-label">Content Type</label>
 						<div class="col-sm-5">							
 								<select th:field="*{contentType}" class="form-control">
 									<option value="0" label="--- Select ---" />
-									<option value="1" label="Advertisement" />
-									<option value="2" label="News" />
-									<option value="3" label="Product Update" />
+									<option value="Advertisement" label="Advertisement" />
+									<option value="News" label="News" />
+									<option value="DrugUpdate" label="Drug Update" />
 								</select>				
 						</div>
 					</div>

@@ -3,19 +3,26 @@ package com.demo.commands;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
+
 
 
 public class ContentForm {		
   
     private Integer id;        
 
-
+    @NotNull
+    @NotBlank  
     private String contentType;    
     
-
+    @NotNull
+    @NotBlank  
     private String header; 
     
-
+    @NotNull
+    @NotBlank  
     private String content_summary;        
    
   
@@ -31,7 +38,7 @@ public class ContentForm {
     private Date insertDate;    
        
     
-
+    @NotNull
     private Date expireDate;
 
 
