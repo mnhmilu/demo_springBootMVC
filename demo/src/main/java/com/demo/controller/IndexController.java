@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.actuate.metrics.CounterService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -32,23 +33,26 @@ public class IndexController {
 	private DrugDataToDrugForm drugDataToDrugForm;
 	private DrugGenericRepository drugGenericDaoService;
 	private ContentRepository contentRepository;
+	private CounterService cournterService;
 
 	private final Logger slf4jLogger = LoggerFactory.getLogger(DrugController.class);
 
 	@Autowired
 	public void setservices(DrugRepository drugDaoService, DrugDataToDrugForm drugDataToDrugForm,
-			DrugGenericRepository drugGenericDaoService, ContentRepository contentRepository) {
+			DrugGenericRepository drugGenericDaoService, ContentRepository contentRepository,CounterService cournterService) {
 
 		this.drugDaoService = drugDaoService;
 		this.drugDataToDrugForm = drugDataToDrugForm;
 		this.drugGenericDaoService = drugGenericDaoService;
 		this.contentRepository = contentRepository;
+		this.cournterService=cournterService;
 
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(Model model)  {
-
+		
+		cournterService.increment("Calling Index");
 		model.addAttribute("drug", new DrugSearchForm());
 		model.addAttribute("drugCount", drugDaoService.count());
 		model.addAttribute("genericCount", drugGenericDaoService.count());
