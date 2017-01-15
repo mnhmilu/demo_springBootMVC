@@ -92,19 +92,26 @@ public class FileSystemStorageService implements StorageService {
 
 	@Override
 	public void init() {
+		/*
 		try {
+			
+		
 			String directoryName = rootLocation.getFileName().toString();
-			//File directory = new File(String.valueOf(directoryName));
-			String path = rootLocation.toString();
-			File directory = new File(path);
+			
+			
+			File directory = new File(String.valueOf(directoryName));
+			//String path = rootLocation.toString();
+			//File directory = new File(path);
 			
 			
 
 			if (!directory.exists()) {
 				Files.createDirectory(rootLocation);
 			}
+			
 		} catch (IOException e) {
 			throw new StorageException("Could not initialize storage", e);
 		}
+		*/
 	}
 }

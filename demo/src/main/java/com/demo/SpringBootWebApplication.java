@@ -20,6 +20,7 @@ public class SpringBootWebApplication extends SpringBootServletInitializer {
 
 		// https://springframework.guru/spring-boot-web-application-part-3-spring-data-jpa/
 
+		//String test=System.getProperty("user.dir") ;
 		ApplicationContext ctx = SpringApplication.run(SpringBootWebApplication.class, args);
 
 	}
@@ -35,14 +36,15 @@ public class SpringBootWebApplication extends SpringBootServletInitializer {
 	}
 
 
-
+/*
 
 
 	@Bean
 	CommandLineRunner init(StorageService storageService) {
 		return (args) -> {
             //storageService.deleteAll();
-            storageService.init();
+            //storageService.init();
 		};
 	}
+	*/
 }

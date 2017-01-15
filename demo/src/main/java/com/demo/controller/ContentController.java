@@ -1,5 +1,6 @@
 package com.demo.controller;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -75,7 +76,7 @@ public class ContentController {
 
 	@RequestMapping(value = "content", method = RequestMethod.POST)
 	public String saveDrug(@RequestParam("file") MultipartFile file, @Valid @ModelAttribute("content") ContentForm form,
-			BindingResult bindingResult, Model model) {
+			BindingResult bindingResult, Model model) throws IOException {
 
 		if (bindingResult.hasErrors() || form.getContentType().equalsIgnoreCase(",0")) {
 			
@@ -93,14 +94,15 @@ public class ContentController {
 		Content content = new Content();
 		content.setAdd_section(form.getAdd_section());
 		content.setContent_details(form.getContent_details());
+		content.setImage(file.getBytes());
 		
-		if (file.getSize() != 0) {
-			String uniquePhotoId =  contentType.charAt(0)+new SimpleDateFormat("MMddyyyyHHmmss").format(new Date());
-			content.setImageURL(uniquePhotoId);		
+		//if (file.getSize() != 0) {
+		//	String uniquePhotoId =  contentType.charAt(0)+new SimpleDateFormat("MMddyyyyHHmmss").format(new Date());
+			//content.setImageURL(uniquePhotoId);		
 			
 			//storageService.store(file, uniquePhotoId);
-			storageService.store(file, "A1");
-		}
+		//	storageService.store(file, "A1");
+	//	}
 		
 		content.setContent_summary(form.getContent_summary());
 		content.setContentType(contentType);
