@@ -40,6 +40,19 @@ public class ContentForm {
     
     @NotNull
     private Date expireDate;
+    
+    
+    private String drugUpdateType;
+
+	public String getDrugUpdateType() {
+		return drugUpdateType;
+	}
+
+
+
+	public void setDrugUpdateType(String drugUpdateType) {
+		this.drugUpdateType = drugUpdateType;
+	}
 
 
 

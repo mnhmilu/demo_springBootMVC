@@ -46,8 +46,8 @@ public class Content {
     @Column(name = "add_section")
     private String add_section;
     
-    @Column(name = "imageURL")
-    private String imageURL;
+    @Column(name = "drugUpdateType")
+    private String drugUpdateType;
     
     @Column(name = "originalFileName")
     private String originalFileName;
@@ -146,16 +146,16 @@ public class Content {
 
 	public void setAdd_section(String add_section) {
 		this.add_section = add_section;
+	}	
+
+
+	public String getDrugUpdateType() {
+		return drugUpdateType;
 	}
 
 
-	public String getImageURL() {
-		return imageURL;
-	}
-
-
-	public void setImageURL(String imageURL) {
-		this.imageURL = imageURL;
+	public void setDrugUpdateType(String drugUpdateType) {
+		this.drugUpdateType = drugUpdateType;
 	}
 
 

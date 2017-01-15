@@ -96,13 +96,7 @@ public class ContentController {
 		content.setContent_details(form.getContent_details());
 		content.setImage(file.getBytes());
 		
-		//if (file.getSize() != 0) {
-		//	String uniquePhotoId =  contentType.charAt(0)+new SimpleDateFormat("MMddyyyyHHmmss").format(new Date());
-			//content.setImageURL(uniquePhotoId);		
-			
-			//storageService.store(file, uniquePhotoId);
-		//	storageService.store(file, "A1");
-	//	}
+        content.setDrugUpdateType(form.getDrugUpdateType());
 		
 		content.setContent_summary(form.getContent_summary());
 		content.setContentType(contentType);
