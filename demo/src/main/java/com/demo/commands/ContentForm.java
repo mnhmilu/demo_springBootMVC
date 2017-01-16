@@ -32,7 +32,7 @@ public class ContentForm {
     private String add_section;
     
 
-    private String imageURL;
+    private byte[] image;  
     
 
     private Date insertDate;    
@@ -42,7 +42,20 @@ public class ContentForm {
     private Date expireDate;
     
     
-    private String drugUpdateType;
+    private String drugUpdateType;  
+    
+
+	public byte[] getImage() {
+		return image;
+	}
+
+
+
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
+
+
 
 	public String getDrugUpdateType() {
 		return drugUpdateType;
@@ -128,15 +141,7 @@ public class ContentForm {
 
 
 
-	public String getImageURL() {
-		return imageURL;
-	}
 
-
-
-	public void setImageURL(String imageURL) {
-		this.imageURL = imageURL;
-	}
 
 
 

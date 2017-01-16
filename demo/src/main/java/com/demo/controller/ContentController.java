@@ -3,10 +3,8 @@ package com.demo.controller;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import javax.validation.Valid;
 
@@ -20,6 +18,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -27,9 +26,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.demo.commands.ContentForm;
 import com.demo.commands.ContentSearchForm;
+import com.demo.commands.DrugForm;
+import com.demo.converter.ContentDataToContentForm;
 import com.demo.domain.Content;
+import com.demo.domain.DrugGeneric;
+import com.demo.domain.DrugManufacturer;
 import com.demo.repositories.ContentRepository;
-import com.demo.utility.fileUploader.StorageService;
 
 @Controller
 public class ContentController {
@@ -37,13 +39,14 @@ public class ContentController {
 	private final Logger slf4jLogger = LoggerFactory.getLogger(ContentController.class);
 
 	private ContentRepository contentRepository;
-	private StorageService storageService;
+
+	private ContentDataToContentForm contentDataToContentForm;
 
 	@Autowired
-	public void setservices(ContentRepository contentRepository, StorageService storageService) {
+	public void setservices(ContentRepository contentRepository, ContentDataToContentForm contentDataToContentForm) {
 
 		this.contentRepository = contentRepository;
-		this.storageService = storageService;
+		this.contentDataToContentForm = contentDataToContentForm;
 
 	}
 
@@ -60,14 +63,14 @@ public class ContentController {
 	public String newDrug(Model model) throws ParseException {
 
 		ContentForm form = new ContentForm();
-		//SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		// SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
 		Date currentDate = new Date();
 		Calendar c = Calendar.getInstance();
 		c.setTime(currentDate);
 		c.add(Calendar.DATE, 7);
 
-		Date currentDatePlusOne = c.getTime();	
+		Date currentDatePlusOne = c.getTime();
 		form.setExpireDate(currentDatePlusOne);
 		model.addAttribute("content", form);
 
@@ -75,11 +78,12 @@ public class ContentController {
 	}
 
 	@RequestMapping(value = "content", method = RequestMethod.POST)
-	public String saveDrug(@RequestParam("file") MultipartFile file, @Valid @ModelAttribute("content") ContentForm form,
-			BindingResult bindingResult, Model model) throws IOException {
+	public String saveContent(@RequestParam("file") MultipartFile file,
+			@Valid @ModelAttribute("content") ContentForm form, BindingResult bindingResult, Model model)
+			throws IOException {
 
 		if (bindingResult.hasErrors() || form.getContentType().equalsIgnoreCase(",0")) {
-			
+
 			SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 			Date today = new Date();
 			dateFormat.format(today);
@@ -88,29 +92,67 @@ public class ContentController {
 			return "contents/contentForm";
 		}
 
+		// add custom validation here
+
 		String[] parts = form.getContentType().split(",");
-		String contentType = parts[0];		
+		String contentType = parts[0];
 
 		Content content = new Content();
+		content.setId(form.getId());
 		content.setAdd_section(form.getAdd_section());
 		content.setContent_details(form.getContent_details());
 		content.setImage(file.getBytes());
-		
-        content.setDrugUpdateType(form.getDrugUpdateType());
-		
+
+		content.setDrugUpdateType(form.getDrugUpdateType());
+
 		content.setContent_summary(form.getContent_summary());
 		content.setContentType(contentType);
 		content.setExpireDate(form.getExpireDate());
 		content.setHeader(form.getHeader());
 		content.setInsertDate(new Date());
-		content.setOriginalFileName(file.getOriginalFilename());	
+		content.setOriginalFileName(file.getOriginalFilename());
 		content.setAdd_section(form.getAdd_section());
 
 		contentRepository.save(content);
 
-	
 		return "redirect:/content/new";
 
+	}
+
+	@RequestMapping("content/{id}")
+	public String showContent(@PathVariable Integer id, Model model) {
+
+		slf4jLogger.info("ContentController :: showContent");
+		ContentForm form = contentDataToContentForm.convert(contentRepository.findById(id));
+		model.addAttribute("content", form);
+		model.addAttribute("imageid", "A1");
+		return "contents/contentshow";
+
+	}
+
+	@RequestMapping("content/edit/{id}")
+	public String editContent(@PathVariable Integer id, Model model) {
+
+		ContentForm form = contentDataToContentForm.convert(contentRepository.findById(id));
+
+		model.addAttribute("content", form);
+
+		return "contents/contentForm";
+
+	}
+
+	@RequestMapping("content/delete/{id}")
+	public String delete(@PathVariable Integer id) {
+		try {
+
+			contentRepository.delete(id);
+			return "redirect:/contentList";
+
+		} catch (Exception ex) {
+
+			return "redirect:/contentList";
+
+		}
 	}
 
 	@InitBinder
@@ -164,47 +206,9 @@ public class ContentController {
 	 * 
 	 * 
 	 * 
-	 * @RequestMapping("drug/{id}") public String showDrug(@PathVariable Integer
-	 * id, Model model) {
 	 * 
-	 * slf4jLogger.info("DrugController :: showDrug");
 	 * 
-	 * DrugForm form = drugDataToDrugForm.convert(drugDaoService.findById(id));
-	 * model.addAttribute("drug", form); return "drugs/drugshow"; }
 	 * 
-	 * @RequestMapping("drug/edit/{id}") public String edit(@PathVariable
-	 * Integer id, Model model) {
-	 * 
-	 * DrugForm form = drugDataToDrugForm.convert(drugDaoService.findById(id));
-	 * model.addAttribute("generics", drugGenericDaoService.findAll());
-	 * model.addAttribute("brands", drugManufacturerDaoServie.findAll());
-	 * 
-	 * model.addAttribute("drug", form);
-	 * 
-	 * DrugGeneric generic = new DrugGeneric();
-	 * generic.setGenericName(form.getGenericName());
-	 * generic.setIdGeneric(form.getGenericId());
-	 * model.addAttribute("drugGeneric", generic);
-	 * 
-	 * DrugManufacturer brand2 = new DrugManufacturer();
-	 * brand2.setManufacturer(form.getManufacturer());
-	 * brand2.setManufacturerId(form.getManufacturerId());
-	 * model.addAttribute("drugBrand", brand2);
-	 * 
-	 * return "drugs/drugForm";
-	 * 
-	 * }
-	 * 
-	 * @RequestMapping("drug/delete/{id}") public String delete(@PathVariable
-	 * Integer id) { try {
-	 * 
-	 * drugDaoService.delete(id); return "redirect:/drugList";
-	 * 
-	 * } catch (Exception ex) {
-	 * 
-	 * return "redirect:/drugList";
-	 * 
-	 * } }
 	 * 
 	 */
 

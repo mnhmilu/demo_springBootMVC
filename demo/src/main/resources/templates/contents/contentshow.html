@@ -10,115 +10,55 @@
 	<div class="container">
 		<!--/*/ <th:block th:include="fragments/headerForManager :: header"></th:block> /*/-->
 
-		<h2>Drug Details</h2>
+		<h2>Content Details</h2>
 		<div style="overflow-y: scroll; height: 600px;">
 			<form class="form-horizontal">
 				<div class="form-group">
-					<label class="col-sm-2 control-label">Drug Id:</label>
+					<label class="col-sm-2 control-label">Content Id:</label>
 					<div class="col-sm-10">
-						<p class="form-control-static" th:text="${drug.id}">Drug Id</p>
+						<p class="form-control-static" th:text="${content.id}">Content
+							Id</p>
 					</div>
 				</div>
 
 				<div class="form-group">
-					<label class="col-sm-2 control-label">Brand Name:</label>
+					<label class="col-sm-2 control-label">Content Type:</label>
 					<div class="col-sm-10">
-						<p class="form-control-static" th:text="${drug.drugName}">Name</p>
+						<p class="form-control-static" th:text="${content.contentType}">Content
+							Type</p>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 control-label">Generic:</label>
+					<label class="col-sm-2 control-label">Drug Update Type:</label>
 					<div class="col-sm-10">
-						<p class="form-control-static" th:text="${drug.genericName}">Generic
-							Name</p>
+						<p class="form-control-static" th:text="${content.drugUpdateType}">Drug
+							Update Type</p>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 control-label">Manufacturer:</label>
+					<label class="col-sm-2 control-label">Content Header:</label>
 					<div class="col-sm-10">
-						<p class="form-control-static" th:text="${drug.manufacturer}">Manufacturer
-						</p>
+						<p class="form-control-static" th:text="${content.header}">Content
+							Header</p>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 control-label">Composition:</label>
-					<div class="col-sm-10">
-						<p class="form-control-static" th:text="${drug.composition}">Composition
-						</p>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">Indication:</label>
-					<div class="col-sm-10">
-						<p class="form-control-static" th:text="${drug.indication}">Indication
-						</p>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">Dosages
-						Administration:</label>
+					<label class="col-sm-2 control-label">Content Summary:</label>
 					<div class="col-sm-10">
 						<p class="form-control-static"
-							th:text="${drug.dosagesAdministration}">DosagesAdministration</p>
+							th:text="${content.content_summary}">Content Summary</p>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 control-label">Contra indication:</label>
+					<label class="col-sm-2 control-label">Content Expire on:</label>
 					<div class="col-sm-10">
-						<p class="form-control-static" th:text="${drug.contraindication}">Contra
-							indication</p>
+						<p class="form-control-static" th:text="${content.expireDate}">Content
+							Expire on</p>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 control-label">SideEffect:</label>
-					<div class="col-sm-10">
-						<p class="form-control-static" th:text="${drug.sideEffect}">SideEffect
-						</p>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">Special
-						warning/Precautions:</label>
-					<div class="col-sm-10">
-						<p class="form-control-static"
-							th:text="${drug.specialWarningPrecautions}">SpecialWarningPrecautions
-						</p>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">Drug Interaction:</label>
-					<div class="col-sm-10">
-						<p class="form-control-static" th:text="${drug.drugInteraction}">DrugInteraction
-						</p>
-					</div>
-				</div>
-
-				<div class="form-group">
-					<label class="col-sm-2 control-label">Storage:</label>
-					<div class="col-sm-10">
-						<p class="form-control-static" th:text="${drug.storage}">Storage
-						</p>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">Pregnancy/Lactation:</label>
-					<div class="col-sm-10">
-						<p class="form-control-static"
-							th:text="${drug.pregnancyLactation}">PregnancyLactation</p>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">Pack Size:</label>
-					<div class="col-sm-10">
-						<p class="form-control-static" th:text="${drug.packSize}">
-							Pack Size</p>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="col-sm-2 control-label">Drug price:</label>
-					<div class="col-sm-10">
-						<p class="form-control-static" th:text="${drug.drugprice}">Drug
-							price</p>
+					<div class="thumbnail">
+						<img width="400" th:src="@{|/index/image/${imageid}|}" />
 					</div>
 				</div>
 
