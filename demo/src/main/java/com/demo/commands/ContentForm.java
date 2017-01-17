@@ -31,6 +31,8 @@ public class ContentForm {
 
     private String add_section;
     
+   private String  contentPage;
+    
 
     private byte[] image;  
     
@@ -44,6 +46,18 @@ public class ContentForm {
     
     private String drugUpdateType;  
     
+    
+	public String getContentPage() {
+		return contentPage;
+	}
+
+
+
+	public void setContentPage(String contentPage) {
+		this.contentPage = contentPage;
+	}
+
+
 
 	public byte[] getImage() {
 		return image;

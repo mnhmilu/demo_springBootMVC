@@ -1,6 +1,9 @@
 package com.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,20 +53,36 @@ public class IndexController {
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String index(Model model)  {
+	public String index(Model model,HttpSession session	)  {
 		
 		cournterService.increment("Calling Index");
 		model.addAttribute("drug", new DrugSearchForm());
 		model.addAttribute("drugCount", drugDaoService.count());
 		model.addAttribute("genericCount", drugGenericDaoService.count());
-		model.addAttribute("imageid", "A1");
+		
+		List<Content> indexContents = contentRepository.findContentByContentPageOrderByInsertDateDesc("Index");
+		
+		List<Content> news =filterContentByType(indexContents,"News");
+		List<Content> add =filterContentByType(indexContents,"Advertisement");
+		model.addAttribute("newsList", news);
+		session.setAttribute("add", add);
+		
+		model.addAttribute("add1", "add1");
+		model.addAttribute("add2", "add2");
+		model.addAttribute("add3", "add3");
+		model.addAttribute("add4", "add4");
+		model.addAttribute("add5", "add5");
+		model.addAttribute("add6", "add6");
+		
 
 		return "index";
 
 	}
 
 	@RequestMapping(value = "/drugSearchFromIndex", method = RequestMethod.POST)
-	public String drugSearch(DrugSearchForm form, BindingResult bindingResult, Model model) {
+	public String drugSearch(DrugSearchForm form, BindingResult bindingResult, Model model,HttpSession session) {
+		
+		///String a =(String) session.getAttribute("test1");
 
 		if (form.getDrugName() == null || form.getDrugName().trim() == "") {
 			return "redirect:/";
@@ -108,12 +127,15 @@ public class IndexController {
 
 
 	@RequestMapping(value = "/index/image/{imageid}", method = RequestMethod.GET)
-	public ResponseEntity<byte[]> getQRImage(@PathVariable final String imageid)  {
+	public ResponseEntity<byte[]> getQRImage(@PathVariable final String imageid,HttpSession session)  {
 
 		byte[] bytes = null;
 		
+		
+		List<Content> contents=(List<Content> )session.getAttribute("add");
+		
 		if (contentRepository.count() > 0) {
-			Content content = contentRepository.findTop50ByOrderByInsertDateDesc().get(0);
+			Content content = filterAddByType(contents,imageid);
 			bytes = content.getImage();
 		}
 
@@ -123,5 +145,46 @@ public class IndexController {
 
 		return new ResponseEntity<byte[]>(bytes, headers, HttpStatus.CREATED);
 	}
+	
+	
+	private List<Content> filterContentByType(List<Content> indexContents,String type)
+	{
+		
+		List<Content> filteredContents = new ArrayList();
+		
+		
+		for(Content c : indexContents)
+		{
+			if(c.getContentType().equalsIgnoreCase(type))
+			{
+				filteredContents.add(c);				
+			}			
+			
+		}	
+		
+		return filteredContents;
+		
+	}
+	
+	
+	private Content filterAddByType(List<Content> addContents,String type)
+	{
+		
+		Content filteredContent = null;
+		
+		
+		for(Content c : addContents)
+		{
+			if(c.getAddSection().equalsIgnoreCase(type))
+			{
+				filteredContent=c;			
+			}			
+			
+		}	
+		
+		return filteredContent;
+		
+	}
+	
 
 }

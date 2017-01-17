@@ -8,11 +8,13 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import com.demo.domain.Content;
 import com.demo.domain.DoctorsInfo;
 import com.demo.domain.DoctorsSpecialization;
 import com.demo.domain.Drug;
 import com.demo.domain.DrugGeneric;
 import com.demo.domain.DrugManufacturer;
+import com.demo.repositories.ContentRepository;
 import com.demo.repositories.DoctorsInfoRepository;
 import com.demo.repositories.DoctorsSpecializaitonRepository;
 import com.demo.repositories.DrugGenericRepository;
@@ -32,19 +34,22 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
 	private DoctorsSpecializaitonRepository doctorsSpecializaitonRepository;
 
+	private ContentRepository contentRepository;
+
 	private Logger log = Logger.getLogger(DataLoader.class);
 
 	@Autowired
 	public void setProductRepository(DrugRepository drugRepository,
 			DrugManufacturerRepository drugManufacturerDaoService, DrugGenericRepository drugGenericRepository,
 			DoctorsInfoRepository doctorsInfoRepository,
-			DoctorsSpecializaitonRepository doctorsSpecializaitonRepository) {
+			DoctorsSpecializaitonRepository doctorsSpecializaitonRepository, ContentRepository contentRepository) {
 
 		this.drugRepository = drugRepository;
 		this.drugManufacturerDaoService = drugManufacturerDaoService;
 		this.drugGenericRepository = drugGenericRepository;
 		this.doctorsInfoRepository = doctorsInfoRepository;
 		this.doctorsSpecializaitonRepository = doctorsSpecializaitonRepository;
+		this.contentRepository = contentRepository;
 	}
 
 	@Override
@@ -144,32 +149,86 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		doctor.setDoctorDetails("MBBS,FCPS");
 		doctor.setDoctorsSpecialization(specialization);
 		doctorsInfoRepository.save(doctor);
-		
-		
 
 		for (int a = 0; a < 50; a++) {
 
-			doctor.setDoctorName("Dr Iqbal "+a);
+			doctor.setDoctorName("Dr Iqbal " + a);
 			doctor.setId(0);
-		
-			doctor.setChamber("i) Rampura Diagonistic Center ii) Banani Tel: 76555222, Mobile: 01733400999, Fax: 65552323");
-			doctor.setDoctorDetails("MBBS,PGT,MBBS, FAEM (CMC, Vellore), FDP (George Washington University, USA), MEM (India), "
-					+ "MMSc EM (Texila American University, Guyana), Examiner Royal College of Emergency Medicine (UK),"
-					+ "	Consultant");
+
+			doctor.setChamber(
+					"i) Rampura Diagonistic Center ii) Banani Tel: 76555222, Mobile: 01733400999, Fax: 65552323");
+			doctor.setDoctorDetails(
+					"MBBS,PGT,MBBS, FAEM (CMC, Vellore), FDP (George Washington University, USA), MEM (India), "
+							+ "MMSc EM (Texila American University, Guyana), Examiner Royal College of Emergency Medicine (UK),"
+							+ "	Consultant");
 			doctorsInfoRepository.save(doctor);
 		}
 		for (int a = 0; a < 50; a++) {
 
-			doctor.setDoctorName("Dr Alamgir Hossain "+a);
+			doctor.setDoctorName("Dr Alamgir Hossain " + a);
 			doctor.setId(0);
 			specialization.setIdSpecialization(1);
 			doctor.setDoctorsSpecialization(specialization);
-			doctor.setChamber("i) Rampura Diagonistic Center ii) Banani Tel: 76555222, Mobile: 01733400999, Fax: 65552323");
-			doctor.setDoctorDetails("MBBS,PGT,MBBS, FAEM (CMC, Vellore), FDP (George Washington University, USA), MEM (India), "
-					+ "MMSc EM (Texila American University, Guyana), Examiner Royal College of Emergency Medicine (UK),"
-					+ "	Consultant");
+			doctor.setChamber(
+					"i) Rampura Diagonistic Center ii) Banani Tel: 76555222, Mobile: 01733400999, Fax: 65552323");
+			doctor.setDoctorDetails(
+					"MBBS,PGT,MBBS, FAEM (CMC, Vellore), FDP (George Washington University, USA), MEM (India), "
+							+ "MMSc EM (Texila American University, Guyana), Examiner Royal College of Emergency Medicine (UK),"
+							+ "	Consultant");
 			doctorsInfoRepository.save(doctor);
 		}
 
+		addNewsData();
+		addAddData();
+
 	}
+
+	private void addAddData() {
+
+		for (int a = 1; a <=6 ; a++) {
+
+			Content add = new Content();
+			add.setContentType("Advertisement");
+			add.setContentPage("Index");
+			add.setHeader("Advertisement Header " + a);
+			add.setContent_summary("Advertisement Summary " + a);
+			add.setAddSection("add"+a);
+			
+			add.setInsertDate(new Date());
+			add.setExpireDate(new Date());
+
+			contentRepository.save(add);
+		}
+
+	}
+
+	private void addNewsData() {
+
+		Content news1 = new Content();
+		news1.setContentType("News");
+		news1.setContentPage("Index");
+		news1.setHeader("Health professionals: 4 Tips to deal with information fatigue");
+		news1.setContent_summary("According to Oxford Dictionary, information fatigue is a condition of apathy, "
+				+ "indifference or mental exhaustion due to being exposed "
+				+ "to too much information. Information fatigue is also sometimes referred to as information overload");
+		news1.setInsertDate(new Date());
+		news1.setExpireDate(new Date());
+
+		contentRepository.save(news1);
+
+		Content news2 = new Content();
+		news2.setContentType("News");
+		news2.setContentPage("Index");
+		news2.setHeader("Nobel Laureate Oliver Smithies leaves vast body of new work at age 91");
+		news2.setContent_summary("Nobel laureate Oliver Smithies, the Weatherspoon Eminent Distinguished Professor,"
+				+ " has passed on at the age of 91 on 10 January 2017. "
+				+ "News of his death was reported by his wife, Dr. "
+				+ "Nobuyo Maeda, to the school officials of University of North Carolina at Chapel Hill");
+		news2.setInsertDate(new Date());
+		news2.setExpireDate(new Date());
+
+		contentRepository.save(news2);
+
+	}
+
 }

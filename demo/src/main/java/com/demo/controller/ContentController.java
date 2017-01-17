@@ -5,13 +5,19 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -99,9 +105,10 @@ public class ContentController {
 
 		Content content = new Content();
 		content.setId(form.getId());
-		content.setAdd_section(form.getAdd_section());
+		content.setAddSection(form.getAdd_section());
 		content.setContent_details(form.getContent_details());
 		content.setImage(file.getBytes());
+		content.setContentPage(form.getContentPage());
 
 		content.setDrugUpdateType(form.getDrugUpdateType());
 
@@ -111,8 +118,7 @@ public class ContentController {
 		content.setHeader(form.getHeader());
 		content.setInsertDate(new Date());
 		content.setOriginalFileName(file.getOriginalFilename());
-		content.setAdd_section(form.getAdd_section());
-
+		
 		contentRepository.save(content);
 
 		return "redirect:/content/new";
@@ -120,12 +126,14 @@ public class ContentController {
 	}
 
 	@RequestMapping("content/{id}")
-	public String showContent(@PathVariable Integer id, Model model) {
+	public String showContent(@PathVariable Integer id, Model model,HttpSession session) {
 
 		slf4jLogger.info("ContentController :: showContent");
-		ContentForm form = contentDataToContentForm.convert(contentRepository.findById(id));
+		Content content =contentRepository.findById(id);
+		ContentForm form = contentDataToContentForm.convert(content);
 		model.addAttribute("content", form);
-		model.addAttribute("imageid", "A1");
+		model.addAttribute("imageid", form.getAdd_section());
+		session.setAttribute("stroredContent", content);
 		return "contents/contentshow";
 
 	}
@@ -165,51 +173,24 @@ public class ContentController {
 		binder.registerCustomEditor(Date.class, editor);
 	}
 
-	/*
-	 * 
-	 * @RequestMapping(value = "/drugSearch", method = RequestMethod.POST)
-	 * public String drugSearch(DrugSearchForm form, BindingResult
-	 * bindingResult, Model model) {
-	 * 
-	 * if (form.getDrugName() == null && form.getManufacturerId() == 0 &&
-	 * form.getGenericName()== null) { return "redirect:/drugList";
-	 * 
-	 * }
-	 * 
-	 * //DrugGeneric generic = null; DrugManufacturer brand2 = null;
-	 * 
-	 * Integer brandId =null; //Integer genericId= null;
-	 * 
-	 * 
-	 * 
-	 * if(form.getManufacturerId()!=0) { brand2 = new DrugManufacturer();
-	 * brand2.setManufacturerId(form.getManufacturerId()); brandId =
-	 * form.getManufacturerId(); model.addAttribute("drugBrand", brand2);
-	 * 
-	 * }
-	 * 
-	 * 
-	 * 
-	 * model.addAttribute("drug", form); model.addAttribute("brands",
-	 * drugManufacturerDaoServie.findAll()); //model.addAttribute("generics",
-	 * drugGenericDaoService.findAll());
-	 * 
-	 * 
-	 * List<Drug> drugsSearchResult =drugDaoService
-	 * .findDrugByDrugManufacturerOrByDrugGenericOrDrugName(brandId,form.
-	 * getGenericName(), form.getDrugName());
-	 * 
-	 * 
-	 * model.addAttribute("drugs",drugsSearchResult ); return "drugs/drugs"; }
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 */
+
+	@RequestMapping(value = "/content/image/{imageid}", method = RequestMethod.GET)
+	public ResponseEntity<byte[]> getImage(@PathVariable final String imageid,HttpSession session)  {
+
+		byte[] bytes = null;
+		
+		
+		Content content=(Content )session.getAttribute("stroredContent");
+		
+		if (content!=null) {			
+			bytes = content.getImage();
+		}
+
+		// Set headers
+		final HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.IMAGE_PNG);
+
+		return new ResponseEntity<byte[]>(bytes, headers, HttpStatus.CREATED);
+	}
 
 }

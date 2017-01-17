@@ -51,25 +51,19 @@
 
 				<div class="row">
 					<div class="col-sm-6 col-md-4" style="height: 410px;">
+
 						<div class="thumbnail">
+							<h3>
+								<span class="label label-primary">Advertisement</span>
+							</h3>
+							<p>
+								<img width="340" th:src="@{|/index/image/${add1}|}" />
+							</p>
+							<p>
+								<img width="340" th:src="@{|/index/image/${add2}|}" />
+							</p>
 
-							<!-- 							<img src="../../static/images/drug.jpg" width="400" -->
-							<!-- 								th:src="@{/images/drug.jpg}" /> -->
-<!-- 							<img width="400" -->
-<!-- 								th:src="@{|/images/upload-dir/${imageURL}|}" /> -->
-								<img width="400"
-								th:src="@{|/index/image/${imageid}|}" />
 
-							<div class="caption">
-								<h3>Advertisement 1</h3>
-								<p>Cras justo odio, dapibus ac facilisis in, egestas eget
-									quam. Donec id elit non mi porta gravida at eget metus. Nullam
-									id dolor id nibh ultricies vehicula ut id elit.</p>
-								<p>
-									<a href="#" class="btn btn-primary" role="button">Button</a> <a
-										href="#" class="btn btn-default" role="button">Button</a>
-								</p>
-							</div>
 						</div>
 
 					</div>
@@ -85,7 +79,8 @@
 									<li class="active"><a data-toggle="tab" href="#home">By
 											Brand</a></li>
 									<li><a data-toggle="tab" href="#menu1">By Generic</a></li>
-									<li><a data-toggle="tab" href="#menu2">By New Molicule</a></li>
+									<li><a data-toggle="tab" href="#menu2">By New
+											Molecules</a></li>
 								</ul>
 
 								<div class="tab-content" style="overflow: auto; height: 250px;">
@@ -180,7 +175,6 @@
 				<div class="row">
 					<div class="col-sm-6 col-md-8" style="height: 510px;">
 						<div class="thumbnail">
-							<!-- 							<img src="..." alt="..."> -->
 							<div class="caption">
 								<h3>
 									<span class="label label-primary">News</span>
@@ -188,80 +182,37 @@
 
 								<div class="bs-example" data-example-id="media-alignment"
 									style="overflow: auto; height: 410px;">
-									<div class="media">
+
+
+									<div class="media" th:each="news : ${newsList}">
 										<div class="media-left">
 
 											<img src="../../static/images/test1.png"
 												th:src="@{/images/test1.png}" />
 										</div>
 										<div class="media-body">
-											<h4 class="media-heading">Top aligned media</h4>
-											<p>Cras sit amet nibh libero, in gravida nulla. Nulla vel
-												metus scelerisque ante sollicitudin commodo. Cras purus
-												odio, vestibulum in vulputate at, tempus viverra turpis.
-												Fusce condimentum nunc ac nisi vulputate fringilla. Donec
-												lacinia congue felis in faucibus.</p>
-											<p>Donec sed odio dui. Nullam quis risus eget urna mollis
-												ornare vel eu leo. Cum sociis natoque penatibus et magnis
-												dis parturient montes, nascetur ridiculus mus.</p>
-										</div>
-									</div>
-									<div class="media">
-										<div class="media-left">
+											<h4 class="media-heading" th:text="${news.header}"></h4>
+											<p th:text="${news.content_summary}"></p>
 
-											<img src="../../static/images/test1.png"
-												th:src="@{/images/test1.png}" />
-										</div>
-										<div class="media-body">
-											<h4 class="media-heading">Middle aligned media</h4>
-											<p>Cras sit amet nibh libero, in gravida nulla. Nulla vel
-												metus scelerisque ante sollicitudin commodo. Cras purus
-												odio, vestibulum in vulputate at, tempus viverra turpis.
-												Fusce condimentum nunc ac nisi vulputate fringilla. Donec
-												lacinia congue felis in faucibus.</p>
-											<p>Donec sed odio dui. Nullam quis risus eget urna mollis
-												ornare vel eu leo. Cum sociis natoque penatibus et magnis
-												dis parturient montes, nascetur ridiculus mus.</p>
 										</div>
 									</div>
-									<div class="media">
-										<div class="media-left">
 
-											<img src="../../static/images/test1.png"
-												th:src="@{/images/test1.png}" />
-										</div>
-										<div class="media-body">
-											<h4 class="media-heading">Bottom aligned media</h4>
-											<p>Cras sit amet nibh libero, in gravida nulla. Nulla vel
-												metus scelerisque ante sollicitudin commodo. Cras purus
-												odio, vestibulum in vulputate at, tempus viverra turpis.
-												Fusce condimentum nunc ac nisi vulputate fringilla. Donec
-												lacinia congue felis in faucibus.</p>
-											<p>Donec sed odio dui. Nullam quis risus eget urna mollis
-												ornare vel eu leo. Cum sociis natoque penatibus et magnis
-												dis parturient montes, nascetur ridiculus mus.</p>
-										</div>
-									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="col-sm-6 col-md-4">
 						<div class="thumbnail">
-							<!-- 							<img src="..." alt="..."> -->
+
 							<div class="caption" style="height: 495px;">
 								<h3>
 									<span class="label label-primary">Advertisement</span>
 								</h3>
 								<p>
-
-									<img src="../../static/images/test2.jpg"
-										th:src="@{/images/test2.jpg}" />
+									<img width="300" th:src="@{|/index/image/${add3}|}" />
 								</p>
 								<p>
-
-									<img src="../../static/images/test3.jpg"
-										th:src="@{/images/test3.jpg}" />
+									<img width="300" th:src="@{|/index/image/${add4}|}" />
 								</p>
 							</div>
 						</div>
@@ -318,21 +269,16 @@
 					</div>
 					<div class="col-sm-6 col-md-4" style="height: 410px;">
 						<div class="thumbnail">
+							<h3>
+								<span class="label label-primary">Advertisement</span>
+							</h3>
 
-							<img src="../../static/images/drug.jpg" width="400"
-								th:src="@{/images/drug.jpg}" />
-
-
-							<div class="caption">
-								<h3>Thumbnail label</h3>
-								<p>Cras justo odio, dapibus ac facilisis in, egestas eget
-									quam. Donec id elit non mi porta gravida at eget metus. Nullam
-									id dolor id nibh ultricies vehicula ut id elit.</p>
-								<p>
-									<a href="#" class="btn btn-primary" role="button">Button</a> <a
-										href="#" class="btn btn-default" role="button">Button</a>
-								</p>
-							</div>
+							<p>
+								<img width="300" th:src="@{|/index/image/${add5}|}" />
+							</p>
+							<p>
+								<img width="300" th:src="@{|/index/image/${add6}|}" />
+							</p>
 						</div>
 
 					</div>

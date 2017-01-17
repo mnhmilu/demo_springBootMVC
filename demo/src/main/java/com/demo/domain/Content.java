@@ -43,8 +43,13 @@ public class Content {
     @Column(name = "content_details",columnDefinition="TEXT" )
     private String content_details;
 
-    @Column(name = "add_section")
-    private String add_section;
+    @Column(name = "addSection")
+    private String addSection;
+    
+    @Column(name = "contentPage")
+    private String contentPage;
+    
+    
     
     @Column(name = "drugUpdateType")
     private String drugUpdateType;
@@ -66,7 +71,10 @@ public class Content {
     
     @Column(name="image")
     @Lob
-    private byte[] image;  
+    private byte[] image;      
+
+
+
 
 
 	public byte[] getImage() {
@@ -139,14 +147,26 @@ public class Content {
 	}
 
 
-	public String getAdd_section() {
-		return add_section;
+
+
+	public String getAddSection() {
+		return addSection;
 	}
 
 
-	public void setAdd_section(String add_section) {
-		this.add_section = add_section;
-	}	
+	public void setAddSection(String addSection) {
+		this.addSection = addSection;
+	}
+	
+
+	public String getContentPage() {
+		return contentPage;
+	}
+
+
+	public void setContentPage(String contentPage) {
+		this.contentPage = contentPage;
+	}
 
 
 	public String getDrugUpdateType() {
