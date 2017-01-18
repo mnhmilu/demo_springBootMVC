@@ -54,7 +54,133 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
+		addDrugData();
+		addNewsData();
+		addAddData();
+		addDrugUpdateData();
 
+	}
+	
+	
+	private void addDrugUpdateData(){		
+
+
+			for (int a = 1; a <=6 ; a++) {
+
+				Content add = new Content();
+				add.setContentType("DrugUpdate");
+				add.setContentPage("Index");
+				add.setDrugUpdateType("ByBrand");
+				add.setHeader("Arthritis Center" + a);
+				add.setContent_summary("Arthritis is a condition associated with swelling and inflammation of the joints,"
+						+ " which often results in pain and restriction of movement. It is estimated that more"
+						+ " than 40 million people in America have some form of arthritis. Consult this center "
+						+ "if you wish to find more information on the types of arthritis");
+				add.setAddSection("add"+a);
+				
+				add.setInsertDate(new Date());
+				add.setExpireDate(new Date());
+
+				contentRepository.save(add);
+			}
+			
+			for (int a = 1; a <=6 ; a++) {
+
+				Content add = new Content();
+				add.setContentType("DrugUpdate");
+				add.setContentPage("Index");
+				add.setDrugUpdateType("ByGeneric");
+				add.setHeader("Micromedex® Consumer Information (Advanced)" + a);
+				add.setContent_summary("Arthritis is a condition associated with swelling and inflammation of the joints,"
+						+ " which often results in pain and restriction of movement. It is estimated that more"
+						+ " than 40 million people in America have some form of arthritis. Consult this center "
+						+ "if you wish to find more information on the types of arthritis");
+				add.setAddSection("add"+a);
+				
+				add.setInsertDate(new Date());
+				add.setExpireDate(new Date());
+
+				contentRepository.save(add);
+			}
+			
+			for (int a = 1; a <=6 ; a++) {
+
+				Content add = new Content();
+				add.setContentType("DrugUpdate");
+				add.setContentPage("Index");
+				add.setDrugUpdateType("ByNewMolecules");
+				add.setHeader("AHFS DI Monographs" + a);
+				add.setContent_summary("Arthritis is a condition associated with swelling and inflammation of the joints,"
+						+ " which often results in pain and restriction of movement. It is estimated that more"
+						+ " than 40 million people in America have some form of arthritis. Consult this center "
+						+ "if you wish to find more information on the types of arthritis");
+				add.setAddSection("add"+a);
+				
+				add.setInsertDate(new Date());
+				add.setExpireDate(new Date());
+
+				contentRepository.save(add);
+			}
+
+
+		
+		
+		
+	}
+	
+	
+
+	private void addAddData() {
+
+		for (int a = 1; a <=6 ; a++) {
+
+			Content add = new Content();
+			add.setContentType("Advertisement");
+			add.setContentPage("Index");
+			add.setHeader("Advertisement Header " + a);
+			add.setContent_summary("Advertisement Summary " + a);
+			add.setAddSection("add"+a);
+			
+			add.setInsertDate(new Date());
+			add.setExpireDate(new Date());
+
+			contentRepository.save(add);
+		}
+
+	}
+
+	private void addNewsData() {
+
+		Content news1 = new Content();
+		news1.setContentType("News");
+		news1.setContentPage("Index");
+		news1.setHeader("Health professionals: 4 Tips to deal with information fatigue");
+		news1.setContent_summary("According to Oxford Dictionary, information fatigue is a condition of apathy, "
+				+ "indifference or mental exhaustion due to being exposed "
+				+ "to too much information. Information fatigue is also sometimes referred to as information overload");
+		news1.setInsertDate(new Date());
+		news1.setExpireDate(new Date());
+
+		contentRepository.save(news1);
+
+		Content news2 = new Content();
+		news2.setContentType("News");
+		news2.setContentPage("Index");
+		news2.setHeader("Nobel Laureate Oliver Smithies leaves vast body of new work at age 91");
+		news2.setContent_summary("Nobel laureate Oliver Smithies, the Weatherspoon Eminent Distinguished Professor,"
+				+ " has passed on at the age of 91 on 10 January 2017. "
+				+ "News of his death was reported by his wife, Dr. "
+				+ "Nobuyo Maeda, to the school officials of University of North Carolina at Chapel Hill");
+		news2.setInsertDate(new Date());
+		news2.setExpireDate(new Date());
+
+		contentRepository.save(news2);
+
+	}
+	
+	
+	private void addDrugData() {
+		
 		DrugManufacturer manufacturer = new DrugManufacturer();
 		manufacturer.setManufacturer("ESKAYEF");
 		drugManufacturerDaoService.save(manufacturer);
@@ -177,58 +303,8 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 							+ "	Consultant");
 			doctorsInfoRepository.save(doctor);
 		}
-
-		addNewsData();
-		addAddData();
-
-	}
-
-	private void addAddData() {
-
-		for (int a = 1; a <=6 ; a++) {
-
-			Content add = new Content();
-			add.setContentType("Advertisement");
-			add.setContentPage("Index");
-			add.setHeader("Advertisement Header " + a);
-			add.setContent_summary("Advertisement Summary " + a);
-			add.setAddSection("add"+a);
-			
-			add.setInsertDate(new Date());
-			add.setExpireDate(new Date());
-
-			contentRepository.save(add);
-		}
-
-	}
-
-	private void addNewsData() {
-
-		Content news1 = new Content();
-		news1.setContentType("News");
-		news1.setContentPage("Index");
-		news1.setHeader("Health professionals: 4 Tips to deal with information fatigue");
-		news1.setContent_summary("According to Oxford Dictionary, information fatigue is a condition of apathy, "
-				+ "indifference or mental exhaustion due to being exposed "
-				+ "to too much information. Information fatigue is also sometimes referred to as information overload");
-		news1.setInsertDate(new Date());
-		news1.setExpireDate(new Date());
-
-		contentRepository.save(news1);
-
-		Content news2 = new Content();
-		news2.setContentType("News");
-		news2.setContentPage("Index");
-		news2.setHeader("Nobel Laureate Oliver Smithies leaves vast body of new work at age 91");
-		news2.setContent_summary("Nobel laureate Oliver Smithies, the Weatherspoon Eminent Distinguished Professor,"
-				+ " has passed on at the age of 91 on 10 January 2017. "
-				+ "News of his death was reported by his wife, Dr. "
-				+ "Nobuyo Maeda, to the school officials of University of North Carolina at Chapel Hill");
-		news2.setInsertDate(new Date());
-		news2.setExpireDate(new Date());
-
-		contentRepository.save(news2);
-
+		
+		
 	}
 
 }

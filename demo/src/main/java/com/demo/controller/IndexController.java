@@ -64,6 +64,17 @@ public class IndexController {
 		
 		List<Content> news =filterContentByType(indexContents,"News");
 		List<Content> add =filterContentByType(indexContents,"Advertisement");
+		List<Content> drugUpdate =filterContentByType(indexContents,"DrugUpdate");
+		
+		List<Content> drugUpdatesByBrand =filterDrugUpdateByType(drugUpdate,"ByBrand");
+		List<Content> drugUpdatesByGeneric =filterDrugUpdateByType(drugUpdate,"ByGeneric");
+		List<Content> drugUpdatesByNewMolecules =filterDrugUpdateByType(drugUpdate,"ByNewMolecules");
+		
+		model.addAttribute("drugUpdatesByBrand", drugUpdatesByBrand);
+		model.addAttribute("drugUpdatesByGeneric",drugUpdatesByGeneric);
+		model.addAttribute("drugUpdatesByNewMolecules", drugUpdatesByNewMolecules);
+		
+		
 		model.addAttribute("newsList", news);
 		session.setAttribute("add", add);
 		
@@ -186,5 +197,26 @@ public class IndexController {
 		
 	}
 	
+	
+	private List<Content> filterDrugUpdateByType(List<Content> indexContents,String type)
+	{
+		
+		List<Content> filteredContents = new ArrayList();
+		
+		
+		for(Content c : indexContents)
+		{
+			if(c.getDrugUpdateType().equalsIgnoreCase(type))
+			{
+				filteredContents.add(c);				
+			}			
+			
+		}	
+		
+		return filteredContents;
+		
+	}
+	
+
 
 }

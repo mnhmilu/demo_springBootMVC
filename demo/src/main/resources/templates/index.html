@@ -85,83 +85,45 @@
 
 								<div class="tab-content" style="overflow: auto; height: 250px;">
 									<div id="home" class="tab-pane fade in active">
-										<div class="list-group">
+										<div class="list-group" th:each="news : ${drugUpdatesByBrand}">
 											<a href="#" class="list-group-item ">
 												<h5 class="list-group-item-heading">
-													<b>niraparib</b>
+													<b th:text="${news.header}">ddd</b>
 												</h5>
-												<p class="list-group-item-text">Niraparib is an oral,
-													poly ADP-ribose polymerase (PARP) inhibitor in development
-													for the treatment of patients with recurrent...</p>
-											</a> <a href="#" class="list-group-item ">
-												<h5 class="list-group-item-heading">
-													<b>Cotempla XR-ODT</b>
-												</h5>
-												<p class="list-group-item-text">Cotempla XR-ODT
-													(methylphenidate) is a once-daily, extended-release, orally
-													disintegrating tablet formulation of the stimulant...</p>
-											</a> <a href="#" class="list-group-item ">
-												<h5 class="list-group-item-heading">
-													<b>Ocrevus</b>
-												</h5>
-												<p class="list-group-item-text">Ocrevus (ocrelizumab) is
-													a humanized monoclonal antibody designed to target
-													CD20-positive B-cells, which are implicated in the
-													inflammatory...</p>
-											</a> <a href="#" class="list-group-item ">
-												<h5 class="list-group-item-heading">
-													<b>Ocrevus</b>
-												</h5>
-												<p class="list-group-item-text">Ocrevus (ocrelizumab) is
-													a humanized monoclonal antibody designed to target
-													CD20-positive B-cells, which are implicated in the
-													inflammatory...</p>
-											</a> <a href="#" class="list-group-item ">
-												<h5 class="list-group-item-heading">
-													<b>Ocrevus</b>
-												</h5>
-												<p class="list-group-item-text">Ocrevus (ocrelizumab) is
-													a humanized monoclonal antibody designed to target
-													CD20-positive B-cells, which are implicated in the
-													inflammatory...</p>
+												<p class="list-group-item-text"
+													th:text="${news.content_summary}">para</p>
 											</a>
 										</div>
 									</div>
 									<div id="menu1" class="tab-pane fade">
-										<h3>Menu 1</h3>
-										<div class="list-group">
+										
+										<div class="list-group"
+											th:each="news : ${drugUpdatesByGeneric}">
 											<a href="#" class="list-group-item ">
-												<h4 class="list-group-item-heading">List group item
-													heading</h4>
-												<p class="list-group-item-text">...</p>
-											</a> <a href="#" class="list-group-item ">
-												<h4 class="list-group-item-heading">List group item
-													heading</h4>
-												<p class="list-group-item-text">...</p>
-											</a> <a href="#" class="list-group-item ">
-												<h4 class="list-group-item-heading">List group item
-													heading</h4>
-												<p class="list-group-item-text">...</p>
+												<h5 class="list-group-item-heading">
+													<b th:text="${news.header}">ddd</b>
+												</h5>
+												<p class="list-group-item-text"
+													th:text="${news.content_summary}">para</p>
 											</a>
 										</div>
 									</div>
 									<div id="menu2" class="tab-pane fade">
-										<h3>Menu 2</h3>
-										<div class="list-group">
+									
+										<div class="list-group"
+											th:each="news : ${drugUpdatesByNewMolecules}">
 											<a href="#" class="list-group-item ">
-												<h4 class="list-group-item-heading">List group item
-													heading</h4>
-												<p class="list-group-item-text">...</p>
-											</a> <a href="#" class="list-group-item ">
-												<h4 class="list-group-item-heading">List group item
-													heading</h4>
-												<p class="list-group-item-text">...</p>
-											</a> <a href="#" class="list-group-item ">
-												<h4 class="list-group-item-heading">List group item
-													heading</h4>
-												<p class="list-group-item-text">...</p>
+												<h5 class="list-group-item-heading">
+													<b th:text="${news.header}">ddd</b>
+												</h5>
+												<p class="list-group-item-text"
+													th:text="${news.content_summary}">para</p>
 											</a>
 										</div>
+
+
+
+
 									</div>
 								</div>
 							</div>

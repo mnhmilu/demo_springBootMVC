@@ -32,11 +32,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.demo.commands.ContentForm;
 import com.demo.commands.ContentSearchForm;
-import com.demo.commands.DrugForm;
 import com.demo.converter.ContentDataToContentForm;
 import com.demo.domain.Content;
-import com.demo.domain.DrugGeneric;
-import com.demo.domain.DrugManufacturer;
 import com.demo.repositories.ContentRepository;
 
 @Controller
@@ -63,6 +60,19 @@ public class ContentController {
 		model.addAttribute("contents", contentRepository.findTop50ByOrderByInsertDateDesc());
 		return "contents/contents";
 
+	}
+	
+	@RequestMapping(value = "/contentSearch", method = RequestMethod.POST)
+	public String contentSearch(ContentSearchForm form, BindingResult bindingResult, Model model) {
+
+		if (form.getContentType() == null ) {
+			return "redirect:/contentList";
+		}	
+		
+        List<Content> results =contentRepository.findContentByContentTypeOrderByInsertDateDesc(form.getContentType());
+        model.addAttribute("content", form);
+        model.addAttribute("contents",results );
+		return "contents/contents";
 	}
 
 	@RequestMapping("content/new")

@@ -23,7 +23,8 @@ public interface ContentRepository extends CrudRepository<Content, Integer>{
 	@Query("select d from Content d where lower(d.contentPage) like lower( :contentPage) ")
 	List<Content> findContentByContentPageOrderByInsertDateDesc(@Param("contentPage") String contentPage);		
 	
-	
+	@Query("select d from Content d where lower(d.contentType) like lower( :contentType) ")
+	List<Content> findContentByContentTypeOrderByInsertDateDesc(@Param("contentType") String contentType);	
 	
 	
 	//@Query("select d from Drug d inner join d.drugManufacturer br inner join d.drugGeneric dg where br.manufacturerId=:manufacturerId or lower(dg.genericName) like lower(:genericName)  or lower(d.drugName) LIKE lower (:drugName)")
