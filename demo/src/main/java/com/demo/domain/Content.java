@@ -61,7 +61,7 @@ public class Content {
     @Temporal(TemporalType.DATE)
     private Date insertDate;    
        
-    
+    @NotNull
     @Temporal(TemporalType.DATE)
     private Date expireDate;   
    
