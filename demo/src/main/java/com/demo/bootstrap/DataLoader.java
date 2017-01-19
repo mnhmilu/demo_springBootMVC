@@ -293,7 +293,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
 			doctor.setDoctorName("Dr Alamgir Hossain " + a);
 			doctor.setId(0);
-			specialization.setIdSpecialization(1);
+			specialization.setIdSpecialization(specialization.getIdSpecialization());
 			doctor.setDoctorsSpecialization(specialization);
 			doctor.setChamber(
 					"i) Rampura Diagonistic Center ii) Banani Tel: 76555222, Mobile: 01733400999, Fax: 65552323");
