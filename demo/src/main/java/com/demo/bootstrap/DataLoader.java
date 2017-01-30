@@ -1,6 +1,8 @@
 package com.demo.bootstrap;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +16,15 @@ import com.demo.domain.DoctorsSpecialization;
 import com.demo.domain.Drug;
 import com.demo.domain.DrugGeneric;
 import com.demo.domain.DrugManufacturer;
+import com.demo.domain.security.Role;
+import com.demo.domain.security.User;
 import com.demo.repositories.ContentRepository;
 import com.demo.repositories.DoctorsInfoRepository;
 import com.demo.repositories.DoctorsSpecializaitonRepository;
 import com.demo.repositories.DrugGenericRepository;
 import com.demo.repositories.DrugManufacturerRepository;
 import com.demo.repositories.DrugRepository;
+import com.demo.repositories.UserRepository;
 
 @Component
 public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
@@ -35,6 +40,8 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 	private DoctorsSpecializaitonRepository doctorsSpecializaitonRepository;
 
 	private ContentRepository contentRepository;
+	
+	private UserRepository userRepository;
 
 	private Logger log = Logger.getLogger(DataLoader.class);
 
@@ -42,7 +49,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 	public void setProductRepository(DrugRepository drugRepository,
 			DrugManufacturerRepository drugManufacturerDaoService, DrugGenericRepository drugGenericRepository,
 			DoctorsInfoRepository doctorsInfoRepository,
-			DoctorsSpecializaitonRepository doctorsSpecializaitonRepository, ContentRepository contentRepository) {
+			DoctorsSpecializaitonRepository doctorsSpecializaitonRepository, ContentRepository contentRepository,UserRepository userRepository) {
 
 		this.drugRepository = drugRepository;
 		this.drugManufacturerDaoService = drugManufacturerDaoService;
@@ -50,6 +57,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		this.doctorsInfoRepository = doctorsInfoRepository;
 		this.doctorsSpecializaitonRepository = doctorsSpecializaitonRepository;
 		this.contentRepository = contentRepository;
+		this.userRepository = userRepository;
 	}
 
 	@Override
@@ -58,7 +66,26 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		addNewsData();
 		addAddData();
 		addDrugUpdateData();
+		addSecurityIntitalData();
 
+	}
+	
+	private void addSecurityIntitalData(){			
+		
+		Role role = new Role();
+		role.setRole("ROLE_ADMIN");
+		
+		User admin = new User();		
+		admin.setPassword("pass");
+		admin.setUsername("admin");		
+		
+		Set<Role> set = new HashSet<Role>();
+		set.add(role);
+		
+		admin.setRoles(set);		
+		userRepository.save(admin);
+		
+	
 	}
 	
 	
