@@ -73,7 +73,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 	private void addSecurityIntitalData(){			
 		
 		Role role = new Role();
-		role.setRole("ROLE_ADMIN");
+		role.setRole("ADMIN");
 		
 		User admin = new User();		
 		admin.setPassword("pass");
