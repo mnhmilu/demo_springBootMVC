@@ -1,6 +1,5 @@
 package com.demo.configuration;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -18,57 +17,47 @@ import com.demo.repositories.UserRepository;
  */
 @Configuration
 @EnableWebSecurity
-public class SpringSecurityConfigurer extends WebSecurityConfigurerAdapter{
+public class SpringSecurityConfigurer extends WebSecurityConfigurerAdapter {
 
-    @Autowired private UserRepository userRepository;
+	@Autowired
+	private UserRepository userRepository;
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsServiceBean());
-    }
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsServiceBean());
+	}
 
-    @Override
-    public UserDetailsService userDetailsServiceBean() throws Exception {
-        return new SSUserDetailsService(userRepository);
-    }
+	@Override
+	public UserDetailsService userDetailsServiceBean() throws Exception {
+		return new SSUserDetailsService(userRepository);
+	}
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-    	
-    	/* from previous config
-    	http.authorizeRequests().antMatchers("/").permitAll().and()
-        .authorizeRequests().antMatchers("/console/**").permitAll();
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
 
-    	http.csrf().disable();
-    	http.headers().frameOptions().disable();
-    	http.logout().logoutSuccessUrl("/index");
-    	*/
-    	/*  from web site
-        http
-            .authorizeRequests()
-                .antMatchers("/admin/**").hasAuthority("ADMIN")
-                .antMatchers("/user/**").hasAuthority("USER")
-                .anyRequest().authenticated()
-            .and()
-            .formLogin()
-            .and()
-            .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login");
-            */
-    	
-    	http
-        .authorizeRequests().antMatchers("/").permitAll().and().authorizeRequests()
-            .antMatchers("/admin/**","/content/**").hasAuthority("ADMIN")
-            .antMatchers("/user/**").hasAuthority("USER")
-            .anyRequest().authenticated()
-        .and()
-        .formLogin()
-        .and()
-        .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/");
-        
-    }
+		/*
+		 * from previous config
+		 * http.authorizeRequests().antMatchers("/").permitAll().and()
+		 * .authorizeRequests().antMatchers("/console/**").permitAll();
+		 * 
+		 * http.csrf().disable(); http.headers().frameOptions().disable();
+		 * http.logout().logoutSuccessUrl("/index");
+		 */
+		/*
+		 * from web site http .authorizeRequests()
+		 * .antMatchers("/admin/**").hasAuthority("ADMIN")
+		 * .antMatchers("/user/**").hasAuthority("USER")
+		 * .anyRequest().authenticated() .and() .formLogin() .and()
+		 * .logout().logoutRequestMatcher(new
+		 * AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login");
+		 */
 
+		http.authorizeRequests().antMatchers("/", "/drugSearchFromIndex", "/index/drugByGeneric/*", "/index/drugByBrand/*","/index/image/*").permitAll().
+		        and().formLogin().loginPage("/login").permitAll().
+		        and().authorizeRequests().antMatchers("/static/*").permitAll().
+				and().authorizeRequests().anyRequest().authenticated().
+				and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/");
 
-
-
+	}
 
 }

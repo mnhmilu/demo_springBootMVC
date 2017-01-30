@@ -32,6 +32,10 @@ public class AuthenticationController {
 		return "My Spring Bood App(auth)";		
 	}
 	
+
+	
+	
+	
 	
 	@RequestMapping(value="/logout", method = RequestMethod.GET)
 	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
