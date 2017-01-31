@@ -18,8 +18,8 @@
 				</div>
 				<div class="col-md-4" align="right">
 					<h5 th:inline="text">
-						<a class="navbar-brand" href="#" th:href="@{/manager}">Manager
-							Home</a> Welcome Admin
+						Welcome
+						<div sec:authentication="name">.</div>
 						<form th:action="@{/logout}" method="post">
 							<input type="submit" value="Sign Out" class="btn btn-primary" />
 						</form>
@@ -31,7 +31,7 @@
 				<div class="container-fluid">
 					<div class="navbar-header">
 						<a class="navbar-brand" href="#" th:href="@{/}">Home</a>
-						<ul class="nav navbar-nav">						
+						<ul class="nav navbar-nav">
 							<li><a href="#" th:href="@{/drugList}">Drugs</a></li>
 							<li><a href="#" th:href="@{/specializations}">Doctors </a></li>
 							<li><a href="#" th:href="@{/contentList}">Contents </a></li>

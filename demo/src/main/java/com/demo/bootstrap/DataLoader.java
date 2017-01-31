@@ -24,6 +24,7 @@ import com.demo.repositories.DoctorsSpecializaitonRepository;
 import com.demo.repositories.DrugGenericRepository;
 import com.demo.repositories.DrugManufacturerRepository;
 import com.demo.repositories.DrugRepository;
+import com.demo.repositories.RoleRepository;
 import com.demo.repositories.UserRepository;
 
 @Component
@@ -42,6 +43,8 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 	private ContentRepository contentRepository;
 	
 	private UserRepository userRepository;
+	
+	private RoleRepository roleRepository;
 
 	private Logger log = Logger.getLogger(DataLoader.class);
 
@@ -49,7 +52,8 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 	public void setProductRepository(DrugRepository drugRepository,
 			DrugManufacturerRepository drugManufacturerDaoService, DrugGenericRepository drugGenericRepository,
 			DoctorsInfoRepository doctorsInfoRepository,
-			DoctorsSpecializaitonRepository doctorsSpecializaitonRepository, ContentRepository contentRepository,UserRepository userRepository) {
+			DoctorsSpecializaitonRepository doctorsSpecializaitonRepository, ContentRepository contentRepository,UserRepository userRepository,
+			RoleRepository roleRepository) {
 
 		this.drugRepository = drugRepository;
 		this.drugManufacturerDaoService = drugManufacturerDaoService;
@@ -58,6 +62,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		this.doctorsSpecializaitonRepository = doctorsSpecializaitonRepository;
 		this.contentRepository = contentRepository;
 		this.userRepository = userRepository;
+		this.roleRepository =roleRepository;
 	}
 
 	@Override
@@ -72,18 +77,50 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 	
 	private void addSecurityIntitalData(){			
 		
-		Role role = new Role();
-		role.setRole("ADMIN");
+		Role roleAdmin = new Role();
+		roleAdmin.setRole("ADMIN");
+		
+		Role roleUser = new Role();
+		roleUser.setRole("USER");	
+		
+		Role roleManager = new Role();
+		roleManager.setRole("MANAGER");
+				
+		
+		//adding admin user
+		Set<Role> setAdminRole = new HashSet<Role>();
+		setAdminRole.add(roleAdmin);
+		//setAdminRole.add(roleManager);
 		
 		User admin = new User();		
 		admin.setPassword("pass");
-		admin.setUsername("admin");		
+		admin.setUsername("admin");	
+		admin.setRoles(setAdminRole);		
+		userRepository.save(admin);		
 		
-		Set<Role> set = new HashSet<Role>();
-		set.add(role);
 		
-		admin.setRoles(set);		
-		userRepository.save(admin);
+		
+		//adding general user
+		Set<Role> setUserRole = new HashSet<Role>();
+		setUserRole.add(roleUser);		
+		
+		User user = new User();		
+		user.setPassword("user");
+		user.setUsername("user");	
+		admin.setRoles(setUserRole);		
+		userRepository.save(user);
+		
+		//adding manager user
+		Set<Role> setManagerRole = new HashSet<Role>();
+		setManagerRole.add(roleManager);		
+		
+		
+		User userManager = new User();		
+		userManager.setPassword("manager");
+		userManager.setUsername("manager");			
+		userManager.setRoles(setManagerRole);		
+		userRepository.save(userManager);	
+		
 		
 	
 	}

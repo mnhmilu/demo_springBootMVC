@@ -59,6 +59,11 @@
 				<div class="panel-body">
 					<h4>
 						<span class="label label-primary">Content List</span>
+
+						<div sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')">This content is
+							only shown to administrators.</div>
+						<div sec:authorize="hasRole('ROLE_MANAGER')">This content is
+							only shown to manager.</div>
 					</h4>
 					<table class="table table-striped">
 						<tr>
@@ -66,17 +71,16 @@
 							<th>Content Header</th>
 							<th>Expire Date</th>
 							<th>View</th>
-							<th>Edit</th>
-							<th>Delete</th>
+							<th sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')">Edit</th>
+							<th sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')">Delete</th>
 						</tr>
 						<tr th:each="content : ${contents}">
 							<td th:text="${content.contentType}">Content Type</td>
 							<td th:text="${content.header}">Header</td>
 							<td th:text="${content.expireDate}">Expire Date</td>
-
 							<td><a th:href="${'/content/' + content.id}">Details</a></td>
-							<td><a th:href="${'/content/edit/' + content.id}">Edit</a></td>
-							<td><a th:href="${'/content/delete/' + content.id}">Delete</a></td>
+							<td sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')"><a th:href="${'/content/edit/' + content.id}">Edit</a></td>
+							<td sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')"><a th:href="${'/content/delete/' + content.id}">Delete</a></td>
 						</tr>
 					</table>
 				</div>
