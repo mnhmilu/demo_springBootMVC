@@ -28,8 +28,8 @@
 								<p class="list-group-item-text" th:text="${item.doctorDetails}">...</p>
 								<p class="list-group-item-text"
 									th:text="|cham: ${item.chamber}|">...</p> <a
-								th:href="${'/doctor/edit/' + item.id}">Edit</a> <a
-								th:href="${'/doctor/delete/' + item.id}">Delete</a>
+								th:href="${'/doctor/edit/' + item.id}" sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')">Edit</a> <a
+								th:href="${'/doctor/delete/' + item.id}" sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')">Delete</a>
 
 							</a>
 						</th:block>

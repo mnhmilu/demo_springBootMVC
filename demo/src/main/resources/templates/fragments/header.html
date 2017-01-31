@@ -16,12 +16,13 @@
 						</p>
 					</h1>
 				</div>
-<!-- 				<div class="col-md-4" align="right"> -->
-<!-- 					<h5 th:inline="text"> -->
-<!-- 						<a class="navbar-brand" href="#" th:href="@{/manager}">Manager -->
-<!-- 							Home</a> -->
-<!-- 					</h5> -->
-<!-- 				</div> -->
+				<div class="col-md-4" align="right">
+					<h5 th:inline="text">
+						<form th:action="@{/manager}" method="get">
+							<input type="submit" value="Login" class="btn btn-primary" />
+						</form>
+					</h5>
+				</div>
 			</div>
 			<nav class="navbar navbar-default">
 				<div class="container-fluid">
@@ -29,20 +30,26 @@
 						<a class="navbar-brand" href="#" th:href="@{/}">Home</a>
 						<ul class="nav navbar-nav">
 							<li><a href="#" th:href="@{/drugList}">Drugs</a></li>
-							<li><a href="#" th:href="@{/specializations}">Doctors </a></li>
-							<li><a href="#" th:href="@{/contentList}">Contents </a></li>
-                            <li><a href="#" th:href="@{/manager}">Admin </a></li>
+							<li><a href="#" th:href="@{/specializations}">Doctors </a></li>					
+
 						</ul>
-						
+						<ul class="nav navbar-nav">
+							<li class="dropdown"><a href="#" class="dropdown-toggle"
+								data-toggle="dropdown" role="button" aria-haspopup="true"
+								aria-expanded="false">News <span class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li><a href="#">General News</a></li>
+									<li><a href="#">Drug Updates</a></li>
+								</ul></li>
+						</ul>
 						<ul class="nav navbar-nav navbar-right">
 							<li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown" role="button" aria-haspopup="true"
-								aria-expanded="false">Settings <span class="caret"></span></a>
-								<ul class="dropdown-menu">
-									<li><a href="#" th:href="@{/drugGenericList}">Generic</a></li>
+								aria-expanded="false">More <span class="caret"></span></a>
+								<ul class="dropdown-menu">							
 									<li><a href="#">Registration</a></li>
 									<li role="separator" class="divider"></li>
-									<li><a href="#">Advertisements</a></li>
+									<li><a href="#">FAQ</a></li>
 								</ul></li>
 						</ul>
 

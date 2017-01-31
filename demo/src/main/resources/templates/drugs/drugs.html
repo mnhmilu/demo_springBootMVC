@@ -60,7 +60,7 @@
 				</form>
 			</div>
 		</div>
-		<div class="panel panel-default">
+		<div class="panel panel-default" sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')">
 			<div class="panel-body">
 
 				<a href="/drug/new" class="btn btn-success" role="button">Add
@@ -82,9 +82,9 @@
 							<th>Manufacturer Name</th>
 							<!-- 							<th>Price</th> -->
 
-							<th>View</th>
-							<th>Edit</th>
-							<th>Delete</th>
+							<th >View</th>
+							<th sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')">Edit</th>
+							<th sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')">Delete</th>
 						</tr>
 						<tr th:each="drug : ${drugs}">
 							<td th:text="${drug.id}"><a href="/drug/${drug.id}">Id</a></td>
@@ -95,8 +95,8 @@
 							<!-- 							<td th:text="${drug.drugprice}">Price</td> -->
 
 							<td><a th:href="${'/drug/' + drug.id}">Details</a></td>
-							<td><a th:href="${'/drug/edit/' + drug.id}">Edit</a></td>
-							<td><a th:href="${'/drug/delete/' + drug.id}">Delete</a></td>
+							<td sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')"><a th:href="${'/drug/edit/' + drug.id}">Edit</a></td>
+							<td sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')"><a th:href="${'/drug/delete/' + drug.id}">Delete</a></td>
 						</tr>
 					</table>
 

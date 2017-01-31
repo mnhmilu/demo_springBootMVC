@@ -9,7 +9,7 @@
 <body>
 	<div class="container">
 		<!--/*/ <th:block th:include="fragments/headerForManager :: header"></th:block> /*/-->
-		<div class="panel panel-default">
+		<div class="panel panel-default" sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')">
 			<div class="panel-body">
 
 				<a href="/doctor/new" class="btn btn-success" role="button">Add

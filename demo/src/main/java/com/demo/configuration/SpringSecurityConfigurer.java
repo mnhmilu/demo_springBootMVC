@@ -53,9 +53,14 @@ public class SpringSecurityConfigurer extends WebSecurityConfigurerAdapter {
 		 */
 
 		http.authorizeRequests().antMatchers("/", "/drugSearchFromIndex", "/index/drugByGeneric/*", "/index/drugByBrand/*","/index/image/*").permitAll().
-		        and().formLogin().loginPage("/login").permitAll().
-		        and().authorizeRequests().antMatchers("/static/*").permitAll().
-				and().authorizeRequests().anyRequest().authenticated().
+		        and().formLogin().loginPage("/login").permitAll().	   
+		        and().authorizeRequests().antMatchers("/**/favicon.ico") .permitAll()           
+                .and().authorizeRequests().antMatchers("/webjars/**").permitAll()
+                .and().authorizeRequests().antMatchers("/static/css").permitAll()
+                .and().authorizeRequests().antMatchers("/specializations").permitAll()          
+                .and().authorizeRequests().antMatchers("/doctorsList/**").permitAll()
+                .and().authorizeRequests().antMatchers("/js").permitAll()
+				.and().authorizeRequests().anyRequest().authenticated().
 				and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/");
 
 	}

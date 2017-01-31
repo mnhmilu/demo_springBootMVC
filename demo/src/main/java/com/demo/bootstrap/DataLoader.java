@@ -80,12 +80,14 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		Role roleAdmin = new Role();
 		roleAdmin.setRole("ADMIN");
 		
-		Role roleUser = new Role();
-		roleUser.setRole("USER");	
+		Role rolePharma = new Role();
+		rolePharma.setRole("PHARMA");	
 		
 		Role roleManager = new Role();
 		roleManager.setRole("MANAGER");
-				
+		
+		Role roleDoctor = new Role();
+		roleDoctor.setRole("DOCTOR");				
 		
 		//adding admin user
 		Set<Role> setAdminRole = new HashSet<Role>();
@@ -100,15 +102,15 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		
 		
 		
-		//adding general user
-		Set<Role> setUserRole = new HashSet<Role>();
-		setUserRole.add(roleUser);		
+		//adding pharma
+		Set<Role> setPharmaRole = new HashSet<Role>();
+		setPharmaRole.add(rolePharma);		
 		
-		User user = new User();		
-		user.setPassword("user");
-		user.setUsername("user");	
-		admin.setRoles(setUserRole);		
-		userRepository.save(user);
+		User pharma = new User();		
+		pharma.setPassword("pharma");
+		pharma.setUsername("pharma");	
+		admin.setRoles(setPharmaRole);		
+		userRepository.save(pharma);
 		
 		//adding manager user
 		Set<Role> setManagerRole = new HashSet<Role>();
@@ -120,6 +122,19 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		userManager.setUsername("manager");			
 		userManager.setRoles(setManagerRole);		
 		userRepository.save(userManager);	
+		
+		
+		//adding doctor user
+		
+		Set<Role> setDoctorRole = new HashSet<Role>();
+		setDoctorRole.add(roleDoctor);		
+		
+		
+		User userDoctor = new User();		
+		userDoctor.setPassword("doctor");
+		userDoctor.setUsername("doctor");			
+		userDoctor.setRoles(setDoctorRole);		
+		userRepository.save(userDoctor);
 		
 		
 	
