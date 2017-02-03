@@ -15,7 +15,7 @@
 					<span class="label label-primary">Drug Generic Search</span>
 				</h4>
 				<form class="form-inline" th:object="${drugGeneric}"
-					th:action="@{/drugGenericSearch}" method="post">
+					th:action="@{/admin/drugGenericSearch}" method="post">
 					<div class="row">
 						<div class="col-md-6">
 							<label class="col-md-4 control-label">Generic Name</label>
@@ -29,7 +29,7 @@
 								<button type="submit" class="btn btn-primary">Search</button>
 							</div>
 							<div class="form-group">
-								<a href="/drugGenericList" class="btn btn-success" role="button">Reset
+								<a href="/admin/drugGenericList" class="btn btn-success" role="button">Reset
 								</a>
 							</div>
 						</div>
@@ -41,7 +41,7 @@
 		<div class="panel panel-default">
 			<div class="panel-body">
 
-				<a href="/generic/new" class="btn btn-success" role="button">Add
+				<a href="/admin/generic/new" class="btn btn-success" role="button">Add
 					New Drug Generic</a>
 			</div>
 		</div>
@@ -62,11 +62,11 @@
 						</tr>
 						<tr th:each="generic : ${drugGenerics}">
 							<td th:text="${generic.idGeneric}"><a
-								href="/generic/${generic.idGeneric}">Id</a></td>
+								href="/admin/generic/${generic.idGeneric}">Id</a></td>
 							<td th:text="${generic.genericName}">Generic Name</td>
 							<td th:text="${generic.remarks}">Remarks</td>
-							<td><a th:href="${'/generic/edit/' + generic.idGeneric}">Edit</a></td>
-							<td><a th:href="${'/generic/delete/' + generic.idGeneric}">Delete</a></td>
+							<td><a th:href="${'/admin/generic/edit/' + generic.idGeneric}">Edit</a></td>
+							<td><a th:href="${'/admin/generic/delete/' + generic.idGeneric}">Delete</a></td>
 						</tr>
 					</table>
 

@@ -36,7 +36,7 @@ public class DrugGenericController {
 
 	}
 
-	@RequestMapping(value = "/drugGenericList", method = RequestMethod.GET)
+	@RequestMapping(value = "admin/drugGenericList", method = RequestMethod.GET)
 	public String listGeneric(Model model) {
 
 		model.addAttribute("drugGeneric", new DrugGenericSearchForm());
@@ -45,12 +45,12 @@ public class DrugGenericController {
 
 	}
 
-	@RequestMapping(value = "/drugGenericSearch", method = RequestMethod.POST)
+	@RequestMapping(value = "admin/drugGenericSearch", method = RequestMethod.POST)
 	public String drugGenericSearch(DrugGenericSearchForm form,
 			BindingResult bindingResult, Model model) {
 
 		if (form.getGenericName() == null) {
-			return "redirect:/drugGenericList";
+			return "redirect:/admin/drugGenericList";
 		}
 
 		model.addAttribute("drugGeneric", form);
@@ -62,14 +62,14 @@ public class DrugGenericController {
 		return "drugGeneric/drugsGenerics";
 	}
 
-	@RequestMapping("generic/new")
+	@RequestMapping("admin/generic/new")
 	public String newDrugGeneric(Model model) {
 		DrugGenericForm form = new DrugGenericForm();
 		model.addAttribute("drugGeneric", form);
 		return "drugGeneric/drugGenericForm";
 	}
 
-	@RequestMapping(value = "generics", method = RequestMethod.POST)
+	@RequestMapping(value = "admin/generics", method = RequestMethod.POST)
 	public String saveDrugGeneric(@Valid @ModelAttribute("drug") DrugGenericForm form,
 			BindingResult bindingResult, Model model) {
 
@@ -87,11 +87,11 @@ public class DrugGenericController {
 		generic.setInsertDate(new Date());
 		drugGenericDaoService.save(generic);
 
-		return "redirect:/drugGenericList";
+		return "redirect:/admin/drugGenericList";
 
 	}
 
-	@RequestMapping("generic/edit/{idGeneric}")
+	@RequestMapping("admin/generic/edit/{idGeneric}")
 	public String editGeneric(@PathVariable Integer idGeneric, Model model) {
 		DrugGenericForm form = new DrugGenericForm();
 		DrugGeneric generic = drugGenericDaoService.findByIdGeneric(idGeneric);
@@ -103,16 +103,16 @@ public class DrugGenericController {
 
 	}
 
-	@RequestMapping("generic/delete/{id}")
+	@RequestMapping("admin/generic/delete/{id}")
 	public String deleteGeneric(@PathVariable Integer id) {
 		try {
 
 			drugGenericDaoService.delete(id);
-			return "redirect:/drugGenericList";
+			return "redirect:/admin/drugGenericList";
 
 		} catch (Exception ex) {
 
-			return "redirect:/drugGenericList";
+			return "redirect:/admin/drugGenericList";
 
 		}
 	}
