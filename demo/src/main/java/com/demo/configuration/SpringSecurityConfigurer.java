@@ -59,6 +59,8 @@ public class SpringSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .and().authorizeRequests().antMatchers("/static/css").permitAll()
                 .and().authorizeRequests().antMatchers("/specializations").permitAll()          
                 .and().authorizeRequests().antMatchers("/doctorsList/**").permitAll()
+                .and().authorizeRequests().antMatchers("/drug/delete/**","/drug/edit/**","/drug/saveDrug/**","/drug/new/**").hasAnyAuthority("ADMIN","MANAGER")
+                
                 .and().authorizeRequests().antMatchers("/js").permitAll()
 				.and().authorizeRequests().anyRequest().authenticated().
 				and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/");

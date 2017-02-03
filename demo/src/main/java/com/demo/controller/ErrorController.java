@@ -16,12 +16,13 @@ public class ErrorController {
 
     private static Logger logger = LoggerFactory.getLogger(ErrorController.class);
 
-    @ExceptionHandler(Throwable.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+   @ExceptionHandler(Throwable.class)
+   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public String exception(final Throwable throwable, final Model model) {
         logger.error("Exception during execution of SpringSecurity application", throwable);
         String errorMessage = (throwable != null ? throwable.getMessage() : "Something went wrong :(");
         model.addAttribute("errorMessage", "Something went wrong :(");
+        throwable.printStackTrace();        
         return "error";
     }
 
