@@ -53,7 +53,7 @@ public class ContentController {
 
 	}
 
-	@RequestMapping(value = "/contentList", method = RequestMethod.GET)
+	@RequestMapping(value = "admin/contentList", method = RequestMethod.GET)
 	public String list(Model model) {
 
 		model.addAttribute("content", new ContentSearchForm());
@@ -62,11 +62,11 @@ public class ContentController {
 
 	}
 	
-	@RequestMapping(value = "/contentSearch", method = RequestMethod.POST)
+	@RequestMapping(value = "admin/contentSearch", method = RequestMethod.POST)
 	public String contentSearch(ContentSearchForm form, BindingResult bindingResult, Model model) {
 
 		if (form.getContentType() == null ) {
-			return "redirect:/contentList";
+			return "redirect:/admin/contentList";
 		}	
 		
         List<Content> results =contentRepository.findContentByContentTypeOrderByInsertDateDesc(form.getContentType());
@@ -75,7 +75,7 @@ public class ContentController {
 		return "contents/contents";
 	}
 
-	@RequestMapping("content/new")
+	@RequestMapping("admin/content/new")
 	public String newDrug(Model model) throws ParseException {
 
 		ContentForm form = new ContentForm();
@@ -93,7 +93,7 @@ public class ContentController {
 		return "contents/contentForm";
 	}
 
-	@RequestMapping(value = "content", method = RequestMethod.POST)
+	@RequestMapping(value = "admin/saveContent", method = RequestMethod.POST)
 	public String saveContent(@RequestParam("file") MultipartFile file,
 			@Valid @ModelAttribute("content") ContentForm form, BindingResult bindingResult, Model model)
 			throws IOException {
@@ -131,11 +131,11 @@ public class ContentController {
 		
 		contentRepository.save(content);
 
-		return "redirect:/content/new";
+		return "redirect:/admin/content/new";
 
 	}
 
-	@RequestMapping("content/{id}")
+	@RequestMapping("admin/content/{id}")
 	public String showContent(@PathVariable Integer id, Model model,HttpSession session) {
 
 		slf4jLogger.info("ContentController :: showContent");
@@ -148,7 +148,7 @@ public class ContentController {
 
 	}
 
-	@RequestMapping("content/edit/{id}")
+	@RequestMapping("admin/content/edit/{id}")
 	public String editContent(@PathVariable Integer id, Model model) {
 
 		ContentForm form = contentDataToContentForm.convert(contentRepository.findById(id));
@@ -159,16 +159,16 @@ public class ContentController {
 
 	}
 
-	@RequestMapping("content/delete/{id}")
+	@RequestMapping("admin/content/delete/{id}")
 	public String delete(@PathVariable Integer id) {
 		try {
 
 			contentRepository.delete(id);
-			return "redirect:/contentList";
+			return "redirect:/admin/contentList";
 
 		} catch (Exception ex) {
 
-			return "redirect:/contentList";
+			return "redirect:/admin/contentList";
 
 		}
 	}

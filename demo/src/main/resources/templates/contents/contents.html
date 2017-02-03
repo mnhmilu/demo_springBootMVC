@@ -16,7 +16,7 @@
 					<span class="label label-primary">Content Search</span>
 				</h4>
 				<form class="form-inline" th:object="${content}"
-					th:action="@{/contentSearch}" method="post">
+					th:action="@{/admin/contentSearch}" method="post">
 					<div class="row">
 						<div class="col-sm-4">
 							<div class="form-group">
@@ -36,7 +36,7 @@
 								<button type="submit" class="btn btn-primary">Search</button>
 							</div>
 							<div class="form-group">
-								<a href="/contentList" class="btn btn-success" role="button">Reset
+								<a href="/admin/contentList" class="btn btn-success" role="button">Reset
 								</a>
 							</div>
 						</div>
@@ -49,7 +49,7 @@
 		<div class="panel panel-default">
 			<div class="panel-body">
 
-				<a href="/content/new" class="btn btn-success" role="button">Add
+				<a href="/admin/content/new" class="btn btn-success" role="button">Add
 					New Content</a>
 			</div>
 		</div>
@@ -78,9 +78,9 @@
 							<td th:text="${content.contentType}">Content Type</td>
 							<td th:text="${content.header}">Header</td>
 							<td th:text="${content.expireDate}">Expire Date</td>
-							<td><a th:href="${'/content/' + content.id}">Details</a></td>
-							<td sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')"><a th:href="${'/content/edit/' + content.id}">Edit</a></td>
-							<td sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')"><a th:href="${'/content/delete/' + content.id}">Delete</a></td>
+							<td><a th:href="${'/admin/content/' + content.id}">Details</a></td>
+							<td sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')"><a th:href="${'/admin/content/edit/' + content.id}">Edit</a></td>
+							<td sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')"><a th:href="${'/admin/content/delete/' + content.id}">Delete</a></td>
 						</tr>
 					</table>
 				</div>
