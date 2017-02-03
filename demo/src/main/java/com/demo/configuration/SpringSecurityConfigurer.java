@@ -35,22 +35,6 @@ public class SpringSecurityConfigurer extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		/*
-		 * from previous config
-		 * http.authorizeRequests().antMatchers("/").permitAll().and()
-		 * .authorizeRequests().antMatchers("/console/**").permitAll();
-		 * 
-		 * http.csrf().disable(); http.headers().frameOptions().disable();
-		 * http.logout().logoutSuccessUrl("/index");
-		 */
-		/*
-		 * from web site http .authorizeRequests()
-		 * .antMatchers("/admin/**").hasAuthority("ADMIN")
-		 * .antMatchers("/user/**").hasAuthority("USER")
-		 * .anyRequest().authenticated() .and() .formLogin() .and()
-		 * .logout().logoutRequestMatcher(new
-		 * AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login");
-		 */
 
 		http.authorizeRequests().antMatchers("/", "/drugSearchFromIndex", "/index/drugByGeneric/*", "/index/drugByBrand/*","/index/image/*").permitAll().
 		        and().formLogin().loginPage("/login").permitAll().	   
@@ -60,7 +44,7 @@ public class SpringSecurityConfigurer extends WebSecurityConfigurerAdapter {
                 .and().authorizeRequests().antMatchers("/specializations").permitAll()          
                 .and().authorizeRequests().antMatchers("/doctorsList/**").permitAll()
                 .and().authorizeRequests().antMatchers("/drug/delete/**","/drug/edit/**","/drug/saveDrug/**","/drug/new/**").hasAnyAuthority("ADMIN","MANAGER")
-                
+                .and().authorizeRequests().antMatchers("/doctor/delete/**","/doctor/edit/**","/doctor/SaveDoctor/**","/doctor/new/**").hasAnyAuthority("ADMIN","MANAGER")
                 .and().authorizeRequests().antMatchers("/js").permitAll()
 				.and().authorizeRequests().anyRequest().authenticated().
 				and().logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/");

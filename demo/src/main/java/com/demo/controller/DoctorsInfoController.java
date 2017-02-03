@@ -73,8 +73,8 @@ public class DoctorsInfoController {
 		return "doctors/doctorForm";
 	}
 
-	@RequestMapping(value = "doctor", method = RequestMethod.POST)
-	public String saveDrug(@Valid @ModelAttribute("doctor") DoctorForm form, BindingResult bindingResult, Model model) {
+	@RequestMapping(value = "doctor/SaveDoctor", method = RequestMethod.POST)
+	public String saveDoctor(@Valid @ModelAttribute("doctor") DoctorForm form, BindingResult bindingResult, Model model) {
 
 		if (bindingResult.hasErrors()) {
 
