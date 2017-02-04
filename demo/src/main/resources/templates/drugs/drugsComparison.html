@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+<title th:text="#{index.page.title}">Page Title</title>
+
+<!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+	<div class="container">
+		<!--/*/ <th:block th:include="fragments/headerForManager :: header"></th:block> /*/-->
+
+		<div class="row">
+			<img alt="Drug Price Comparison Graph" th:src="${barUrl}" />
+		</div>
+		<div class="row">
+			<div th:if="${not #lists.isEmpty(drugs)}">
+
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<h4>
+							<span class="label label-primary">Drug List</span>
+						</h4>
+						<table class="table table-striped">
+							<tr>
+							
+								<th>Brand Name</th>
+								<th>Drug Price</th>
+								<th>Manufacturer Name</th>
+								<th>View</th>
+
+							</tr>
+							<tr th:each="drug : ${drugs}">								
+								<td th:text="${drug.drugName}">Brand Name</td>
+								<td th:text="${drug.drugprice}">Drug Price</td>
+								<td th:text="${drug.drugManufacturer.manufacturer}">Manufacturer
+									Name</td>
+								<td><a th:href="${'/index/drugDeatails/' + drug.id}">Details</a></td>
+
+							</tr>
+						</table>
+
+					</div>
+				</div>
+
+			</div>
+			<div th:if="${#lists.isEmpty(drugs)}">
+
+				<div class="alert alert-info" role="alert">No Data Found</div>
+
+			</div>
+		</div>
+
+	</div>
+
+</body>
+</html>

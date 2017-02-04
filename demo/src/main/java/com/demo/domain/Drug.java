@@ -69,6 +69,7 @@ public class Drug {
     private String packSize;
     
     @Column(name = "drugPrice",precision=10, scale=2)
+    @NotNull
     private Double drugprice;    
        
     

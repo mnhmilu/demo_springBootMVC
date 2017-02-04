@@ -57,6 +57,7 @@ public class DrugForm {
 
     private String packSize;
     
+    @NotNull
     private Double drugprice;      
 
 

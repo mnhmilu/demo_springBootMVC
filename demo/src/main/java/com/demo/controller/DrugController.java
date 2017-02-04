@@ -1,5 +1,6 @@
 package com.demo.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -28,6 +29,13 @@ import com.demo.repositories.DrugGenericRepository;
 import com.demo.repositories.DrugManufacturerRepository;
 import com.demo.repositories.DrugRepository;
 import com.demo.services.DrugService;
+import com.googlecode.charts4j.BarChart;
+import com.googlecode.charts4j.BarChartPlot;
+import com.googlecode.charts4j.Color;
+import com.googlecode.charts4j.Data;
+import com.googlecode.charts4j.GCharts;
+import com.googlecode.charts4j.Plot;
+import com.googlecode.charts4j.Plots;
 
 @Controller
 public class DrugController {
@@ -60,7 +68,7 @@ public class DrugController {
 		model.addAttribute("drug", new DrugSearchForm());
 		model.addAttribute("drugs", drugDaoService.findTop50ByOrderByInsertDateDesc());
 		model.addAttribute("brands", drugManufacturerDaoServie.findAll());
-		//model.addAttribute("generics", drugGenericDaoService.findAll());
+		// model.addAttribute("generics", drugGenericDaoService.findAll());
 
 		return "drugs/drugs";
 
@@ -69,40 +77,33 @@ public class DrugController {
 	@RequestMapping(value = "/drugSearch", method = RequestMethod.POST)
 	public String drugSearch(DrugSearchForm form, BindingResult bindingResult, Model model) {
 
-		if (form.getDrugName() == null && form.getManufacturerId() == 0 && form.getGenericName()== null) {
+		if (form.getDrugName() == null && form.getManufacturerId() == 0 && form.getGenericName() == null) {
 			return "redirect:/drugList";
 
 		}
 
-		//DrugGeneric generic = null;
+		// DrugGeneric generic = null;
 		DrugManufacturer brand2 = null;
-		
-		Integer brandId =null;
-		//Integer genericId= null;
-		
-		
-		
-		if(form.getManufacturerId()!=0)
-		{
+
+		Integer brandId = null;
+		// Integer genericId= null;
+
+		if (form.getManufacturerId() != 0) {
 			brand2 = new DrugManufacturer();
 			brand2.setManufacturerId(form.getManufacturerId());
 			brandId = form.getManufacturerId();
 			model.addAttribute("drugBrand", brand2);
-			
-		}
 
-		
+		}
 
 		model.addAttribute("drug", form);
 		model.addAttribute("brands", drugManufacturerDaoServie.findAll());
-		//model.addAttribute("generics", drugGenericDaoService.findAll());
+		// model.addAttribute("generics", drugGenericDaoService.findAll());
 
-		
-        List<Drug> drugsSearchResult =drugDaoService
-				.findDrugByDrugManufacturerOrByDrugGenericOrDrugName(brandId,form.getGenericName(), form.getDrugName());
+		List<Drug> drugsSearchResult = drugDaoService.findDrugByDrugManufacturerOrByDrugGenericOrDrugName(brandId,
+				form.getGenericName(), form.getDrugName());
 
-		
-		model.addAttribute("drugs",drugsSearchResult );
+		model.addAttribute("drugs", drugsSearchResult);
 		return "drugs/drugs";
 	}
 
@@ -182,6 +183,83 @@ public class DrugController {
 			return "redirect:/drugList";
 
 		}
+	}
+
+	@RequestMapping("drug/drugByGenericForComparison/{key}")
+	public String showDrugByGenericForComparison(@PathVariable String key, Model model) {
+
+		slf4jLogger.info("DrugController :: showDrugByGenericForComparison");
+		List<Drug> drugsSearchResult = drugDaoService.findTop5ByDrugGeneric(Integer.parseInt(key));
+
+		List<Drug> drugsFilteredList = new ArrayList();
+
+		int topLimit = 0;
+
+		if (drugsSearchResult.size() <= 5) {
+			topLimit = drugsSearchResult.size();
+		} else {
+			topLimit = 5;
+		}
+
+		drugsFilteredList = drugsSearchResult.subList(0, topLimit);
+
+		// BarChartPlot currentCoverage=null;
+		List<BarChartPlot> plots = new ArrayList();
+
+		if (drugsFilteredList.get(0) != null) {
+			BarChartPlot currentCoverage = Plots.newBarChartPlot(Data.newData(drugsFilteredList.get(0).getDrugprice()),
+					Color.CRIMSON,
+					drugsFilteredList.get(0).getDrugName() + " (" + drugsFilteredList.get(0).getDrugprice() + ")");
+			plots.add(currentCoverage);
+		}
+
+		if (drugsFilteredList.size() > 1) {
+
+			if (drugsFilteredList.get(1) != null) {
+				BarChartPlot currentCoverage1 = Plots.newBarChartPlot(
+						Data.newData(drugsFilteredList.get(1).getDrugprice()), Color.ORANGERED,
+						drugsFilteredList.get(1).getDrugName() + " (" + drugsFilteredList.get(1).getDrugprice() + ")");
+				plots.add(currentCoverage1);
+			}
+		}
+		if (drugsFilteredList.size() > 2) {
+
+			if (drugsFilteredList.get(2) != null) {
+				BarChartPlot currentCoverage2 = Plots.newBarChartPlot(
+						Data.newData(drugsFilteredList.get(2).getDrugprice()), Color.ORANGE,
+						drugsFilteredList.get(2).getDrugName() + " (" + drugsFilteredList.get(2).getDrugprice() + ")");
+				plots.add(currentCoverage2);
+			}
+		}
+		if (drugsFilteredList.size() > 3) {
+			if (drugsFilteredList.get(3) != null) {
+				BarChartPlot currentCoverage3 = Plots.newBarChartPlot(
+						Data.newData(drugsFilteredList.get(3).getDrugprice()), Color.YELLOW,
+						drugsFilteredList.get(3).getDrugName() + " (" + drugsFilteredList.get(3).getDrugprice() + ")");
+				plots.add(currentCoverage3);
+			}
+		}
+		if (drugsFilteredList.size() > 4) {
+			if (drugsFilteredList.get(4) != null) {
+				BarChartPlot currentCoverage4 = Plots.newBarChartPlot(
+						Data.newData(drugsFilteredList.get(4).getDrugprice()), Color.GREEN,
+						drugsFilteredList.get(4).getDrugName() + " (" + drugsFilteredList.get(4).getDrugprice() + ")");
+				plots.add(currentCoverage4);
+			}
+		}
+
+		BarChart barChart = GCharts.newBarChart(plots);
+
+		// BarChart barChart = GCharts.newBarChart(currentCoverage,
+		// currentCoverage2);
+		barChart.setTitle("Drug Price Comparison for Generic: "+drugsSearchResult.get(0).getDrugGeneric().getGenericName(), Color.BLACK, 15);
+		barChart.setSize(760, 320);
+		barChart.setHorizontal(true);
+
+		model.addAttribute("barUrl", barChart.toURLString());
+		model.addAttribute("drugs", drugsFilteredList);
+
+		return "drugs/drugsComparison";
 	}
 
 }

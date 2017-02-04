@@ -183,6 +183,8 @@
 							<div class="col-sm-10">
 								<input type="text" class="form-control" th:field="*{drugprice}" />
 							</div>
+							<p th:if="${#fields.hasErrors('drugprice')}"
+										th:errors="*{drugprice}">Invalid Price</p>
 						</div>
 
 

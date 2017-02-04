@@ -20,7 +20,7 @@
 					</h4>
 					<table class="table table-striped">
 						<tr>
-							<th>Id</th>
+							
 							<th>Brand Name</th>
 							<th>Generic Name</th>
 							<th>Manufacturer Name</th>
@@ -28,7 +28,7 @@
 
 						</tr>
 						<tr th:each="drug : ${drugs}">
-							<td th:text="${drug.id}"><a href="/drug/${drug.id}">Id</a></td>
+							
 							<td th:text="${drug.drugName}">Brand Name</td>
 							<td th:text="${drug.drugGeneric.genericName}">Generic Name</td>
 							<td th:text="${drug.drugManufacturer.manufacturer}">Manufacturer

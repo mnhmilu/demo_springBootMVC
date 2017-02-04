@@ -305,36 +305,43 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		drugRepository.save(newDrug);
 
 		newDrug.setId(0);
+		newDrug.setDrugprice(58.87);
 		newDrug.setDrugName("Captoril");
 
 		drugRepository.save(newDrug);
 
 		newDrug.setId(0);
+		newDrug.setDrugprice(60.87);
 		newDrug.setDrugName("Daptoril");
 
 		drugRepository.save(newDrug);
 
 		newDrug.setId(0);
+		newDrug.setDrugprice(62.87);
 		newDrug.setDrugName("Eaptoril");
 
 		drugRepository.save(newDrug);
 
 		newDrug.setId(0);
+		newDrug.setDrugprice(64.87);
 		newDrug.setDrugName("Faptoril");
 
 		drugRepository.save(newDrug);
 
 		newDrug.setId(0);
+		newDrug.setDrugprice(66.87);
 		newDrug.setDrugName("Gaptoril");
 
 		drugRepository.save(newDrug);
 
 		newDrug.setId(0);
+		newDrug.setDrugprice(78.87);
 		newDrug.setDrugName("Haptoril");
 
 		drugRepository.save(newDrug);
 
 		newDrug.setId(0);
+		newDrug.setDrugprice(56.87);
 		newDrug.setDrugName("Iaptoril");
 
 		drugRepository.save(newDrug);
