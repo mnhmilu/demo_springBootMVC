@@ -26,7 +26,7 @@
 						th:action="@{/admin/generics}" method="post" action="#">
 						<input type="hidden" th:field="*{idGeneric}" />
 						<div class="form-group">
-							<label class="col-sm-2 control-label">Drug Generic Name:</label>
+							<label class="col-sm-2 control-label">Drug Generic Name(*):</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" th:field="*{genericName}" />
 								<p th:if="${#fields.hasErrors('genericName')}"

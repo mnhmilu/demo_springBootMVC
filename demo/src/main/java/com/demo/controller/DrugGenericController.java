@@ -77,7 +77,7 @@ public class DrugGenericController {
 
 			model.addAttribute("drugGeneric", form);
 
-			return "drugs/drugGenericForm";
+			return "drugGeneric/drugGenericForm";
 		}
 
 		DrugGeneric generic = new DrugGeneric();
