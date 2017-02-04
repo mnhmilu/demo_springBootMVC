@@ -12,10 +12,13 @@
 	left: 0;
 	right: 0;
 	margin: auto;
+	background-color: #00CCFF;
+	color: white;
 }
 
 .body {
-	background-color: #00CCFF;
+	/* 	background-color: #00CCFF; */
+	
 }
 </style>
 
@@ -24,8 +27,7 @@
 
 </head>
 <body class="body">
-	<!-- 	<div style="width: 100px;height: 100px;position: absolute; top:0; bottom: 0;  left: 0;  right: 0;margin: auto;"> -->
-	<div class="login">
+	<div class="login" align="center">
 		<h3>Welcome to Rx MIMS Bangladesh</h3>
 		<div th:if="${param.error}">Invalid username and password.</div>
 		<div th:if="${param.logout}">You have been logged out.</div>
@@ -46,7 +48,7 @@
 
 			</table>
 
-	
+
 		</form>
 	</div>
 </body>
