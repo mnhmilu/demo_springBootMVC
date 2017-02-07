@@ -34,6 +34,9 @@ import com.googlecode.charts4j.BarChartPlot;
 import com.googlecode.charts4j.Color;
 import com.googlecode.charts4j.Data;
 import com.googlecode.charts4j.GCharts;
+import com.googlecode.charts4j.LegendPosition;
+import com.googlecode.charts4j.Marker;
+import com.googlecode.charts4j.Markers;
 import com.googlecode.charts4j.Plot;
 import com.googlecode.charts4j.Plots;
 
@@ -190,74 +193,30 @@ public class DrugController {
 
 		slf4jLogger.info("DrugController :: showDrugByGenericForComparison");
 		List<Drug> drugsSearchResult = drugDaoService.findTop5ByDrugGeneric(Integer.parseInt(key));
-
-		List<Drug> drugsFilteredList = new ArrayList();
-
-		int topLimit = 0;
-
-		if (drugsSearchResult.size() <= 5) {
-			topLimit = drugsSearchResult.size();
-		} else {
-			topLimit = 5;
-		}
-
-		drugsFilteredList = drugsSearchResult.subList(0, topLimit);
-
-		// BarChartPlot currentCoverage=null;
 		List<BarChartPlot> plots = new ArrayList();
 
-		if (drugsFilteredList.get(0) != null) {
-			BarChartPlot currentCoverage = Plots.newBarChartPlot(Data.newData(drugsFilteredList.get(0).getDrugprice()),
-					Color.CRIMSON,
-					drugsFilteredList.get(0).getDrugName() + " (" + drugsFilteredList.get(0).getDrugprice() + ")");
+		
+		for(Drug d: drugsSearchResult)
+		{
+			String drugMarkerText =d.getDrugName() + " (" + d.getDrugprice() + ")";
+			BarChartPlot currentCoverage = Plots.newBarChartPlot(Data.newData(d.getDrugprice()),
+					Color.LIGHTSKYBLUE,
+					d.getDrugName() + " (" + d.getDrugprice() + ")");
+		      Marker a = Markers.newTextMarker(drugMarkerText, Color.BLACK, 12);
+		      currentCoverage.addMarker(a,0);
 			plots.add(currentCoverage);
+			
 		}
 
-		if (drugsFilteredList.size() > 1) {
 
-			if (drugsFilteredList.get(1) != null) {
-				BarChartPlot currentCoverage1 = Plots.newBarChartPlot(
-						Data.newData(drugsFilteredList.get(1).getDrugprice()), Color.ORANGERED,
-						drugsFilteredList.get(1).getDrugName() + " (" + drugsFilteredList.get(1).getDrugprice() + ")");
-				plots.add(currentCoverage1);
-			}
-		}
-		if (drugsFilteredList.size() > 2) {
-
-			if (drugsFilteredList.get(2) != null) {
-				BarChartPlot currentCoverage2 = Plots.newBarChartPlot(
-						Data.newData(drugsFilteredList.get(2).getDrugprice()), Color.ORANGE,
-						drugsFilteredList.get(2).getDrugName() + " (" + drugsFilteredList.get(2).getDrugprice() + ")");
-				plots.add(currentCoverage2);
-			}
-		}
-		if (drugsFilteredList.size() > 3) {
-			if (drugsFilteredList.get(3) != null) {
-				BarChartPlot currentCoverage3 = Plots.newBarChartPlot(
-						Data.newData(drugsFilteredList.get(3).getDrugprice()), Color.YELLOW,
-						drugsFilteredList.get(3).getDrugName() + " (" + drugsFilteredList.get(3).getDrugprice() + ")");
-				plots.add(currentCoverage3);
-			}
-		}
-		if (drugsFilteredList.size() > 4) {
-			if (drugsFilteredList.get(4) != null) {
-				BarChartPlot currentCoverage4 = Plots.newBarChartPlot(
-						Data.newData(drugsFilteredList.get(4).getDrugprice()), Color.GREEN,
-						drugsFilteredList.get(4).getDrugName() + " (" + drugsFilteredList.get(4).getDrugprice() + ")");
-				plots.add(currentCoverage4);
-			}
-		}
-
-		BarChart barChart = GCharts.newBarChart(plots);
-
-		// BarChart barChart = GCharts.newBarChart(currentCoverage,
-		// currentCoverage2);
-		barChart.setTitle("Drug Price Comparison for Generic: "+drugsSearchResult.get(0).getDrugGeneric().getGenericName(), Color.BLACK, 15);
+		BarChart barChart = GCharts.newBarChart(plots);	
+		barChart.setTitle("Comparison for Generic: "+drugsSearchResult.get(0).getDrugGeneric().getGenericName(), Color.BLACK, 15);
 		barChart.setSize(760, 320);
 		barChart.setHorizontal(true);
+	 
 
 		model.addAttribute("barUrl", barChart.toURLString());
-		model.addAttribute("drugs", drugsFilteredList);
+		model.addAttribute("drugs", drugsSearchResult);
 
 		return "drugs/drugsComparison";
 	}

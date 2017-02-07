@@ -41,9 +41,9 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 	private DoctorsSpecializaitonRepository doctorsSpecializaitonRepository;
 
 	private ContentRepository contentRepository;
-	
+
 	private UserRepository userRepository;
-	
+
 	private RoleRepository roleRepository;
 
 	private Logger log = Logger.getLogger(DataLoader.class);
@@ -52,8 +52,8 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 	public void setProductRepository(DrugRepository drugRepository,
 			DrugManufacturerRepository drugManufacturerDaoService, DrugGenericRepository drugGenericRepository,
 			DoctorsInfoRepository doctorsInfoRepository,
-			DoctorsSpecializaitonRepository doctorsSpecializaitonRepository, ContentRepository contentRepository,UserRepository userRepository,
-			RoleRepository roleRepository) {
+			DoctorsSpecializaitonRepository doctorsSpecializaitonRepository, ContentRepository contentRepository,
+			UserRepository userRepository, RoleRepository roleRepository) {
 
 		this.drugRepository = drugRepository;
 		this.drugManufacturerDaoService = drugManufacturerDaoService;
@@ -62,164 +62,147 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		this.doctorsSpecializaitonRepository = doctorsSpecializaitonRepository;
 		this.contentRepository = contentRepository;
 		this.userRepository = userRepository;
-		this.roleRepository =roleRepository;
+		this.roleRepository = roleRepository;
 	}
 
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
-		addDrugData();
-		addNewsData();
-		addAddData();
-		addDrugUpdateData();
-		addSecurityIntitalData();
-
+		/*
+		 * addDrugData(); addNewsData(); addAddData(); addDrugUpdateData();
+		 * addSecurityIntitalData();
+		 */
 	}
-	
-	private void addSecurityIntitalData(){			
-		
+
+	private void addSecurityIntitalData() {
+
 		Role roleAdmin = new Role();
 		roleAdmin.setRole("ADMIN");
-		
+
 		Role rolePharma = new Role();
-		rolePharma.setRole("PHARMA");	
-		
+		rolePharma.setRole("PHARMA");
+
 		Role roleManager = new Role();
 		roleManager.setRole("MANAGER");
-		
+
 		Role roleDoctor = new Role();
-		roleDoctor.setRole("DOCTOR");				
-		
-		//adding admin user
+		roleDoctor.setRole("DOCTOR");
+
+		// adding admin user
 		Set<Role> setAdminRole = new HashSet<Role>();
 		setAdminRole.add(roleAdmin);
-		//setAdminRole.add(roleManager);
-		
-		User admin = new User();		
-		admin.setPassword("pass");
-		admin.setUsername("admin");	
-		admin.setRoles(setAdminRole);		
-		userRepository.save(admin);		
-		
-		
-		
-		//adding pharma
+		// setAdminRole.add(roleManager);
+
+		User admin = new User();
+		admin.setPassword("java8");
+		admin.setUsername("admin");
+		admin.setRoles(setAdminRole);
+		userRepository.save(admin);
+
+		// adding pharma
 		Set<Role> setPharmaRole = new HashSet<Role>();
-		setPharmaRole.add(rolePharma);		
-		
-		User pharma = new User();		
-		pharma.setPassword("pharma");
-		pharma.setUsername("pharma");	
-		admin.setRoles(setPharmaRole);		
+		setPharmaRole.add(rolePharma);
+
+		User pharma = new User();
+		pharma.setPassword("4h=nu");
+		pharma.setUsername("pharma");
+		admin.setRoles(setPharmaRole);
 		userRepository.save(pharma);
-		
-		//adding manager user
+
+		// adding manager user
 		Set<Role> setManagerRole = new HashSet<Role>();
-		setManagerRole.add(roleManager);		
-		
-		
-		User userManager = new User();		
-		userManager.setPassword("manager");
-		userManager.setUsername("manager");			
-		userManager.setRoles(setManagerRole);		
-		userRepository.save(userManager);	
-		
-		
-		//adding doctor user
-		
+		setManagerRole.add(roleManager);
+
+		User userManager = new User();
+		userManager.setPassword("cuw!6");
+		userManager.setUsername("manager");
+		userManager.setRoles(setManagerRole);
+		userRepository.save(userManager);
+
+		// adding doctor user
+
 		Set<Role> setDoctorRole = new HashSet<Role>();
-		setDoctorRole.add(roleDoctor);		
-		
-		
-		User userDoctor = new User();		
-		userDoctor.setPassword("doctor");
-		userDoctor.setUsername("doctor");			
-		userDoctor.setRoles(setDoctorRole);		
+		setDoctorRole.add(roleDoctor);
+
+		User userDoctor = new User();
+		userDoctor.setPassword("3@fra");
+		userDoctor.setUsername("doctor");
+		userDoctor.setRoles(setDoctorRole);
 		userRepository.save(userDoctor);
-		
-		
-	
+
 	}
-	
-	
-	private void addDrugUpdateData(){		
 
+	private void addDrugUpdateData() {
 
-			for (int a = 1; a <=6 ; a++) {
+		for (int a = 1; a <= 6; a++) {
 
-				Content add = new Content();
-				add.setContentType("DrugUpdate");
-				add.setContentPage("Index");
-				add.setDrugUpdateType("ByBrand");
-				add.setHeader("Arthritis Center" + a);
-				add.setContent_summary("Arthritis is a condition associated with swelling and inflammation of the joints,"
-						+ " which often results in pain and restriction of movement. It is estimated that more"
-						+ " than 40 million people in America have some form of arthritis. Consult this center "
-						+ "if you wish to find more information on the types of arthritis");
-				add.setAddSection("add"+a);
-				
-				add.setInsertDate(new Date());
-				add.setExpireDate(new Date());
+			Content add = new Content();
+			add.setContentType("DrugUpdate");
+			add.setContentPage("Index");
+			add.setDrugUpdateType("ByBrand");
+			add.setHeader("Arthritis Center" + a);
+			add.setContent_summary("Arthritis is a condition associated with swelling and inflammation of the joints,"
+					+ " which often results in pain and restriction of movement. It is estimated that more"
+					+ " than 40 million people in America have some form of arthritis. Consult this center "
+					+ "if you wish to find more information on the types of arthritis");
+			add.setAddSection("add" + a);
 
-				contentRepository.save(add);
-			}
-			
-			for (int a = 1; a <=6 ; a++) {
+			add.setInsertDate(new Date());
+			add.setExpireDate(new Date());
 
-				Content add = new Content();
-				add.setContentType("DrugUpdate");
-				add.setContentPage("Index");
-				add.setDrugUpdateType("ByGeneric");
-				add.setHeader("Micromedex® Consumer Information (Advanced)" + a);
-				add.setContent_summary("Arthritis is a condition associated with swelling and inflammation of the joints,"
-						+ " which often results in pain and restriction of movement. It is estimated that more"
-						+ " than 40 million people in America have some form of arthritis. Consult this center "
-						+ "if you wish to find more information on the types of arthritis");
-				add.setAddSection("add"+a);
-				
-				add.setInsertDate(new Date());
-				add.setExpireDate(new Date());
+			contentRepository.save(add);
+		}
 
-				contentRepository.save(add);
-			}
-			
-			for (int a = 1; a <=6 ; a++) {
+		for (int a = 1; a <= 6; a++) {
 
-				Content add = new Content();
-				add.setContentType("DrugUpdate");
-				add.setContentPage("Index");
-				add.setDrugUpdateType("ByNewMolecules");
-				add.setHeader("AHFS DI Monographs" + a);
-				add.setContent_summary("Arthritis is a condition associated with swelling and inflammation of the joints,"
-						+ " which often results in pain and restriction of movement. It is estimated that more"
-						+ " than 40 million people in America have some form of arthritis. Consult this center "
-						+ "if you wish to find more information on the types of arthritis");
-				add.setAddSection("add"+a);
-				
-				add.setInsertDate(new Date());
-				add.setExpireDate(new Date());
+			Content add = new Content();
+			add.setContentType("DrugUpdate");
+			add.setContentPage("Index");
+			add.setDrugUpdateType("ByGeneric");
+			add.setHeader("Micromedex® Consumer Information (Advanced)" + a);
+			add.setContent_summary("Arthritis is a condition associated with swelling and inflammation of the joints,"
+					+ " which often results in pain and restriction of movement. It is estimated that more"
+					+ " than 40 million people in America have some form of arthritis. Consult this center "
+					+ "if you wish to find more information on the types of arthritis");
+			add.setAddSection("add" + a);
 
-				contentRepository.save(add);
-			}
+			add.setInsertDate(new Date());
+			add.setExpireDate(new Date());
 
+			contentRepository.save(add);
+		}
 
-		
-		
-		
+		for (int a = 1; a <= 6; a++) {
+
+			Content add = new Content();
+			add.setContentType("DrugUpdate");
+			add.setContentPage("Index");
+			add.setDrugUpdateType("ByNewMolecules");
+			add.setHeader("AHFS DI Monographs" + a);
+			add.setContent_summary("Arthritis is a condition associated with swelling and inflammation of the joints,"
+					+ " which often results in pain and restriction of movement. It is estimated that more"
+					+ " than 40 million people in America have some form of arthritis. Consult this center "
+					+ "if you wish to find more information on the types of arthritis");
+			add.setAddSection("add" + a);
+
+			add.setInsertDate(new Date());
+			add.setExpireDate(new Date());
+
+			contentRepository.save(add);
+		}
+
 	}
-	
-	
 
 	private void addAddData() {
 
-		for (int a = 1; a <=6 ; a++) {
+		for (int a = 1; a <= 6; a++) {
 
 			Content add = new Content();
 			add.setContentType("Advertisement");
 			add.setContentPage("Index");
 			add.setHeader("Advertisement Header " + a);
 			add.setContent_summary("Advertisement Summary " + a);
-			add.setAddSection("add"+a);
-			
+			add.setAddSection("add" + a);
+
 			add.setInsertDate(new Date());
 			add.setExpireDate(new Date());
 
@@ -256,10 +239,9 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		contentRepository.save(news2);
 
 	}
-	
-	
+
 	private void addDrugData() {
-		
+
 		DrugManufacturer manufacturer = new DrugManufacturer();
 		manufacturer.setManufacturer("ESKAYEF");
 		drugManufacturerDaoService.save(manufacturer);
@@ -389,8 +371,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 							+ "	Consultant");
 			doctorsInfoRepository.save(doctor);
 		}
-		
-		
+
 	}
 
 }

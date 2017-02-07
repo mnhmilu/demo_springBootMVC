@@ -59,11 +59,7 @@
 				<div class="panel-body">
 					<h4>
 						<span class="label label-primary">Content List</span>
-
-						<div sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')">This content is
-							only shown to administrators.</div>
-						<div sec:authorize="hasRole('ROLE_MANAGER')">This content is
-							only shown to manager.</div>
+						
 					</h4>
 					<table class="table table-striped">
 						<tr>
