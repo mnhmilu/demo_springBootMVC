@@ -25,7 +25,7 @@ public class DrugManufacturer {
     
     @NotNull
     @NotBlank
-    @Column(name = "manufacturer" ,nullable = false)
+    @Column(name = "manufacturer" ,nullable = false,unique=true)
     private String manufacturer;
    
   

@@ -29,7 +29,7 @@ public class DoctorsSpecialization {
     
     @NotNull
     @NotBlank
-    @Column(name = "specializationName" ,nullable = false)
+    @Column(name = "specializationName" ,nullable = false,unique=true)
     private String specializationName;
     
     @Temporal(TemporalType.DATE)

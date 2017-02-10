@@ -1,5 +1,6 @@
 package com.demo.controller;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Date;
 import java.util.List;
 
@@ -71,8 +72,9 @@ public class DrugGenericController {
 
 	@RequestMapping(value = "admin/generics", method = RequestMethod.POST)
 	public String saveDrugGeneric(@Valid @ModelAttribute("drug") DrugGenericForm form,
-			BindingResult bindingResult, Model model) {
+			BindingResult bindingResult, Model model)  {
 
+		
 		if (bindingResult.hasErrors()) {
 
 			model.addAttribute("drugGeneric", form);

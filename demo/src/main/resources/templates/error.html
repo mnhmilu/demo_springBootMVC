@@ -16,6 +16,8 @@
 		<p>
 			<img src="../../static/images/err.png" th:src="@{/images/err.png}" />
 		</p>
+		<div class="alert alert-danger" role="alert" th:text="${errorMessage}">...</div>
+	
 		<p>
 			<a href="/" class="btn btn-default" role="button">Return to Home
 			</a>

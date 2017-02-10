@@ -30,7 +30,7 @@ public class Drug {
     
     @NotNull
     @NotBlank
-    @Column(name = "drugName" ,nullable = false)
+    @Column(name = "drugName" ,nullable = false,unique=true)
     private String drugName; 
 
     @Column(name = "composition",columnDefinition="TEXT")

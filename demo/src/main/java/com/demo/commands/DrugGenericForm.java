@@ -1,6 +1,8 @@
 package com.demo.commands;
 
 
+import javax.persistence.Column;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -13,6 +15,7 @@ public class DrugGenericForm {
 
     @NotNull
     @NotBlank
+   
     private String genericName;    
     
     private String remarks;

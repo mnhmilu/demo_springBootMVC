@@ -31,7 +31,7 @@ public class DrugGeneric {
     
     @NotNull
     @NotBlank
-    @Column(name = "generic_name" ,nullable = false)
+    @Column(name = "generic_name" ,nullable = false,unique=true)
     private String genericName;
     
     @Temporal(TemporalType.DATE)
