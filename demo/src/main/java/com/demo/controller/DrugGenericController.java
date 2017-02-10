@@ -42,8 +42,8 @@ public class DrugGenericController {
 
 		model.addAttribute("drugGeneric", new DrugGenericSearchForm());
 
-		// model.addAttribute("drugGenerics", drugGenericDaoService.findAll());
-
+		
+  
 		Page<DrugGeneric> productPage = drugGenericDaoService.findAll(pageable);
 		PageWrapper<DrugGeneric> page = new PageWrapper<DrugGeneric>(productPage, "/admin/drugGenericList");
 		model.addAttribute("drugGenerics", page.getContent());

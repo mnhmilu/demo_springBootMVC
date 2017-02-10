@@ -8,6 +8,8 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -68,17 +70,21 @@ public class DrugController {
 	}
 
 	@RequestMapping(value = "/drugList", method = RequestMethod.GET)
-	public String druglist(Model model) {
-		
+	public String druglist(Model model, Pageable pageable) {
+
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String name = auth.getName(); 
+		String name = auth.getName();
 
 		slf4jLogger.info("DrugController ::druglist:: Drug page accessed by :" + name);
-		
 
 		model.addAttribute("drug", new DrugSearchForm());
-		model.addAttribute("drugs", drugDaoService.findTop50ByOrderByInsertDateDesc());
-		model.addAttribute("brands", drugManufacturerDaoServie.findAll());	
+
+		Page<Drug> drugsSearchResultPage = drugDaoService.findAllByOrderByDrugName(pageable);
+		PageWrapper<Drug> page = new PageWrapper<Drug>(drugsSearchResultPage, "/drugList");
+		model.addAttribute("drugs", drugsSearchResultPage);
+		model.addAttribute("page", page);
+
+		model.addAttribute("brands", drugManufacturerDaoServie.findAll());
 
 		return "drugs/drugs";
 
@@ -202,25 +208,21 @@ public class DrugController {
 		List<Drug> drugsSearchResult = drugDaoService.findTop5ByDrugGeneric(Integer.parseInt(key));
 		List<BarChartPlot> plots = new ArrayList();
 
-		
-		for(Drug d: drugsSearchResult)
-		{
-			String drugMarkerText =d.getDrugName() + " (" + d.getDrugprice() + ")";
-			BarChartPlot currentCoverage = Plots.newBarChartPlot(Data.newData(d.getDrugprice()),
-					Color.LIGHTSKYBLUE,
+		for (Drug d : drugsSearchResult) {
+			String drugMarkerText = d.getDrugName() + " (" + d.getDrugprice() + ")";
+			BarChartPlot currentCoverage = Plots.newBarChartPlot(Data.newData(d.getDrugprice()), Color.LIGHTSKYBLUE,
 					d.getDrugName() + " (" + d.getDrugprice() + ")");
-		      Marker a = Markers.newTextMarker(drugMarkerText, Color.BLACK, 12);
-		      currentCoverage.addMarker(a,0);
+			Marker a = Markers.newTextMarker(drugMarkerText, Color.BLACK, 12);
+			currentCoverage.addMarker(a, 0);
 			plots.add(currentCoverage);
-			
+
 		}
 
-
-		BarChart barChart = GCharts.newBarChart(plots);	
-		barChart.setTitle("Comparison for Generic: "+drugsSearchResult.get(0).getDrugGeneric().getGenericName(), Color.BLACK, 15);
+		BarChart barChart = GCharts.newBarChart(plots);
+		barChart.setTitle("Comparison for Generic: " + drugsSearchResult.get(0).getDrugGeneric().getGenericName(),
+				Color.BLACK, 15);
 		barChart.setSize(760, 320);
 		barChart.setHorizontal(true);
-	 
 
 		model.addAttribute("barUrl", barChart.toURLString());
 		model.addAttribute("drugs", drugsSearchResult);

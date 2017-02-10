@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.metrics.CounterService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -27,6 +29,7 @@ import com.demo.commands.DrugSearchForm;
 import com.demo.converter.DrugDataToDrugForm;
 import com.demo.domain.Content;
 import com.demo.domain.Drug;
+import com.demo.domain.DrugGeneric;
 import com.demo.repositories.ContentRepository;
 import com.demo.repositories.DrugGenericRepository;
 import com.demo.repositories.DrugRepository;
@@ -122,20 +125,26 @@ public class IndexController {
 	}
 
 	@RequestMapping("/index/drugByGeneric/{key}")
-	public String showDrugByGeneric(@PathVariable String key, Model model) {
+	public String showDrugByGeneric(@PathVariable String key, Model model, Pageable pageable) {
 
 		slf4jLogger.info("IndexController :: showDrugByGeneric");
-		List<Drug> drugsSearchResult = drugDaoService.findDrugByDrugGeneric(key);
-		model.addAttribute("drugs", drugsSearchResult);
+
+		Page<Drug> drugsSearchResultPage = drugDaoService.findDrugByDrugGeneric(key, pageable);
+		PageWrapper<Drug> page = new PageWrapper<Drug>(drugsSearchResultPage, "/index/drugByGeneric/"+key);
+		model.addAttribute("drugs", drugsSearchResultPage);
+		model.addAttribute("page", page);
+
 		return "drugs/drugsGenericSearch";
 	}
 
 	@RequestMapping("/index/drugByBrand/{key}")
-	public String showDrugByBrand(@PathVariable String key, Model model) {
+	public String showDrugByBrand(@PathVariable String key, Model model, Pageable pageable) {
 
 		slf4jLogger.info("IndexController :: showDrugByBrand");
-		List<Drug> drugsSearchResult = drugDaoService.findDrugByDrugBrand(key);
-		model.addAttribute("drugs", drugsSearchResult);
+		Page<Drug> drugsSearchResultPage = drugDaoService.findDrugByDrugBrand(key,pageable);
+		PageWrapper<Drug> page = new PageWrapper<Drug>(drugsSearchResultPage, "/index/drugByBrand/"+key);
+		model.addAttribute("drugs", drugsSearchResultPage);
+		model.addAttribute("page", page);
 		return "drugs/drugsGenericSearch";
 	}
 
