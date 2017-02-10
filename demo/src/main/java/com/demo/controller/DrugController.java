@@ -3,6 +3,7 @@ package com.demo.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -90,36 +91,66 @@ public class DrugController {
 
 	}
 
-	@RequestMapping(value = "/drugSearch", method = RequestMethod.POST)
-	public String drugSearch(DrugSearchForm form, BindingResult bindingResult, Model model) {
+	@RequestMapping(value = "/drugSearch", method = RequestMethod.GET)
+	public String drugSearch(DrugSearchForm form, BindingResult bindingResult, Model model, Pageable pageable,
+			HttpSession session) {
 
-		if (form.getDrugName() == null && form.getManufacturerId() == 0 && form.getGenericName() == null) {
-			return "redirect:/drugList";
+		if (form != null) {
+			if (form.getDrugName() == "" && form.getManufacturerId() == 0 && form.getGenericName() == "") {
 
+				return "redirect:/drugList";
+
+			}
 		}
 
-		// DrugGeneric generic = null;
-		DrugManufacturer brand2 = null;
+		Integer searhKeyBybrandId = null;
+		String searhKeyByDurgName = null;
+		String searchKeyByGeneric = null;
 
-		Integer brandId = null;
-		// Integer genericId= null;
+		if (pageable.getPageNumber() == 0) {
 
-		if (form.getManufacturerId() != 0) {
-			brand2 = new DrugManufacturer();
-			brand2.setManufacturerId(form.getManufacturerId());
-			brandId = form.getManufacturerId();
-			model.addAttribute("drugBrand", brand2);
+			DrugManufacturer brand2 = null;
+
+			if (form.getManufacturerId() != 0) {
+				brand2 = new DrugManufacturer();
+				brand2.setManufacturerId(form.getManufacturerId());
+				searhKeyBybrandId = form.getManufacturerId();
+				session.setAttribute("searhKeyBybrandId", form.getManufacturerId());
+				model.addAttribute("drugBrand", brand2);
+
+			}
+			searhKeyByDurgName = form.getDrugName() == "" ? null : form.getDrugName();
+			session.setAttribute("searhKeyByDurgName", searhKeyByDurgName);
+			searchKeyByGeneric = form.getGenericName() == "" ? null : form.getGenericName();
+			session.setAttribute("searchKeyByGeneric", searchKeyByGeneric);
+
+			// store session value
+
+		} else {
+			if (session.getAttribute("searhKeyByDurgName") != null) {
+				searhKeyByDurgName = (String) session.getAttribute("searhKeyByDurgName");
+			}
+
+			if (session.getAttribute("searchKeyByGeneric") != null) {
+				searchKeyByGeneric = (String) session.getAttribute("searchKeyByGeneric");
+			}
+
+			if (session.getAttribute("searhKeyBybrandId") != null) {
+				searhKeyBybrandId = (Integer) session.getAttribute("searhKeyBybrandId");
+			}
 
 		}
 
 		model.addAttribute("drug", form);
 		model.addAttribute("brands", drugManufacturerDaoServie.findAll());
-		// model.addAttribute("generics", drugGenericDaoService.findAll());
 
-		List<Drug> drugsSearchResult = drugDaoService.findDrugByDrugManufacturerOrByDrugGenericOrDrugName(brandId,
-				form.getGenericName(), form.getDrugName());
+		Page<Drug> drugsSearchResultPage = drugDaoService.findDrugByDrugManufacturerOrByDrugGenericOrDrugName(
+				searhKeyBybrandId, searchKeyByGeneric, searhKeyByDurgName, pageable);
 
-		model.addAttribute("drugs", drugsSearchResult);
+		PageWrapper<Drug> page = new PageWrapper<Drug>(drugsSearchResultPage, "/drugSearch");
+		model.addAttribute("drugs", drugsSearchResultPage);
+		model.addAttribute("page", page);
+
 		return "drugs/drugs";
 	}
 

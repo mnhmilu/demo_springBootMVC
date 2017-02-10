@@ -96,20 +96,43 @@ public class IndexController {
 
 	}
 
-	@RequestMapping(value = "/drugSearchFromIndex", method = RequestMethod.POST)
-	public String drugSearch(DrugSearchForm form, BindingResult bindingResult, Model model, HttpSession session) {
+	@RequestMapping(value = "/drugSearchFromIndex", method = RequestMethod.GET)
+	public String drugSearch(DrugSearchForm form, BindingResult bindingResult, Model model, HttpSession session,
+			Pageable pageable) {
+		
+		
 
-		/// String a =(String) session.getAttribute("test1");
+		if (form != null && pageable.getPageNumber()==0) {
+			if (form.getDrugName() == null || form.getDrugName().trim() == "") {
+				return "redirect:/";
 
-		if (form.getDrugName() == null || form.getDrugName().trim() == "") {
-			return "redirect:/";
+			}
+		}
+
+		String searhKeyByDurgName = null;
+
+		if (pageable.getPageNumber() == 0) {
+
+			searhKeyByDurgName = form.getDrugName() == "" ? null : form.getDrugName();
+			session.setAttribute("searhKeyByDurgName", searhKeyByDurgName);
 
 		}
 
-		List<Drug> drugsSearchResult = drugDaoService.findDrugByDrugManufacturerOrByDrugGenericOrDrugName(null, "",
-				form.getDrugName());
+		else {
 
-		model.addAttribute("drugs", drugsSearchResult);
+			if (session.getAttribute("searhKeyByDurgName") != null) {
+				searhKeyByDurgName = (String) session.getAttribute("searhKeyByDurgName");
+			}
+
+		}
+
+		Page<Drug> drugsSearchResultPage = drugDaoService.findDrugByDrugManufacturerOrByDrugGenericOrDrugName(null, "",
+				searhKeyByDurgName, pageable);
+
+		PageWrapper<Drug> page = new PageWrapper<Drug>(drugsSearchResultPage, "/drugSearchFromIndex");
+		model.addAttribute("drugs", drugsSearchResultPage);
+		model.addAttribute("page", page);
+
 		return "drugs/drugsGenericSearch";
 
 	}
@@ -130,7 +153,7 @@ public class IndexController {
 		slf4jLogger.info("IndexController :: showDrugByGeneric");
 
 		Page<Drug> drugsSearchResultPage = drugDaoService.findDrugByDrugGeneric(key, pageable);
-		PageWrapper<Drug> page = new PageWrapper<Drug>(drugsSearchResultPage, "/index/drugByGeneric/"+key);
+		PageWrapper<Drug> page = new PageWrapper<Drug>(drugsSearchResultPage, "/index/drugByGeneric/" + key);
 		model.addAttribute("drugs", drugsSearchResultPage);
 		model.addAttribute("page", page);
 
@@ -141,8 +164,8 @@ public class IndexController {
 	public String showDrugByBrand(@PathVariable String key, Model model, Pageable pageable) {
 
 		slf4jLogger.info("IndexController :: showDrugByBrand");
-		Page<Drug> drugsSearchResultPage = drugDaoService.findDrugByDrugBrand(key,pageable);
-		PageWrapper<Drug> page = new PageWrapper<Drug>(drugsSearchResultPage, "/index/drugByBrand/"+key);
+		Page<Drug> drugsSearchResultPage = drugDaoService.findDrugByDrugBrand(key, pageable);
+		PageWrapper<Drug> page = new PageWrapper<Drug>(drugsSearchResultPage, "/index/drugByBrand/" + key);
 		model.addAttribute("drugs", drugsSearchResultPage);
 		model.addAttribute("page", page);
 		return "drugs/drugsGenericSearch";
