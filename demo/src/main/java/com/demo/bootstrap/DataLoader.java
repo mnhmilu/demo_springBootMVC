@@ -265,6 +265,12 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		generic.setGenericName("Generic X");
 		drugGenericRepository.save(generic);
 
+		for (int a = 0; a < 50; a++) {
+			DrugGeneric genericd = new DrugGeneric();
+			genericd.setGenericName("Generic Xdd" + a);
+			drugGenericRepository.save(genericd);
+		}
+
 		DrugGeneric generic2 = new DrugGeneric();
 		generic2.setGenericName("Generic Y");
 		drugGenericRepository.save(generic2);

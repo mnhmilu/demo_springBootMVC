@@ -1,6 +1,5 @@
 package com.demo.controller;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Date;
 import java.util.List;
 
@@ -9,6 +8,8 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,8 +26,7 @@ import com.demo.repositories.DrugGenericRepository;
 @Controller
 public class DrugGenericController {
 
-	private final Logger slf4jLogger = LoggerFactory
-			.getLogger(DrugGenericController.class);
+	private final Logger slf4jLogger = LoggerFactory.getLogger(DrugGenericController.class);
 
 	private DrugGenericRepository drugGenericDaoService;
 
@@ -38,17 +38,23 @@ public class DrugGenericController {
 	}
 
 	@RequestMapping(value = "admin/drugGenericList", method = RequestMethod.GET)
-	public String listGeneric(Model model) {
+	public String listGeneric(Model model, Pageable pageable) {
 
 		model.addAttribute("drugGeneric", new DrugGenericSearchForm());
-		model.addAttribute("drugGenerics", drugGenericDaoService.findAll());
+
+		// model.addAttribute("drugGenerics", drugGenericDaoService.findAll());
+
+		Page<DrugGeneric> productPage = drugGenericDaoService.findAll(pageable);
+		PageWrapper<DrugGeneric> page = new PageWrapper<DrugGeneric>(productPage, "/admin/drugGenericList");
+		model.addAttribute("drugGenerics", page.getContent());
+		model.addAttribute("page", page);
+
 		return "drugGeneric/drugsGenerics";
 
 	}
 
 	@RequestMapping(value = "admin/drugGenericSearch", method = RequestMethod.POST)
-	public String drugGenericSearch(DrugGenericSearchForm form,
-			BindingResult bindingResult, Model model) {
+	public String drugGenericSearch(DrugGenericSearchForm form, BindingResult bindingResult, Model model) {
 
 		if (form.getGenericName() == null) {
 			return "redirect:/admin/drugGenericList";
@@ -71,10 +77,9 @@ public class DrugGenericController {
 	}
 
 	@RequestMapping(value = "admin/generics", method = RequestMethod.POST)
-	public String saveDrugGeneric(@Valid @ModelAttribute("drug") DrugGenericForm form,
-			BindingResult bindingResult, Model model)  {
+	public String saveDrugGeneric(@Valid @ModelAttribute("drug") DrugGenericForm form, BindingResult bindingResult,
+			Model model) {
 
-		
 		if (bindingResult.hasErrors()) {
 
 			model.addAttribute("drugGeneric", form);

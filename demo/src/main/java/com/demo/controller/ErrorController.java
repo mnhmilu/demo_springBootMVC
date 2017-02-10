@@ -22,8 +22,7 @@ public class ErrorController {
 		String errorMessage = "Internal server error, Please contact with Administrator";
 		if (throwable.getCause().getClass().equals(ConstraintViolationException.class)) {
 			errorMessage = "Possible Duplicate Entry, Please check your record";
-		}
-	
+		}	
 
 		logger.error("Exception during execution of SpringSecurity application", throwable);
 

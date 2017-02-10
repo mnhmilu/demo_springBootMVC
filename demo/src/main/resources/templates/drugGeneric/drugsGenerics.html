@@ -29,8 +29,8 @@
 								<button type="submit" class="btn btn-primary">Search</button>
 							</div>
 							<div class="form-group">
-								<a href="/admin/drugGenericList" class="btn btn-success" role="button">Reset
-								</a>
+								<a href="/admin/drugGenericList" class="btn btn-success"
+									role="button">Reset </a>
 							</div>
 						</div>
 					</div>
@@ -65,8 +65,10 @@
 								href="/admin/generic/${generic.idGeneric}">Id</a></td>
 							<td th:text="${generic.genericName}">Generic Name</td>
 							<td th:text="${generic.remarks}">Remarks</td>
-							<td><a th:href="${'/admin/generic/edit/' + generic.idGeneric}">Edit</a></td>
-							<td><a th:href="${'/admin/generic/delete/' + generic.idGeneric}">Delete</a></td>
+							<td><a
+								th:href="${'/admin/generic/edit/' + generic.idGeneric}">Edit</a></td>
+							<td><a
+								th:href="${'/admin/generic/delete/' + generic.idGeneric}">Delete</a></td>
 						</tr>
 					</table>
 
@@ -74,6 +76,39 @@
 			</div>
 
 		</div>
+
+		<!-- Pagination Bar -->
+		<div th:fragment='paginationbar'>
+			<div>
+				<ul class='pagination pagination-centered'>
+					<li th:class="${page.firstPage}?'disabled':''"><span
+						th:if='${page.firstPage}'>First</span> <a
+						th:if='${not page.firstPage}'
+						th:href='@{${page.url}(page=0,size=${page.size})}'>First</a></li>
+					<li th:class="${page.hasPreviousPage}? '' : 'disabled'"><span
+						th:if='${not page.hasPreviousPage}'>Prev</span> <a
+						th:if='${page.hasPreviousPage}'
+						th:href='@{${page.url}(page=${page.number-2},size=${page.size})}'
+						title='Go to previous page'>Prev</a></li>
+					<li th:each='item : ${page.items}'
+						th:class="${item.current}? 'active' : ''"><span
+						th:if='${item.current}' th:text='${item.number}'>1</span> <a
+						th:if='${not item.current}'
+						th:href='@{${page.url}(page=${item.number-1},size=${page.size})}'><span
+							th:text='${item.number}'>1</span></a></li>
+					<li th:class="${page.hasNextPage}? '' : 'disabled'"><span
+						th:if='${not page.hasNextPage}'>Next</span> <a
+						th:if='${page.hasNextPage}'
+						th:href='@{${page.url}(page=${page.number},size=${page.size})}'
+						title='Go to next page'>Next</a></li>
+					<li th:class="${page.lastPage}? 'disabled' : ''"><span
+						th:if='${page.lastPage}'>Last</span> <a
+						th:if='${not page.lastPage}'
+						th:href='@{${page.url}(page=${page.totalPages - 1},size=${page.size})}'>Last</a></li>
+				</ul>
+			</div>
+		</div>
+
 		<div th:if="${#lists.isEmpty(drugGenerics)}">
 
 			<div class="alert alert-info" role="alert">No Data Found</div>
