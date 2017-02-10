@@ -3,6 +3,7 @@ package com.demo.controller;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -42,8 +43,6 @@ public class DrugGenericController {
 
 		model.addAttribute("drugGeneric", new DrugGenericSearchForm());
 
-		
-  
 		Page<DrugGeneric> productPage = drugGenericDaoService.findAll(pageable);
 		PageWrapper<DrugGeneric> page = new PageWrapper<DrugGeneric>(productPage, "/admin/drugGenericList");
 		model.addAttribute("drugGenerics", page.getContent());
@@ -53,19 +52,42 @@ public class DrugGenericController {
 
 	}
 
-	@RequestMapping(value = "admin/drugGenericSearch", method = RequestMethod.POST)
-	public String drugGenericSearch(DrugGenericSearchForm form, BindingResult bindingResult, Model model) {
+	@RequestMapping(value = "admin/drugGenericSearch", method = RequestMethod.GET)
+	public String drugGenericSearch(DrugGenericSearchForm form, BindingResult bindingResult, Model model,
+			Pageable pageable, HttpSession session) {
 
-		if (form.getGenericName() == null) {
+		if (form.getGenericName() == null && pageable.getPageNumber()==0) {
 			return "redirect:/admin/drugGenericList";
+		}	
+		
+		String searhKey = null;
+
+		if (pageable.getPageNumber() == 0) {
+
+			searhKey = form.getGenericName() == "" ? null : form.getGenericName();
+			session.setAttribute("searhKey", searhKey);
+
 		}
+
+		else {
+
+			if (session.getAttribute("searhKey") != null) {
+				searhKey = (String) session.getAttribute("searhKey");
+			}
+
+		}
+		
+		
+		
 
 		model.addAttribute("drugGeneric", form);
 
-		List<DrugGeneric> drugsGenericSearchResult = drugGenericDaoService
-				.findDrugGenericByGenericNameIgnoreCase(form.getGenericName());
+		Page<DrugGeneric> productPage = drugGenericDaoService
+				.findDrugGenericByGenericNameIgnoreCase(form.getGenericName(), pageable);
+		PageWrapper<DrugGeneric> page = new PageWrapper<DrugGeneric>(productPage, "/admin/drugGenericSearch");
+		model.addAttribute("drugGenerics", page.getContent());
+		model.addAttribute("page", page);
 
-		model.addAttribute("drugGenerics", drugsGenericSearchResult);
 		return "drugGeneric/drugsGenerics";
 	}
 

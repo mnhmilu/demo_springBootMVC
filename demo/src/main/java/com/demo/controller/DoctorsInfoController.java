@@ -7,6 +7,8 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -20,9 +22,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.demo.commands.DoctorForm;
 import com.demo.domain.DoctorsInfo;
 import com.demo.domain.DoctorsSpecialization;
+import com.demo.domain.Drug;
 import com.demo.repositories.DoctorsInfoRepository;
 import com.demo.repositories.DoctorsSpecializaitonRepository;
-
 
 @Controller
 public class DoctorsInfoController {
@@ -44,28 +46,31 @@ public class DoctorsInfoController {
 
 	@RequestMapping(value = "/specializations", method = RequestMethod.GET)
 	public String spcializationlist(Model model) {
-		
+
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String name = auth.getName(); 
+		String name = auth.getName();
 
 		slf4jLogger.info("DoctorsInfoController ::spcializationlist:: Doctor page accessed by :" + name);
-		
 
-		model.addAttribute("specializations", doctorsSpecializaitonRepository.findAll());	
-		
-		model.addAttribute("doctorCount", doctorsInfoRepository.count());	
-		
+		model.addAttribute("specializations", doctorsSpecializaitonRepository.findAll());
+
+		model.addAttribute("doctorCount", doctorsInfoRepository.count());
+
 		return "doctors/specializations";
 
 	}
 
 	@RequestMapping(value = "/doctorsList/{idSpecialization}/{specializationName}", method = RequestMethod.GET)
 	public String doctorlist(Model model, @PathVariable Integer idSpecialization,
-			@PathVariable String specializationName) {
+			@PathVariable String specializationName, Pageable pageable) {
 
-		List<DoctorsInfo> list = doctorsInfoRepository.findDoctorsInfoByDoctorsSpecialization(idSpecialization);
+		Page<DoctorsInfo> SearchResultPage = doctorsInfoRepository
+				.findDoctorsInfoByDoctorsSpecialization(idSpecialization, pageable);
+		PageWrapper<DoctorsInfo> page = new PageWrapper<DoctorsInfo>(SearchResultPage,
+				"/doctorsList/" + idSpecialization + "/" + specializationName);
+		model.addAttribute("doctors", SearchResultPage);
+		model.addAttribute("page", page);
 
-		model.addAttribute("doctors", list);
 		model.addAttribute("specialization", specializationName);
 
 		return "doctors/doctors";
@@ -82,7 +87,8 @@ public class DoctorsInfoController {
 	}
 
 	@RequestMapping(value = "doctor/SaveDoctor", method = RequestMethod.POST)
-	public String saveDoctor(@Valid @ModelAttribute("doctor") DoctorForm form, BindingResult bindingResult, Model model) {
+	public String saveDoctor(@Valid @ModelAttribute("doctor") DoctorForm form, BindingResult bindingResult,
+			Model model) {
 
 		if (bindingResult.hasErrors()) {
 

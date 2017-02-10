@@ -15,7 +15,7 @@ public interface DrugGenericRepository extends CrudRepository<DrugGeneric, Integ
 
 	DrugGeneric findByIdGeneric(Integer id);
 
-	List<DrugGeneric> findDrugGenericByGenericNameIgnoreCase(@Param("genericName") String genericName);
+	Page<DrugGeneric> findDrugGenericByGenericNameIgnoreCase(@Param("genericName") String genericName,Pageable pageable);
 
 	List<DrugGeneric> findTop50ByOrderByInsertDateDesc();
 

@@ -2,6 +2,8 @@ package com.demo.repositories;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -21,7 +23,7 @@ public interface DoctorsInfoRepository extends CrudRepository<DoctorsInfo, Integ
 		
 	
 	@Query("select d from DoctorsInfo d inner join d.doctorsSpecialization ds  where ds.id =:idspecialization ")
-	List<DoctorsInfo> findDoctorsInfoByDoctorsSpecialization(@Param("idspecialization") Integer idspecialization);	
+	Page<DoctorsInfo> findDoctorsInfoByDoctorsSpecialization(@Param("idspecialization") Integer idspecialization,Pageable pageable);	
 	
 	
 	
