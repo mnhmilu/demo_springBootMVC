@@ -17,24 +17,12 @@ import com.demo.domain.PatientProfile;
 
 @Controller
 public class AuthenticationController {
-//	
-//	@RequestMapping("/")
-//	public String index(Model model){		
-//		
-//		return "index";	
-//		
-//	}	
-	
 	
 	@ResponseBody
 	@RequestMapping("/test")
 	String entry(){		
 		return "My Spring Bood App(auth)";		
 	}
-	
-
-	
-	
 	
 	
 	@RequestMapping(value="/logout", method = RequestMethod.GET)

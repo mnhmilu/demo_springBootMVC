@@ -13,6 +13,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -42,60 +44,59 @@ public class IndexController {
 
 	@Autowired
 	public void setservices(DrugRepository drugDaoService, DrugDataToDrugForm drugDataToDrugForm,
-			DrugGenericRepository drugGenericDaoService, ContentRepository contentRepository,CounterService cournterService) {
+			DrugGenericRepository drugGenericDaoService, ContentRepository contentRepository,
+			CounterService cournterService) {
 
 		this.drugDaoService = drugDaoService;
 		this.drugDataToDrugForm = drugDataToDrugForm;
 		this.drugGenericDaoService = drugGenericDaoService;
 		this.contentRepository = contentRepository;
-		this.cournterService=cournterService;
+		this.cournterService = cournterService;
 
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String index(Model model,HttpSession session	)  {
-		
+	public String index(Model model, HttpSession session) {
+
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String name = auth.getName(); // get logged in username
+
+		slf4jLogger.info("IndexController ::index:: Home page access by :" + name);
+
 		cournterService.increment("Calling Index");
 		model.addAttribute("drug", new DrugSearchForm());
 		model.addAttribute("drugCount", drugDaoService.count());
 		model.addAttribute("genericCount", drugGenericDaoService.count());
-		
+
 		List<Content> indexContents = contentRepository.findContentByContentPageOrderByInsertDateDesc("Index");
-		
-		List<Content> news =filterContentByType(indexContents,"News");
-		List<Content> add =filterContentByType(indexContents,"Advertisement");
-		List<Content> drugUpdate =filterContentByType(indexContents,"DrugUpdate");
-		
-		List<Content> drugUpdatesByBrand =filterDrugUpdateByType(drugUpdate,"ByBrand");
-		List<Content> drugUpdatesByGeneric =filterDrugUpdateByType(drugUpdate,"ByGeneric");
-		List<Content> drugUpdatesByNewMolecules =filterDrugUpdateByType(drugUpdate,"ByNewMolecules");
-		
+
+		List<Content> news = filterContentByType(indexContents, "News");
+		List<Content> add = filterContentByType(indexContents, "Advertisement");
+		List<Content> drugUpdate = filterContentByType(indexContents, "DrugUpdate");
+
+		List<Content> drugUpdatesByBrand = filterDrugUpdateByType(drugUpdate, "ByBrand");
+		List<Content> drugUpdatesByGeneric = filterDrugUpdateByType(drugUpdate, "ByGeneric");
+		List<Content> drugUpdatesByNewMolecules = filterDrugUpdateByType(drugUpdate, "ByNewMolecules");
+
 		model.addAttribute("drugUpdatesByBrand", drugUpdatesByBrand);
-		model.addAttribute("drugUpdatesByGeneric",drugUpdatesByGeneric);
+		model.addAttribute("drugUpdatesByGeneric", drugUpdatesByGeneric);
 		model.addAttribute("drugUpdatesByNewMolecules", drugUpdatesByNewMolecules);
-		
-		
+
 		model.addAttribute("newsList", news);
 		session.setAttribute("add", add);
-		
+
 		model.addAttribute("add1", "add1");
 		model.addAttribute("add2", "add2");
 		model.addAttribute("add3", "add3");
-		//model.addAttribute("add4", "add4");
-		//model.addAttribute("add5", "add5");
-		//model.addAttribute("add6", "add6");
-		
-		
-		
 
 		return "index";
 
 	}
 
 	@RequestMapping(value = "/drugSearchFromIndex", method = RequestMethod.POST)
-	public String drugSearch(DrugSearchForm form, BindingResult bindingResult, Model model,HttpSession session) {
-		
-		///String a =(String) session.getAttribute("test1");
+	public String drugSearch(DrugSearchForm form, BindingResult bindingResult, Model model, HttpSession session) {
+
+		/// String a =(String) session.getAttribute("test1");
 
 		if (form.getDrugName() == null || form.getDrugName().trim() == "") {
 			return "redirect:/";
@@ -138,17 +139,15 @@ public class IndexController {
 		return "drugs/drugsGenericSearch";
 	}
 
-
 	@RequestMapping(value = "/index/image/{imageid}", method = RequestMethod.GET)
-	public ResponseEntity<byte[]> getQRImage(@PathVariable final String imageid,HttpSession session)  {
+	public ResponseEntity<byte[]> getQRImage(@PathVariable final String imageid, HttpSession session) {
 
 		byte[] bytes = null;
-		
-		
-		List<Content> contents=(List<Content> )session.getAttribute("add");
-		
+
+		List<Content> contents = (List<Content>) session.getAttribute("add");
+
 		if (contentRepository.count() > 0) {
-			Content content = filterAddByType(contents,imageid);
+			Content content = filterAddByType(contents, imageid);
 			bytes = content.getImage();
 		}
 
@@ -158,67 +157,50 @@ public class IndexController {
 
 		return new ResponseEntity<byte[]>(bytes, headers, HttpStatus.CREATED);
 	}
-	
-	
-	private List<Content> filterContentByType(List<Content> indexContents,String type)
-	{
-		
-		List<Content> filteredContents = new ArrayList();
-		
-		
-		for(Content c : indexContents)
-		{
-			if(c.getContentType().equalsIgnoreCase(type))
-			{
-				filteredContents.add(c);				
-			}			
-			
-		}	
-		
-		return filteredContents;
-		
-	}
-	
-	
-	private Content filterAddByType(List<Content> addContents,String type)
-	{
-		
-		Content filteredContent = null;
-		
-		
-		for(Content c : addContents)
-		{
-			if(c.getAddSection().equalsIgnoreCase(type))
-			{
-				filteredContent=c;			
-			}			
-			
-		}	
-		
-		return filteredContent;
-		
-	}
-	
-	
-	private List<Content> filterDrugUpdateByType(List<Content> indexContents,String type)
-	{
-		
-		List<Content> filteredContents = new ArrayList();
-		
-		
-		for(Content c : indexContents)
-		{
-			if(c.getDrugUpdateType().equalsIgnoreCase(type))
-			{
-				filteredContents.add(c);				
-			}			
-			
-		}	
-		
-		return filteredContents;
-		
-	}
-	
 
+	private List<Content> filterContentByType(List<Content> indexContents, String type) {
+
+		List<Content> filteredContents = new ArrayList();
+
+		for (Content c : indexContents) {
+			if (c.getContentType().equalsIgnoreCase(type)) {
+				filteredContents.add(c);
+			}
+
+		}
+
+		return filteredContents;
+
+	}
+
+	private Content filterAddByType(List<Content> addContents, String type) {
+
+		Content filteredContent = null;
+
+		for (Content c : addContents) {
+			if (c.getAddSection().equalsIgnoreCase(type)) {
+				filteredContent = c;
+			}
+
+		}
+
+		return filteredContent;
+
+	}
+
+	private List<Content> filterDrugUpdateByType(List<Content> indexContents, String type) {
+
+		List<Content> filteredContents = new ArrayList();
+
+		for (Content c : indexContents) {
+			if (c.getDrugUpdateType().equalsIgnoreCase(type)) {
+				filteredContents.add(c);
+			}
+
+		}
+
+		return filteredContents;
+
+	}
 
 }

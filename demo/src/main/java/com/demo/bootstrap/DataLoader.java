@@ -1,5 +1,6 @@
 package com.demo.bootstrap;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -8,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import com.demo.domain.Content;
@@ -49,6 +51,9 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 	private Logger log = Logger.getLogger(DataLoader.class);
 
 	@Autowired
+	private Environment environment;
+
+	@Autowired
 	public void setProductRepository(DrugRepository drugRepository,
 			DrugManufacturerRepository drugManufacturerDaoService, DrugGenericRepository drugGenericRepository,
 			DoctorsInfoRepository doctorsInfoRepository,
@@ -67,10 +72,16 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
-		/*
-		 * addDrugData(); addNewsData(); addAddData(); addDrugUpdateData();
-		 * addSecurityIntitalData();
-		 */
+
+		if (Arrays.stream(environment.getActiveProfiles()).anyMatch(env -> (env.equalsIgnoreCase("dev")))) {
+
+			addDrugData();
+			addNewsData();
+			addAddData();
+			addDrugUpdateData();
+			addSecurityIntitalData();
+		}
+
 	}
 
 	private void addSecurityIntitalData() {

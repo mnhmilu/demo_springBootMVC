@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -66,12 +68,17 @@ public class DrugController {
 	}
 
 	@RequestMapping(value = "/drugList", method = RequestMethod.GET)
-	public String list(Model model) {
+	public String druglist(Model model) {
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String name = auth.getName(); 
+
+		slf4jLogger.info("DrugController ::druglist:: Drug page accessed by :" + name);
+		
 
 		model.addAttribute("drug", new DrugSearchForm());
 		model.addAttribute("drugs", drugDaoService.findTop50ByOrderByInsertDateDesc());
-		model.addAttribute("brands", drugManufacturerDaoServie.findAll());
-		// model.addAttribute("generics", drugGenericDaoService.findAll());
+		model.addAttribute("brands", drugManufacturerDaoServie.findAll());	
 
 		return "drugs/drugs";
 
