@@ -14,7 +14,7 @@
 		<!--/*/ <th:block th:include="fragments/headerForManager :: header"></th:block> /*/-->
 
 		<h3 th:text="${generic.genericName}" style="border-style: groove" align="center"></h3>
-		<div style="overflow-y: scroll; height: 600px;">
+		<div style="overflow-y: scroll; height: 900px;">
 			<form class="form-horizontal">
 		
 
@@ -85,7 +85,52 @@
 
 				
 			</form>
+			
+				<div th:if="${not #lists.isEmpty(drugs)}">
+
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<h4>
+						<span class="label label-primary">Brand List</span>
+					</h4>
+					<table class="table table-striped">
+						<tr style="border-style: groove">
+
+							<th>Brand Name</th>					
+							<th>Manufacturer Name</th>
+							<th>Storage</th>
+							<th>Strength</th>
+							
+							<th>Price</th>
+											
+							</tr>
+						<tr th:each="drug : ${drugs}" style="border-style: groove">
+							<td th:text="${drug.drugName}">Brand Name</td>						
+							<td th:text="${drug.drugManufacturer.manufacturer}">Manufacturer
+								Name</td>
+									<td th:text="${drug.strength}">Strength</td>	
+									<td th:text="${drug.storage}">Storage</td>	
+									
+							<td th:text="${drug.drugprice}">Price</td>											
+							
+						</tr>
+					</table>
+
+				</div>
+			</div>
+
 		</div>
+		<div th:if="${#lists.isEmpty(drugs)}">
+
+			<div class="alert alert-info" role="alert">No Data Found</div>
+
+		</div>
+	
+		</div>
+	
+
+	
+	
 	</div>
 
 </body>

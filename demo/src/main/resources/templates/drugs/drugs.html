@@ -60,14 +60,7 @@
 				</form>
 			</div>
 		</div>
-		<div class="panel panel-default"
-			sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')">
-			<div class="panel-body">
 
-				<a href="/drug/new" class="btn btn-success" role="button">Add
-					New Drug</a>
-			</div>
-		</div>
 		<div th:if="${not #lists.isEmpty(drugs)}">
 
 			<div class="panel panel-default">
@@ -76,7 +69,7 @@
 						<span class="label label-primary">Drug List</span>
 					</h4>
 					<table class="table table-striped">
-						<tr>
+						<tr style="border-style: groove">
 
 							<th>Brand Name</th>
 							<th>Generic Name</th>
@@ -84,12 +77,12 @@
 							<th>Price</th>
 							<th>View</th>
 							<th>Price Comparison</th>
-							<th
-								sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')">Edit</th>
-							<th
-								sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')">Delete</th>
+<!-- 							<th -->
+<!-- 								sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')">Edit</th> -->
+<!-- 							<th -->
+<!-- 								sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')">Delete</th> -->
 						</tr>
-						<tr th:each="drug : ${drugs}">
+						<tr th:each="drug : ${drugs}" style="border-style: groove">
 							<td th:text="${drug.drugName}">Brand Name</td>
 							<td th:text="${drug.drugGeneric.genericName}">Generic Name</td>
 							<td th:text="${drug.drugManufacturer.manufacturer}">Manufacturer
@@ -98,12 +91,7 @@
 
 							<td><a th:href="${'/drug/' + drug.id}">Details</a></td>
 							<td><a th:href="${'/drug/drugByGenericForComparison/' + drug.drugGeneric}">Price Comparison</a></td>
-							<td
-								sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')"><a
-								th:href="${'/drug/edit/' + drug.id}">Edit</a></td>
-							<td
-								sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')"><a
-								th:href="${'/drug/delete/' + drug.id}">Delete</a></td>
+							
 						</tr>
 					</table>
 

@@ -18,19 +18,12 @@ public class DrugDataToDrugForm implements Converter<Drug,DrugForm> {
         frm.setGenericId(data.getDrugGeneric().getIdGeneric());
         frm.setGenericName(data.getDrugGeneric().getGenericName());  
         frm.setManufacturerId(data.getDrugManufacturer().getManufacturerId());
-        frm.setManufacturer(data.getDrugManufacturer().getManufacturer());
-        frm.setComposition(data.getComposition());
-        frm.setContraindication(data.getContraindication());
-        frm.setDosagesAdministration(data.getDosagesAdministration());
-        frm.setDrugInteraction(data.getDrugInteraction());
-        frm.setDrugprice(data.getDrugprice());
-        frm.setIndication(data.getIndication());
-        frm.setPregnancyLactation(data.getPregnancyLactation());
-        frm.setSideEffect(data.getSideEffect());
-        frm.setSpecialWarningPrecautions(data.getSpecialWarningPrecautions());
-        frm.setStorage(data.getStorage());
-        frm.setSideEffect(data.getSideEffect());    
+        frm.setManufacturer(data.getDrugManufacturer().getManufacturer());     
+        frm.setDrugprice(data.getDrugprice());   
+        frm.setStorage(data.getStorage());         
         frm.setPackSize(data.getPackSize());   
+        frm.setDosageForm(data.getDosageForm());
+        frm.setStrength(data.getStrength());
         
 		return frm;
 	}

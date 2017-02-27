@@ -181,7 +181,9 @@ public class DrugController {
 
 		drugDaoService.save(drug);
 
-		return "redirect:/drugList";
+		return "redirect:/generic/brands/" + form.getGenericId();
+
+		// return "redirect:/drugList";
 
 	}
 
@@ -220,14 +222,16 @@ public class DrugController {
 
 	@RequestMapping("drug/delete/{id}")
 	public String delete(@PathVariable Integer id) {
+		Drug drug = drugDaoService.findById(id);
 		try {
 
 			drugDaoService.delete(id);
-			return "redirect:/drugList";
+
+			return "redirect:/generic/brands/" + drug.getDrugGeneric().getIdGeneric();
 
 		} catch (Exception ex) {
 
-			return "redirect:/drugList";
+			return "redirect:/generic/brands/" + drug.getDrugGeneric().getIdGeneric();
 
 		}
 	}
@@ -238,16 +242,22 @@ public class DrugController {
 		slf4jLogger.info("DrugController :: showDrugByGenericForComparison");
 		List<Drug> drugsSearchResult = drugDaoService.findTop5ByDrugGeneric(Integer.parseInt(key));
 		List<BarChartPlot> plots = new ArrayList();
+		String msg = "";
 
-		for (Drug d : drugsSearchResult) {
-			String drugMarkerText = d.getDrugName() + " (" + d.getDrugprice() + ")";
-			BarChartPlot currentCoverage = Plots.newBarChartPlot(Data.newData(d.getDrugprice()), Color.LIGHTSKYBLUE,
-					d.getDrugName() + " (" + d.getDrugprice() + ")");
-			Marker a = Markers.newTextMarker(drugMarkerText, Color.BLACK, 12);
-			currentCoverage.addMarker(a, 0);
-			plots.add(currentCoverage);
+		if (drugsSearchResult.size() == 0) {
+			msg = "No available drugs for generic";
+		} else {
 
-		}
+			for (Drug d : drugsSearchResult) {
+				String drugMarkerText = d.getDrugName() + " (" + d.getDrugprice() + ")";
+				BarChartPlot currentCoverage = Plots.newBarChartPlot(Data.newData(d.getDrugprice()), Color.LIGHTSKYBLUE,
+						d.getDrugName() + " (" + d.getDrugprice() + ")");
+				Marker a = Markers.newTextMarker(drugMarkerText, Color.BLACK, 12);
+				currentCoverage.addMarker(a, 0);
+				plots.add(currentCoverage);
+
+			}
+		
 
 		BarChart barChart = GCharts.newBarChart(plots);
 		barChart.setTitle("Comparison for Generic: " + drugsSearchResult.get(0).getDrugGeneric().getGenericName(),
@@ -257,6 +267,8 @@ public class DrugController {
 
 		model.addAttribute("barUrl", barChart.toURLString());
 		model.addAttribute("drugs", drugsSearchResult);
+		}
+		model.addAttribute("msg", msg);
 
 		return "drugs/drugsComparison";
 	}

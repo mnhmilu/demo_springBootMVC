@@ -1,6 +1,7 @@
 package com.demo.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -10,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,10 +24,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.demo.commands.DrugForm;
 import com.demo.commands.DrugGenericForm;
 import com.demo.commands.DrugGenericSearchForm;
+import com.demo.commands.DrugSearchForm;
 import com.demo.converter.DrugGenericDataToDrugGenericForm;
 import com.demo.converter.DrugGenericFormToDrugGenericData;
+import com.demo.domain.Drug;
 import com.demo.domain.DrugGeneric;
+import com.demo.domain.DrugManufacturer;
 import com.demo.repositories.DrugGenericRepository;
+import com.demo.repositories.DrugManufacturerRepository;
+import com.demo.repositories.DrugRepository;
 
 @Controller
 public class DrugGenericController {
@@ -38,6 +46,12 @@ public class DrugGenericController {
 	
 	@Autowired
 	private DrugGenericFormToDrugGenericData drugGenericFormToDrugGenericData;
+	
+	@Autowired
+	private DrugRepository drugDaoService;
+	
+	@Autowired
+	private DrugManufacturerRepository drugManufacturerDaoServie;
 	
 	
 	
@@ -62,6 +76,30 @@ public class DrugGenericController {
 		return "drugGeneric/drugsGenerics";
 
 	}
+	
+	@RequestMapping(value = "/generic/brands/{key}", method = RequestMethod.GET)
+	public String druglist(Model model, @PathVariable String key) {			
+
+		List<Drug> drugsSearchResult = drugDaoService.findTop5ByDrugGeneric(Integer.parseInt(key));		
+		DrugGeneric generic = drugGenericDaoService.findByIdGeneric(Integer.parseInt(key));
+		
+		model.addAttribute("generic", generic);	
+		model.addAttribute("drugs", drugsSearchResult);	
+		
+		DrugForm form = new DrugForm();	
+		model.addAttribute("brands", drugManufacturerDaoServie.findAll());
+		model.addAttribute("drugBrand", new DrugManufacturer());
+		model.addAttribute("drugGeneric", new DrugGeneric());
+		form.setGenericId(Integer.valueOf(key));
+		model.addAttribute("drug", form);		
+		
+		model.addAttribute("drugGeneric", generic);
+		
+		return "drugGeneric/drugs";
+
+	}
+	
+
 
 	@RequestMapping(value = "admin/drugGenericSearch", method = RequestMethod.GET)
 	public String drugGenericSearch(DrugGenericSearchForm form, BindingResult bindingResult, Model model,
@@ -143,6 +181,11 @@ public class DrugGenericController {
 
 		DrugGenericForm form = drugGenericDataToDrugGenericForm.convert(drugGenericDaoService.findByIdGeneric(id));
 		model.addAttribute("generic", form);
+		
+		List<Drug> drugsSearchResult = drugDaoService.findTop5ByDrugGeneric(id);	
+		model.addAttribute("drugs", drugsSearchResult);	
+		
+		
 		return "drugGeneric/drugGenericDetails";
 	}
 

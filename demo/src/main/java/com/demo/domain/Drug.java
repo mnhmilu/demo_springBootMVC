@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -33,40 +32,19 @@ public class Drug {
     @Column(name = "drugName" ,nullable = false,unique=true)
     private String drugName; 
 
-    @Column(name = "composition",columnDefinition="TEXT")
-    private String composition;
-    
-    @Column(name = "indication",columnDefinition="TEXT")
-    private String indication;
-    
-    @Column(name = "dosagesAdministration",columnDefinition="TEXT")
-    private String dosagesAdministration;
-       
-    
-    @Column(name = "contraindication",columnDefinition="TEXT")
-    private String contraindication;
-    
-    @Column(name = "sideEffect",columnDefinition="TEXT")
-    private String sideEffect;      
+    @Column(name = "strength")
+    private String strength;      
     
     
-    @Column(name = "specialWarningPrecautions",columnDefinition="TEXT")
-    private String specialWarningPrecautions;    
-    
-    @Column(name = "drugInteraction",columnDefinition="TEXT")
-    private String drugInteraction;    
-    
-    
-    @Column(name = "storage",columnDefinition="TEXT")
-    private String storage;    
-    
+    @Column(name = "storage")
+    private String storage;       
  
-    
-    @Column(name = "dosageFormStrengthPackSize",columnDefinition="TEXT")
-    private String pregnancyLactation;    
     
     @Column(name = "packSize")    
     private String packSize;
+    
+    @Column(name = "dosageForm")    
+    private String dosageForm;
     
     @Column(name = "drugPrice",precision=10, scale=2)
     @NotNull
@@ -94,27 +72,7 @@ public class Drug {
      
     
     @Temporal(TemporalType.DATE)
-    private Date lastUpdatedDate;       
-
-
-	public String getPackSize() {
-		return packSize;
-	}
-
-
-	public void setPackSize(String packSize) {
-		this.packSize = packSize;
-	}
-
-
-	public DrugManufacturer getDrugManufacturer() {
-		return drugManufacturer;
-	}
-
-
-	public void setDrugManufacturer(DrugManufacturer drugManufacturer) {
-		this.drugManufacturer = drugManufacturer;
-	}
+    private Date lastUpdatedDate;
 
 
 	public Integer getId() {
@@ -137,73 +95,13 @@ public class Drug {
 	}
 
 
-	public String getComposition() {
-		return composition;
+	public String getStrength() {
+		return strength;
 	}
 
 
-	public void setComposition(String composition) {
-		this.composition = composition;
-	}
-
-
-	public String getIndication() {
-		return indication;
-	}
-
-
-	public void setIndication(String indication) {
-		this.indication = indication;
-	}
-
-
-	public String getDosagesAdministration() {
-		return dosagesAdministration;
-	}
-
-
-	public void setDosagesAdministration(String dosagesAdministration) {
-		this.dosagesAdministration = dosagesAdministration;
-	}
-
-
-	public String getContraindication() {
-		return contraindication;
-	}
-
-
-	public void setContraindication(String contraindication) {
-		this.contraindication = contraindication;
-	}
-
-
-	public String getSideEffect() {
-		return sideEffect;
-	}
-
-
-	public void setSideEffect(String sideEffect) {
-		this.sideEffect = sideEffect;
-	}
-
-
-	public String getSpecialWarningPrecautions() {
-		return specialWarningPrecautions;
-	}
-
-
-	public void setSpecialWarningPrecautions(String specialWarningPrecautions) {
-		this.specialWarningPrecautions = specialWarningPrecautions;
-	}
-
-
-	public String getDrugInteraction() {
-		return drugInteraction;
-	}
-
-
-	public void setDrugInteraction(String drugInteraction) {
-		this.drugInteraction = drugInteraction;
+	public void setStrength(String strength) {
+		this.strength = strength;
 	}
 
 
@@ -217,14 +115,23 @@ public class Drug {
 	}
 
 
-
-	public String getPregnancyLactation() {
-		return pregnancyLactation;
+	public String getPackSize() {
+		return packSize;
 	}
 
 
-	public void setPregnancyLactation(String pregnancyLactation) {
-		this.pregnancyLactation = pregnancyLactation;
+	public void setPackSize(String packSize) {
+		this.packSize = packSize;
+	}
+
+
+	public String getDosageForm() {
+		return dosageForm;
+	}
+
+
+	public void setDosageForm(String dosageForm) {
+		this.dosageForm = dosageForm;
 	}
 
 
@@ -268,6 +175,16 @@ public class Drug {
 	}
 
 
+	public DrugManufacturer getDrugManufacturer() {
+		return drugManufacturer;
+	}
+
+
+	public void setDrugManufacturer(DrugManufacturer drugManufacturer) {
+		this.drugManufacturer = drugManufacturer;
+	}
+
+
 	public Date getLastUpdatedDate() {
 		return lastUpdatedDate;
 	}
@@ -275,6 +192,8 @@ public class Drug {
 
 	public void setLastUpdatedDate(Date lastUpdatedDate) {
 		this.lastUpdatedDate = lastUpdatedDate;
-	}     
+	}       
+
+   
    
 }

@@ -75,8 +75,9 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
 		if (Arrays.stream(environment.getActiveProfiles()).anyMatch(env -> (env.equalsIgnoreCase("dev")))) {
 
-			//addDrugData();
+			
 			addGenericData();
+			addDrugData();
 			addNewsData();
 			addAddData();
 			addDrugUpdateData();
@@ -287,7 +288,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		generic.setGenericName("Generic X");
 		drugGenericRepository.save(generic);
 
-		for (int a = 0; a < 50; a++) {
+		for (int a = 0; a < 5; a++) {
 			DrugGeneric genericd = new DrugGeneric();
 			genericd.setGenericName("Generic Xdd" + a);
 			drugGenericRepository.save(genericd);
@@ -297,59 +298,14 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		generic2.setGenericName("Generic Y");
 		drugGenericRepository.save(generic2);
 
-		for (int a = 0; a < 50; a++) {
 
-			Drug newDrugd = new Drug();
-
-			newDrugd.setDrugManufacturer(manufacturer);
-			newDrugd.setDrugGeneric(generic);
-			newDrugd.setDrugName("Alben:"+a);
-			newDrugd.setIndication("Alben is indicated in single and mixed infestations of:"
-					+ "Enterobius vermicularis: Pinworm or threadworm" + "Trichuris trichiura: Whipworm"
-					+ "Ascaris lumbricoides: Large roundworm" + "Ancylostoma duodenale: Hookworm"
-					+ "Necator americanus: Hookworm" + "Taenia spp." + "Strongyloides stercoralis: Tapeworm");
-			newDrugd.setContraindication(
-					"Because albendazole was found to be embryotoxic and teratogenic in rat and rabbit, its use is contraindicated in pregnant "
-							+ "women or those likely to be pregnant. For women of childbearing age (15-45 years), "
-							+ "Alben should be administered within 7 days of the start of normal menstruation");
-
-			newDrugd.setDosagesAdministration(
-					"Adults of children over 2 years of age: 400 mg (2 Alben tablets or 1 Alben-DS tablet or 10 ml suspension) as a single dose in cases of Enterobius vermicularis, "
-							+ "Trichuris trichiura, Ascaris lumbricoides, Ancylostoma duodenale and Necator americanus. In cases of strongyloidiasis or taeniasis, 400 mg (1 Alben-DS tablet or 10 ml suspension) as a single dose should be given for 3 consecutive days."
-							+ "If the patient is not cured on follow-up after three weeks, a second course of treatment is indicated. Alben tablets may be chewed or swallowed but Alben – DS tablet must be chewed. Both the preparations may be crushed and mixed with food."
-							+ " No specific procedures such as fasting or purging are required."
-							+ "Children of 1-2 years: Recommended dose is a single dose of 200mg (1 Alben tablet or 1/2 Alben-DS tablet or 5 ml suspension)."
-							+ "Children under 1 years: Not recommended");
-
-			newDrugd.setInsertDate(new Date());
-			newDrugd.setDrugprice(56.87);
-			newDrugd.setPackSize("5X5 size");
-
-			drugRepository.save(newDrugd);
-
-		}
 		
 		Drug newDrug = new Drug();
 
 		newDrug.setDrugManufacturer(manufacturer);
 		newDrug.setDrugGeneric(generic);
 		newDrug.setDrugName("Alben");
-		newDrug.setIndication("Alben is indicated in single and mixed infestations of:"
-				+ "Enterobius vermicularis: Pinworm or threadworm" + "Trichuris trichiura: Whipworm"
-				+ "Ascaris lumbricoides: Large roundworm" + "Ancylostoma duodenale: Hookworm"
-				+ "Necator americanus: Hookworm" + "Taenia spp." + "Strongyloides stercoralis: Tapeworm");
-		newDrug.setContraindication(
-				"Because albendazole was found to be embryotoxic and teratogenic in rat and rabbit, its use is contraindicated in pregnant "
-						+ "women or those likely to be pregnant. For women of childbearing age (15-45 years), "
-						+ "Alben should be administered within 7 days of the start of normal menstruation");
-
-		newDrug.setDosagesAdministration(
-				"Adults of children over 2 years of age: 400 mg (2 Alben tablets or 1 Alben-DS tablet or 10 ml suspension) as a single dose in cases of Enterobius vermicularis, "
-						+ "Trichuris trichiura, Ascaris lumbricoides, Ancylostoma duodenale and Necator americanus. In cases of strongyloidiasis or taeniasis, 400 mg (1 Alben-DS tablet or 10 ml suspension) as a single dose should be given for 3 consecutive days."
-						+ "If the patient is not cured on follow-up after three weeks, a second course of treatment is indicated. Alben tablets may be chewed or swallowed but Alben – DS tablet must be chewed. Both the preparations may be crushed and mixed with food."
-						+ " No specific procedures such as fasting or purging are required."
-						+ "Children of 1-2 years: Recommended dose is a single dose of 200mg (1 Alben tablet or 1/2 Alben-DS tablet or 5 ml suspension)."
-						+ "Children under 1 years: Not recommended");
+	
 
 		newDrug.setInsertDate(new Date());
 		newDrug.setDrugprice(56.87);
