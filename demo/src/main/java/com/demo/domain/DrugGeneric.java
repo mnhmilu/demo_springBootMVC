@@ -35,15 +35,112 @@ public class DrugGeneric {
     private String genericName;
     
     @Temporal(TemporalType.DATE)
-    private Date insertDate; 
-   
+    private Date insertDate;   
     
-    //@OneToOne(fetch=FetchType.LAZY, mappedBy="drugGeneric", orphanRemoval = true)
+
     @OneToOne
     private Drug drug;
     
+   
+    private String classification;
     
-    private String remarks;
+    private String safetyRemarks;
+    
+    @Column(name = "indicationDosages",columnDefinition="TEXT")
+    private String indicationDosages;
+    
+    
+    // Safety Alert Components
+    
+  
+    
+    @Column(name = "contraindication",columnDefinition="TEXT")
+    private String contraindication;
+    
+    @Column(name = "specialPrecaution",columnDefinition="TEXT")
+    private String specialPrecaution;
+    
+    
+    @Column(name = "advanceDrugReaction",columnDefinition="TEXT")
+    private String advanceDrugReaction;
+    
+    
+    @Column(name = "interAction",columnDefinition="TEXT")
+    private String interAction;
+    
+    
+    private String remarks;   
+    
+
+	public String getClassification() {
+		return classification;
+	}
+
+
+	public void setClassification(String classification) {
+		this.classification = classification;
+	}
+
+
+	public String getSafetyRemarks() {
+		return safetyRemarks;
+	}
+
+
+	public void setSafetyRemarks(String safetyRemarks) {
+		this.safetyRemarks = safetyRemarks;
+	}
+
+
+	public String getIndicationDosages() {
+		return indicationDosages;
+	}
+
+
+	public void setIndicationDosages(String indicationDosages) {
+		this.indicationDosages = indicationDosages;
+	}
+
+
+	public String getContraindication() {
+		return contraindication;
+	}
+
+
+	public void setContraindication(String contraindication) {
+		this.contraindication = contraindication;
+	}
+
+
+	public String getSpecialPrecaution() {
+		return specialPrecaution;
+	}
+
+
+	public void setSpecialPrecaution(String specialPrecaution) {
+		this.specialPrecaution = specialPrecaution;
+	}
+
+
+	public String getAdvanceDrugReaction() {
+		return advanceDrugReaction;
+	}
+
+
+	public void setAdvanceDrugReaction(String advanceDrugReaction) {
+		this.advanceDrugReaction = advanceDrugReaction;
+	}
+
+
+	public String getInterAction() {
+		return interAction;
+	}
+
+
+	public void setInterAction(String interAction) {
+		this.interAction = interAction;
+	}
+
 
 	public String getRemarks() {
 		return remarks;

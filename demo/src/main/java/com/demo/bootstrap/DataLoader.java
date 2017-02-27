@@ -75,7 +75,8 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
 		if (Arrays.stream(environment.getActiveProfiles()).anyMatch(env -> (env.equalsIgnoreCase("dev")))) {
 
-			addDrugData();
+			//addDrugData();
+			addGenericData();
 			addNewsData();
 			addAddData();
 			addDrugUpdateData();
@@ -83,6 +84,27 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		}
 
 	}
+	
+	private void addGenericData()
+	{
+		
+		DrugGeneric generic = new DrugGeneric();
+		generic.setGenericName("ETODOLAC");
+		generic.setAdvanceDrugReaction("Sample advance Drug Reaction");
+		generic.setClassification("Sample Classification");
+		generic.setContraindication("Sample ContraIndication");
+		generic.setIndicationDosages("Sample Dosage and Indication");
+		generic.setInsertDate(new Date());
+		generic.setInterAction("Sample Interaction");
+		generic.setRemarks("Sample Remarks");	
+		generic.setSafetyRemarks("PX LX Food Lab");
+		generic.setSpecialPrecaution("Sample Special Precaution");
+		drugGenericRepository.save(generic);
+		
+		
+		
+	}
+	
 
 	private void addSecurityIntitalData() {
 

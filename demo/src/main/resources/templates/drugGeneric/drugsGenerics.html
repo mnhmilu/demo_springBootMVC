@@ -53,22 +53,33 @@
 						<span class="label label-primary">Drug Generic List</span>
 					</h4>
 					<table class="table table-striped">
-						<tr>
-							<th>Id</th>
+						<tr>							
 							<th>Generic Name</th>
+							<th>Classification </th>
+							<th>Safety Remarks </th>
 							<th>Remarks</th>
+							<th>Details</th>
 							<th>Edit</th>
-							<th>Delete</th>
+							<th>Delete</th>							
+							<th>Brands</th>
+							<th>Comparison</th>
 						</tr>
-						<tr th:each="generic : ${drugGenerics}">
-							<td th:text="${generic.idGeneric}"><a
-								href="/admin/generic/${generic.idGeneric}">Id</a></td>
+						<tr th:each="generic : ${drugGenerics}">						
 							<td th:text="${generic.genericName}">Generic Name</td>
+							<td th:text="${generic.classification}">Classification</td>
+							<td th:text="${generic.safetyRemarks}">Safety Remarks</td>
 							<td th:text="${generic.remarks}">Remarks</td>
+							<td><a
+								th:href="${'/drugGenericDetails/' + generic.idGeneric}">Details</a></td>
 							<td><a
 								th:href="${'/admin/generic/edit/' + generic.idGeneric}">Edit</a></td>
 							<td><a
 								th:href="${'/admin/generic/delete/' + generic.idGeneric}">Delete</a></td>
+								
+								<td><a
+								th:href="${'/admin/generic/delete/' + generic.idGeneric}">Brands</a></td>
+								<td><a
+								th:href="${'/admin/generic/delete/' + generic.idGeneric}">Comparison</a></td>
 						</tr>
 					</table>
 

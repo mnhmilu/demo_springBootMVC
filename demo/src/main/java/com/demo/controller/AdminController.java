@@ -15,6 +15,6 @@ public class AdminController {
 
     @RequestMapping("")
     public String home(){
-        return "Hello :: This is admin home";
+        return "Hello :: This is admin home jkj sample controller    ";
     }
 }

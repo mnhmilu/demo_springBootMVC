@@ -19,28 +19,105 @@
 		<div class="panel panel-default">
 			<div class="panel-body">
 				<h4>
-					<span class="label label-primary">Enter Drug Generic Information</span>
+					<span class="label label-primary">Enter Drug Generic
+						Information</span>
 				</h4>
 				<div>
 					<form class="form-horizontal" th:object="${drugGeneric}"
 						th:action="@{/admin/generics}" method="post" action="#">
 						<input type="hidden" th:field="*{idGeneric}" />
 						<div class="form-group">
-							<label class="col-sm-2 control-label">Drug Generic Name(*):</label>
+							<label class="col-sm-2 control-label">Drug Generic
+								Name(*):</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" th:field="*{genericName}" />
+								<input type="text" class="form-control"
+									th:field="*{genericName}" />
 								<p th:if="${#fields.hasErrors('genericName')}"
 									th:errors="*{drugName}">Invalid Drug Generic Name</p>
 							</div>
-						</div>						
-					
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Classification:</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control"
+									th:field="*{classification}" />
+
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Safety Remarks:</label>
+							<div class="col-sm-10">
+								<input tyÏpe="text" class="form-control"
+									th:field="*{safetyRemarks}" />
+
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Indication Dosage :</label>
+							<div class="col-sm-10">
+								<textarea class="form-control" rows="8"
+									style="margin-top: 10px;"
+									placeholder="Write indication dosage  here......."
+									name="dosage" th:inline="text" th:field="*{indicationDosages}">
+                            </textarea>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Contraindications(CI)</label>
+							<div class="col-sm-10">
+								<textarea class="form-control" rows="8"
+									style="margin-top: 10px;"
+									placeholder="Write contraindication  here......." name="ci"
+									th:inline="text" th:field="*{contraindication}">
+                            </textarea>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Special
+								Precaution(SP) </label>
+							<div class="col-sm-10">
+								<textarea class="form-control" rows="8"
+									style="margin-top: 10px;"
+									placeholder="Write special precaution  here......." name="sp"
+									th:inline="text" th:field="*{specialPrecaution}">
+                            </textarea>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Advance Drug
+								Reaction(ADR) </label>
+							<div class="col-sm-10">
+								<textarea class="form-control" rows="8"
+									style="margin-top: 10px;"
+									placeholder="Write advance drug reaciton  here......."
+									name="adr" th:inline="text" th:field="*{advanceDrugReaction}">
+                            </textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Inter Action(INT) </label>
+							<div class="col-sm-10">
+								<textarea class="form-control" rows="8"
+									style="margin-top: 10px;"
+									placeholder="Write interaction  here......." name="interaction"
+									th:inline="text" th:field="*{interAction}">
+                            </textarea>
+							</div>
+						</div>
+
+
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Remarks:</label>
 							<div class="col-sm-10">
 								<textarea class="form-control" rows="8"
 									style="margin-top: 10px;"
-									placeholder="Write remarks  here......."
-									name="composition" th:inline="text" th:field="*{remarks}">
+									placeholder="Write remarks  here......." name="composition"
+									th:inline="text" th:field="*{remarks}">
                             </textarea>
 							</div>
 						</div>

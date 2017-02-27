@@ -1,7 +1,6 @@
 package com.demo.controller;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -19,8 +18,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.demo.commands.DrugForm;
 import com.demo.commands.DrugGenericForm;
 import com.demo.commands.DrugGenericSearchForm;
+import com.demo.converter.DrugGenericDataToDrugGenericForm;
+import com.demo.converter.DrugGenericFormToDrugGenericData;
 import com.demo.domain.DrugGeneric;
 import com.demo.repositories.DrugGenericRepository;
 
@@ -30,6 +32,15 @@ public class DrugGenericController {
 	private final Logger slf4jLogger = LoggerFactory.getLogger(DrugGenericController.class);
 
 	private DrugGenericRepository drugGenericDaoService;
+	
+	@Autowired
+	private DrugGenericDataToDrugGenericForm drugGenericDataToDrugGenericForm;
+	
+	@Autowired
+	private DrugGenericFormToDrugGenericData drugGenericFormToDrugGenericData;
+	
+	
+	
 
 	@Autowired
 	public void setservices(DrugGenericRepository drugGenericDaoService) {
@@ -77,8 +88,6 @@ public class DrugGenericController {
 
 		}
 		
-		
-		
 
 		model.addAttribute("drugGeneric", form);
 
@@ -88,6 +97,7 @@ public class DrugGenericController {
 		model.addAttribute("drugGenerics", page.getContent());
 		model.addAttribute("page", page);
 
+		
 		return "drugGeneric/drugsGenerics";
 	}
 
@@ -105,14 +115,10 @@ public class DrugGenericController {
 		if (bindingResult.hasErrors()) {
 
 			model.addAttribute("drugGeneric", form);
-
 			return "drugGeneric/drugGenericForm";
 		}
 
-		DrugGeneric generic = new DrugGeneric();
-		generic.setGenericName(form.getGenericName());
-		generic.setRemarks(form.getRemarks());
-		generic.setIdGeneric(form.getIdGeneric());
+		DrugGeneric generic = drugGenericFormToDrugGenericData.convert(form);	
 		generic.setInsertDate(new Date());
 		drugGenericDaoService.save(generic);
 
@@ -122,14 +128,22 @@ public class DrugGenericController {
 
 	@RequestMapping("admin/generic/edit/{idGeneric}")
 	public String editGeneric(@PathVariable Integer idGeneric, Model model) {
+		
 		DrugGenericForm form = new DrugGenericForm();
-		DrugGeneric generic = drugGenericDaoService.findByIdGeneric(idGeneric);
-		form.setGenericName(generic.getGenericName());
-		form.setRemarks(generic.getRemarks());
-		form.setIdGeneric(generic.getIdGeneric());
+		DrugGeneric generic = drugGenericDaoService.findByIdGeneric(idGeneric);		
+		form=drugGenericDataToDrugGenericForm.convert(generic);	
 		model.addAttribute("drugGeneric", form);
 		return "drugGeneric/drugGenericForm";
 
+	}
+	
+	
+	@RequestMapping("drugGenericDetails/{id}")
+	public String showDrugGenericDeatails(@PathVariable Integer id, Model model) {
+
+		DrugGenericForm form = drugGenericDataToDrugGenericForm.convert(drugGenericDaoService.findByIdGeneric(id));
+		model.addAttribute("generic", form);
+		return "drugGeneric/drugGenericDetails";
 	}
 
 	@RequestMapping("admin/generic/delete/{id}")
