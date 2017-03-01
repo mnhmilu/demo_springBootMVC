@@ -29,7 +29,7 @@ public class Drug {
     
     @NotNull
     @NotBlank
-    @Column(name = "drugName" ,nullable = false,unique=true)
+    @Column(name = "drugName" ,nullable = false)
     private String drugName; 
 
     @Column(name = "strength")

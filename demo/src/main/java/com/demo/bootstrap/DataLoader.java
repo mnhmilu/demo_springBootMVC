@@ -75,7 +75,6 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
 		if (Arrays.stream(environment.getActiveProfiles()).anyMatch(env -> (env.equalsIgnoreCase("dev")))) {
 
-			
 			addGenericData();
 			addDrugData();
 			addNewsData();
@@ -85,10 +84,9 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		}
 
 	}
-	
-	private void addGenericData()
-	{
-		
+
+	private void addGenericData() {
+
 		DrugGeneric generic = new DrugGeneric();
 		generic.setGenericName("ETODOLAC");
 		generic.setAdvanceDrugReaction("Sample advance Drug Reaction");
@@ -97,15 +95,12 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		generic.setIndicationDosages("Sample Dosage and Indication");
 		generic.setInsertDate(new Date());
 		generic.setInterAction("Sample Interaction");
-		generic.setRemarks("Sample Remarks");	
+		generic.setRemarks("Sample Remarks");
 		generic.setSafetyRemarks("PX LX Food Lab");
 		generic.setSpecialPrecaution("Sample Special Precaution");
 		drugGenericRepository.save(generic);
-		
-		
-		
+
 	}
-	
 
 	private void addSecurityIntitalData() {
 
@@ -277,88 +272,111 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 	private void addDrugData() {
 
 		DrugManufacturer manufacturer = new DrugManufacturer();
-		manufacturer.setManufacturer("ESKAYEF");
+		manufacturer.setManufacturer("ACME Lab");
 		drugManufacturerDaoService.save(manufacturer);
 
 		DrugManufacturer manufacturer2 = new DrugManufacturer();
-		manufacturer2.setManufacturer("Sanofe");
+		manufacturer2.setManufacturer("Novartis");
 		drugManufacturerDaoService.save(manufacturer2);
 
 		DrugGeneric generic = new DrugGeneric();
-		generic.setGenericName("Generic X");
+		generic.setGenericName("DICLOFENAC");
+		generic.setClassification("Nonsteriodal Anti-Inflammatory Drug");
+		generic.setSafetyRemarks("PX LC Food");
+
+		generic.setIndicationDosages("sprains; Strains; Tendinitis; Pain "
+				+ "& inflammation associated w/ musculoskeletal & joint disorders; Bursitis; Acute gout; Dysmenorrhoea: Adult: As sodium: 75-150 mg daily"
+				+ "in divided doses. Max: 150 mg/day. Migraine: Adult: As potassium: Initially, 50 mg taken at the 1st sign of an attack, an additional dose"
+				+ " of 50 mg may be taken after 2 hr if symptoms persist. If needed, further doses of 50 mg may be taken every 4-6 hr. Max: 200 mg/day."
+				+ "NTRAMUSCULAR " + "Sprains; Strains; Tendinitis;Pain "
+				+ "& inflammation associated w/ musculoskeletal & joint disorders; Bursitis; Acute gout; Dysmenorrhoea: Adult: As sodium: 75 mg once daily, injected into the gluteal muscle,"
+				+ "may increase to 75 mg bid in severe conditions. "
+				+ "Renal colic: Adult: As sodium: 75 mg, may repeat once after 30 mins if needed. Max: 150 mg/day. "
+				+ "INTRAVENOUS "
+				+ "Postoperative pain: Adult: As sodium: 75 mg infusion in 5% glucose or 0.9% Na CI given over 30-120 minutes, may repeat after 4-6 hr if necessary. "
+				+ "WWWIVUVWlVUU-.‘-v"
+				+ "Prophylaxis of postoperative pain: l Adult: As sodium: 25-50 mg infusion given ‘ after surgery over 15-60 mins followed by "
+				+ "5 mg/hr. Max: 150 mg daily. " + "RECTAL "
+				+ "Postoperative pain: Adult: 75-150 mg daily, in divided doses (25 mg, 50 mg & "
+				+ "100 mg supp only). Max: 150 mg/day (inclusive of diclofenac administered through other routes). Child: 6-1 2 yr: 1-2 mg/kg/day in divided doses (12.5 mg & 25 mg supp only) for max of 4 days. ");
+
+		generic.setAdvanceDrugReaction(
+				"Gl disturbances; headache, dizziness, rash; GI bleeding, peptic ulceration; abnormalities of "
+						+ "kidney function. Pain & tissue damage at lnj site (lM); local irritation (rectal); "
+						+ "transient burning & stinging (ophthalmic). StevensJohnson syndrome, "
+						+ "exfoliative dermatitis toxic epidermal necrolysis. k ");
+		generic.setContraindication(
+				"Active peptic ulcer; hypersensitivity to diclofenac or other NSAle. Treatment of perioperative pain in CABG surgery. "
+						+ "3rd trimester of pregnancy. Topical: Not to be applied onto damaged or nonintact skin");
+		generic.setSpecialPrecaution(
+				"History of GI ulceration; impaired cardiac, renal or hepatic function; hypertension; lactation. "
+						+ "lV admin in patients w/ moderate or severe renal impairment; hypovolaemia or dehydration; asthma, porphyria. Monitor LFTs in patients on prolonged therapy. May prolong bleeding time; caution when used in patients M coagulation disorders or on anticoagulants."
+						+ " Prolonged therapy may increase risk of anaemia. fst & 2nd trimester of pregnancy. Elderly, debilitated patients.");
+		generic.setInterAction("Not to be given IV to patients who are receiving other NSAle or anticoagulants including low dose heparin."
+				+ " Renal function may be worsened when used w/ ciclosporin or triamterene. Altered absorption when given w/ sucralfate, "
+				+ "colestyramine or colestipol. Ophthalmic application of diclofenac may reduce the efficacy of ophth acetylcholine & carbachol. Increased risk of GI ulceration , "
+				+ "& bleeding when used w/ corticosteroids, aspirin or anticoagulants. increases blood levels of digoxin, lithium & methotrexate. Potentiate potassium-sparing diuretics.");
+		
+		
+
 		drugGenericRepository.save(generic);
 
-		for (int a = 0; a < 5; a++) {
-			DrugGeneric genericd = new DrugGeneric();
-			genericd.setGenericName("Generic Xdd" + a);
-			drugGenericRepository.save(genericd);
-		}
-
-		DrugGeneric generic2 = new DrugGeneric();
-		generic2.setGenericName("Generic Y");
-		drugGenericRepository.save(generic2);
-
-
-		
 		Drug newDrug = new Drug();
 
 		newDrug.setDrugManufacturer(manufacturer);
 		newDrug.setDrugGeneric(generic);
-		newDrug.setDrugName("Alben");
-	
+		newDrug.setDrugName("A-FENAC");
+		newDrug.setDosageForm("TAB");
+		newDrug.setStrength("25mg");
+		
 
 		newDrug.setInsertDate(new Date());
-		newDrug.setDrugprice(56.87);
-		newDrug.setPackSize("5X5 size");
+		newDrug.setDrugprice(55.00);
+		newDrug.setPackSize("10X10 size");
 
 		drugRepository.save(newDrug);
 
 		newDrug.setId(0);
-		newDrug.setDrugprice(58.87);
-		newDrug.setDrugName("Captoril");
+		newDrug.setDrugName("A-FENAC");
+		newDrug.setDosageForm("TAB");
+		newDrug.setStrength("50mg");
+		
+
+		newDrug.setInsertDate(new Date());
+		newDrug.setDrugprice(84.00);
+		newDrug.setPackSize("10X10 size");
 
 		drugRepository.save(newDrug);
-
+		
+		
 		newDrug.setId(0);
-		newDrug.setDrugprice(60.87);
-		newDrug.setDrugName("Daptoril");
+		newDrug.setDrugManufacturer(manufacturer2);
+		newDrug.setDrugName("CATAFLAM");
+		newDrug.setDosageForm("TAB");
+		newDrug.setStrength("25mg");
+		
+
+		newDrug.setInsertDate(new Date());
+		newDrug.setDrugprice(0.00);
+		newDrug.setPackSize("50's ");
 
 		drugRepository.save(newDrug);
-
+		
 		newDrug.setId(0);
-		newDrug.setDrugprice(62.87);
-		newDrug.setDrugName("Eaptoril");
+		newDrug.setDrugManufacturer(manufacturer2);
+		newDrug.setDrugName("CATAFLAM");
+		newDrug.setDosageForm("TAB");
+		newDrug.setStrength("50mg");
+		
+
+		newDrug.setInsertDate(new Date());
+		newDrug.setDrugprice(0.00);
+		newDrug.setPackSize("50's ");
 
 		drugRepository.save(newDrug);
+		
 
-		newDrug.setId(0);
-		newDrug.setDrugprice(64.87);
-		newDrug.setDrugName("Faptoril");
 
-		drugRepository.save(newDrug);
-
-		newDrug.setId(0);
-		newDrug.setDrugprice(66.87);
-		newDrug.setDrugName("Gaptoril");
-
-		drugRepository.save(newDrug);
-
-		newDrug.setId(0);
-		newDrug.setDrugprice(78.87);
-		newDrug.setDrugName("Haptoril");
-
-		drugRepository.save(newDrug);
-
-		newDrug.setId(0);
-		newDrug.setDrugprice(56.87);
-		newDrug.setDrugName("Iaptoril");
-
-		drugRepository.save(newDrug);
-
-		newDrug.setId(0);
-		newDrug.setDrugName("Japtoril");
-
-		drugRepository.save(newDrug);
 
 		DoctorsSpecialization specialization = new DoctorsSpecialization();
 		specialization.setSpecializationName("PHYCIATRIST");

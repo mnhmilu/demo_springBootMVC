@@ -9,104 +9,105 @@
 <body>
 	<div class="container">
 		<!--/*/ <th:block th:include="fragments/headerForManager :: header"></th:block> /*/-->
-		
-		<h3 th:text="${generic.genericName}" style="border-style: groove" align="center"></h3>
-		
-				<div class="panel-body">
-				<h4>
-					<span class="label label-primary">Enter Drug Information</span>
-				</h4>
-				<div>
-					<form class="form-horizontal" th:object="${drug}"
-						th:action="@{/drug/saveDrug}" method="post" action="#">
-						<input type="hidden" th:field="*{id}" />
-						<input type="hidden" th:field="*{genericId}" />
-						<div class="form-group">
-							<label class="col-sm-2 control-label">Drug Name(*):</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" th:field="*{drugName}" />
-								<p th:if="${#fields.hasErrors('drugName')}"
-									th:errors="*{drugName}">Invalid Drug Name</p>
-							</div>
+
+		<h3 th:text="${generic.genericName}" style="border-style: groove"
+			align="center"></h3>
+
+		<div class="panel-body">
+			<h4>
+				<span class="label label-primary">Enter Drug Information</span>
+			</h4>
+			<div>
+				<form class="form-horizontal" th:object="${drug}"
+					th:action="@{/drug/saveDrug}" method="post" action="#">
+					<input type="hidden" th:field="*{id}" /> <input type="hidden"
+						th:field="*{genericId}" />
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Drug Name(*):</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" th:field="*{drugName}" />
+							<p th:if="${#fields.hasErrors('drugName')}"
+								th:errors="*{drugName}">Invalid Drug Name</p>
 						</div>
-		
-						<div class="form-group">
-							<label class="col-sm-2 control-label">Dosage Form</label>
-							<div class="col-sm-5">
-								<select th:field="*{dosageForm}" class="form-control">
-									<option value="" label="--- Select ---" />
-									<option value="TABLET" label="Tablet" />
-									<option value="SYRUP" label="Syrup" />
-									<option value="CAPSULE" label="Capsule" />
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Dosage Form</label>
+						<div class="col-sm-5">
+							<select th:field="*{dosageForm}" class="form-control">
+								<option value="" label="--- Select ---" />
+								<option value="TABLET" label="Tablet" />
+								<option value="SYRUP" label="Syrup" />
+								<option value="CAPSULE" label="Capsule" />
+							</select>
+							<p th:if="${#fields.hasErrors('dosageForm')}"
+								th:errors="*{dosageForm}">Content Type</p>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Manufacturer(*):</label>
+
+
+						<div class="col-sm-10">
+							<div th:if="${brands != null and not #lists.isEmpty(brands)}">
+								<select th:field="*{manufacturerId}" class="form-control">
+									<option th:each="brand : ${brands}"
+										th:value="${{brand.manufacturerId}}"
+										th:text="${brand.manufacturer}">Select Manufacturer</option>
 								</select>
-								<p th:if="${#fields.hasErrors('dosageForm')}"
-									th:errors="*{dosageForm}">Content Type</p>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="col-sm-2 control-label">Manufacturer(*):</label>
-
-
-							<div class="col-sm-10">
-								<div th:if="${brands != null and not #lists.isEmpty(brands)}">
-									<select th:field="*{manufacturerId}" class="form-control">
-										<option th:each="brand : ${brands}"
-											th:value="${{brand.manufacturerId}}"
-											th:text="${brand.manufacturer}">Select Manufacturer</option>
-									</select>
-								</div>
-
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">Drug price(*)</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" th:field="*{drugprice}" />
-								<p th:if="${#fields.hasErrors('drugprice')}"
-									th:errors="*{drugprice}">Invalid Price</p>
 							</div>
 
 						</div>
-
-						<div class="form-group">
-							<label class="col-sm-2 control-label">Storage:</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" th:field="*{storage}" />
-
-							</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Drug price(*)</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" th:field="*{drugprice}" />
+							<p th:if="${#fields.hasErrors('drugprice')}"
+								th:errors="*{drugprice}">Invalid Price</p>
 						</div>
 
-						<div class="form-group">
-							<label class="col-sm-2 control-label">Strength:</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" th:field="*{strength}" />
-							</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Storage:</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" th:field="*{storage}" />
+
 						</div>
+					</div>
 
-
-						<div class="form-group">
-							<label class="col-sm-2 control-label">Pack Size:</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" th:field="*{packSize}" />
-							</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Strength:</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" th:field="*{strength}" />
 						</div>
+					</div>
 
 
-
-
-						<div class="form-group">
-							<div class="col-sm-10">
-								<button type="submit" class="btn btn-primary">Submit</button>
-							</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Pack Size:</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" th:field="*{packSize}" />
 						</div>
+					</div>
 
-					</form>
-				</div>
 
+
+
+					<div class="form-group">
+						<div class="col-sm-10">
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</div>
+					</div>
+
+				</form>
 			</div>
-	
-	
+
+		</div>
+
+
 		<div th:if="${not #lists.isEmpty(drugs)}">
 
 			<div class="panel panel-default">
@@ -117,30 +118,37 @@
 					<table class="table table-striped">
 						<tr style="border-style: groove">
 
-							<th>Brand Name</th>					
+							<th>Brand Name</th>
 							<th>Manufacturer Name</th>
+							<th>Storage</th>
+							<th>Strength</th>
+
 							<th>Price</th>
-							<th>View</th>
-							
 							<th
 								sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')">Edit</th>
 							<th
-								sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')">Delete</th>
+								sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')">Delete</th>Ï
+
 						</tr>
 						<tr th:each="drug : ${drugs}" style="border-style: groove">
-							<td th:text="${drug.drugName}">Brand Name</td>						
+							<td th:text="${drug.drugName}">Brand Name</td>
 							<td th:text="${drug.drugManufacturer.manufacturer}">Manufacturer
 								Name</td>
+							<td th:text="${drug.strength}">Strength</td>
+							<td th:text="${drug.storage}">Storage</td>
+
 							<td th:text="${drug.drugprice}">Price</td>
-							<td><a th:href="${'/drug/' + drug.id}">Details</a></td>						
 							<td
 								sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')"><a
 								th:href="${'/drug/edit/' + drug.id}">Edit</a></td>
 							<td
 								sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')"><a
 								th:href="${'/drug/delete/' + drug.id}">Delete</a></td>
+
 						</tr>
 					</table>
+
+		
 
 				</div>
 			</div>

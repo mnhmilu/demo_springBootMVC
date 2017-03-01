@@ -18,7 +18,7 @@
 					<h4>
 						<span class="label label-primary">Drug List</span>
 					</h4>
-					<table class="table table-striped">
+					<table class="table table-striped" style="border-style: groove">
 						<tr>
 
 							<th>Brand Name</th>
@@ -27,7 +27,7 @@
 							<th>View</th>
 
 						</tr>
-						<tr th:each="drug : ${drugs}">
+						<tr th:each="drug : ${drugs}" style="border-style: groove">
 
 							<td th:text="${drug.drugName}">Brand Name</td>
 							<td th:text="${drug.drugGeneric.genericName}">Generic Name</td>

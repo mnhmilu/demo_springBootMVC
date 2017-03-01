@@ -261,7 +261,7 @@ public class DrugController {
 
 		BarChart barChart = GCharts.newBarChart(plots);
 		barChart.setTitle("Comparison for Generic: " + drugsSearchResult.get(0).getDrugGeneric().getGenericName(),
-				Color.BLACK, 15);
+				Color.BLACK, 20);
 		barChart.setSize(760, 320);
 		barChart.setHorizontal(true);
 
