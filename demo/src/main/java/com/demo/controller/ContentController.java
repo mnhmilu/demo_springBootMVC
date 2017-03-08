@@ -14,6 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -34,6 +36,7 @@ import com.demo.commands.ContentForm;
 import com.demo.commands.ContentSearchForm;
 import com.demo.converter.ContentDataToContentForm;
 import com.demo.domain.Content;
+import com.demo.domain.Drug;
 import com.demo.enums.ContentType;
 import com.demo.repositories.ContentRepository;
 
@@ -55,67 +58,80 @@ public class ContentController {
 	}
 
 	@RequestMapping(value = "admin/addList", method = RequestMethod.GET)
-	public String druglist(Model model) {
+	public String druglist(Model model,Pageable pageable) {
 
-		model.addAttribute("content", new ContentSearchForm());
-		
-		List<Content> results=contentRepository.findContentByContentTypeOrByHeaderOrderByInsertDateDesc(ContentType.Advertisement.name(),null);
+		model.addAttribute("content", new ContentSearchForm());		
+		Page<Content> results=contentRepository.findContentByContentTypeOrByHeaderOrderByInsertDateDesc(ContentType.Advertisement.name(),null,pageable);		
+		PageWrapper<Content> page = new PageWrapper<Content>(results, "admin/addList");		
 		model.addAttribute("contents", results);
+		model.addAttribute("page", page);
 		return "contents/addcontents";
 
 	}
 	@RequestMapping(value = "admin/newsList", method = RequestMethod.GET)
-	public String newslist(Model model) {
+	public String newslist(Model model,Pageable pageable) {
 
-		model.addAttribute("content", new ContentSearchForm());
-		model.addAttribute("contents", contentRepository.findContentByContentTypeOrByHeaderOrderByInsertDateDesc(ContentType.News.name(),null));
+		model.addAttribute("content", new ContentSearchForm());		
+		Page<Content>  results =contentRepository.findContentByContentTypeOrByHeaderOrderByInsertDateDesc(ContentType.News.name(),null,pageable);		
+		PageWrapper<Content> page = new PageWrapper<Content>(results, "admin/newsList");
+		model.addAttribute("contents", results);	
+		model.addAttribute("page", page);
 		return "contents/newscontents";
 
 	}
 	@RequestMapping(value = "admin/drugUpdateList", method = RequestMethod.GET)
-	public String list(Model model) {
+	public String list(Model model,Pageable pageable) {
 
 		model.addAttribute("content", new ContentSearchForm());
-		model.addAttribute("contents", contentRepository.findContentByContentTypeOrByHeaderOrderByInsertDateDesc(ContentType.DrugUpdate.name(),null));
+		Page<Content>  results = contentRepository.findContentByContentTypeOrByHeaderOrderByInsertDateDesc(ContentType.DrugUpdate.name(),null,pageable);
+		PageWrapper<Content> page = new PageWrapper<Content>(results, "admin/drugUpdateList");
+		model.addAttribute("contents",results);		
+		model.addAttribute("page", page);
 		return "contents/drugUpdateContents";
 
 	}
 	
 	@RequestMapping(value = "admin/addContentSearch", method = RequestMethod.POST)
-	public String addContentSearch(ContentSearchForm form, BindingResult bindingResult, Model model) {
+	public String addContentSearch(ContentSearchForm form, BindingResult bindingResult, Model model,Pageable pageable) {
 
 		if (form.getHeader() == null ) {
 			return "redirect:/admin/addcontents";
 		}	
 		
-        List<Content> results =contentRepository.findContentByContentTypeOrByHeaderOrderByInsertDateDesc(null,form.getHeader());
+        Page<Content> results =contentRepository.findContentByContentTypeOrByHeaderOrderByInsertDateDesc(null,form.getHeader(),pageable);
+        PageWrapper<Content> page = new PageWrapper<Content>(results, "admin/addContentSearch");
         model.addAttribute("content", form);
         model.addAttribute("contents",results );
+    	model.addAttribute("page", page);
 		return "contents/addcontents";
 	}
 	
 	@RequestMapping(value = "admin/newsContentSearch", method = RequestMethod.POST)
-	public String newsContentSearch(ContentSearchForm form, BindingResult bindingResult, Model model) {
+	public String newsContentSearch(ContentSearchForm form, BindingResult bindingResult, Model model,Pageable pageable) {
 
 		if (form.getHeader() == null ) {
 			return "redirect:/admin/newscontents";
 		}	
 		
-        List<Content> results =contentRepository.findContentByContentTypeOrByHeaderOrderByInsertDateDesc(null,form.getHeader());
+        Page<Content> results =contentRepository.findContentByContentTypeOrByHeaderOrderByInsertDateDesc(null,form.getHeader(),pageable);
+        PageWrapper<Content> page = new PageWrapper<Content>(results, "admin/newsContentSearch");
         model.addAttribute("content", form);
         model.addAttribute("contents",results );
+     	model.addAttribute("page", page);
 		return "contents/newscontents";
 	}
 	@RequestMapping(value = "admin/drugUpdateContentSearch", method = RequestMethod.POST)
-	public String drugUpdateContentSearch(ContentSearchForm form, BindingResult bindingResult, Model model) {
+	public String drugUpdateContentSearch(ContentSearchForm form, BindingResult bindingResult, Model model,Pageable pageable) {
 
 		if (form.getHeader() == null ) {
 			return "redirect:/admin/drugUpdateContents";
 		}	
 		
-        List<Content> results =contentRepository.findContentByContentTypeOrByHeaderOrderByInsertDateDesc(null,form.getHeader());
+        Page<Content> results =contentRepository.findContentByContentTypeOrByHeaderOrderByInsertDateDesc(null,form.getHeader(), pageable);
+        PageWrapper<Content> page = new PageWrapper<Content>(results, "admin/drugUpdateContentSearch");
         model.addAttribute("content", form);
         model.addAttribute("contents",results );
+    	model.addAttribute("page", page);
 		return "contents/drugUpdateContents";
 	}
 
