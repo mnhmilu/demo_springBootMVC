@@ -30,6 +30,7 @@ import com.demo.converter.DrugDataToDrugForm;
 import com.demo.domain.Content;
 import com.demo.domain.Drug;
 import com.demo.domain.DrugGeneric;
+import com.demo.enums.ContentType;
 import com.demo.repositories.ContentRepository;
 import com.demo.repositories.DrugGenericRepository;
 import com.demo.repositories.DrugRepository;
@@ -73,9 +74,9 @@ public class IndexController {
 
 		List<Content> indexContents = contentRepository.findContentByContentPageOrderByInsertDateDesc("Index");
 
-		List<Content> news = filterContentByType(indexContents, "News");
-		List<Content> add = filterContentByType(indexContents, "Advertisement");
-		List<Content> drugUpdate = filterContentByType(indexContents, "DrugUpdate");
+		List<Content> news = filterContentByType(indexContents, ContentType.News.name());
+		List<Content> add = filterContentByType(indexContents, ContentType.Advertisement.name());
+		List<Content> drugUpdate = filterContentByType(indexContents, ContentType.DrugUpdate.name());
 
 		List<Content> drugUpdatesByBrand = filterDrugUpdateByType(drugUpdate, "ByBrand");
 		List<Content> drugUpdatesByGeneric = filterDrugUpdateByType(drugUpdate, "ByGeneric");

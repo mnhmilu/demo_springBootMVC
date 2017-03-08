@@ -59,7 +59,7 @@ public class ContentController {
 
 		model.addAttribute("content", new ContentSearchForm());
 		
-		List<Content> results=contentRepository.findContentByContentTypeOrderByInsertDateDesc(ContentType.Advertisement.name());
+		List<Content> results=contentRepository.findContentByContentTypeOrByHeaderOrderByInsertDateDesc(ContentType.Advertisement.name(),null);
 		model.addAttribute("contents", results);
 		return "contents/addcontents";
 
@@ -68,7 +68,7 @@ public class ContentController {
 	public String newslist(Model model) {
 
 		model.addAttribute("content", new ContentSearchForm());
-		model.addAttribute("contents", contentRepository.findContentByContentTypeOrderByInsertDateDesc(ContentType.News.name()));
+		model.addAttribute("contents", contentRepository.findContentByContentTypeOrByHeaderOrderByInsertDateDesc(ContentType.News.name(),null));
 		return "contents/newscontents";
 
 	}
@@ -76,22 +76,47 @@ public class ContentController {
 	public String list(Model model) {
 
 		model.addAttribute("content", new ContentSearchForm());
-		model.addAttribute("contents", contentRepository.findContentByContentTypeOrderByInsertDateDesc(ContentType.DrugUpdate.name()));
+		model.addAttribute("contents", contentRepository.findContentByContentTypeOrByHeaderOrderByInsertDateDesc(ContentType.DrugUpdate.name(),null));
 		return "contents/drugUpdateContents";
 
 	}
 	
-	@RequestMapping(value = "admin/contentSearch", method = RequestMethod.POST)
-	public String contentSearch(ContentSearchForm form, BindingResult bindingResult, Model model) {
+	@RequestMapping(value = "admin/addContentSearch", method = RequestMethod.POST)
+	public String addContentSearch(ContentSearchForm form, BindingResult bindingResult, Model model) {
 
-		if (form.getContentType() == null ) {
-			return "redirect:/admin/contentList";
+		if (form.getHeader() == null ) {
+			return "redirect:/admin/addcontents";
 		}	
 		
-        List<Content> results =contentRepository.findContentByContentTypeOrderByInsertDateDesc(form.getContentType());
+        List<Content> results =contentRepository.findContentByContentTypeOrByHeaderOrderByInsertDateDesc(null,form.getHeader());
         model.addAttribute("content", form);
         model.addAttribute("contents",results );
-		return "contents/contents";
+		return "contents/addcontents";
+	}
+	
+	@RequestMapping(value = "admin/newsContentSearch", method = RequestMethod.POST)
+	public String newsContentSearch(ContentSearchForm form, BindingResult bindingResult, Model model) {
+
+		if (form.getHeader() == null ) {
+			return "redirect:/admin/newscontents";
+		}	
+		
+        List<Content> results =contentRepository.findContentByContentTypeOrByHeaderOrderByInsertDateDesc(null,form.getHeader());
+        model.addAttribute("content", form);
+        model.addAttribute("contents",results );
+		return "contents/newscontents";
+	}
+	@RequestMapping(value = "admin/drugUpdateContentSearch", method = RequestMethod.POST)
+	public String drugUpdateContentSearch(ContentSearchForm form, BindingResult bindingResult, Model model) {
+
+		if (form.getHeader() == null ) {
+			return "redirect:/admin/drugUpdateContents";
+		}	
+		
+        List<Content> results =contentRepository.findContentByContentTypeOrByHeaderOrderByInsertDateDesc(null,form.getHeader());
+        model.addAttribute("content", form);
+        model.addAttribute("contents",results );
+		return "contents/drugUpdateContents";
 	}
 
 	@RequestMapping("admin/content/newAdd")
@@ -205,7 +230,7 @@ public class ContentController {
 		content.setId(form.getId());		
 		content.setContent_details(form.getContent_details());
 		content.setImage(file.getBytes());
-		content.setContentPage(form.getContentPage());
+		content.setContentPage("Index");
 		content.setContent_summary(form.getContent_summary());
 		content.setContentType(ContentType.News.name());
 		content.setExpireDate(form.getExpireDate());
@@ -242,7 +267,7 @@ public class ContentController {
 		content.setId(form.getId());	
 		content.setContent_details(form.getContent_details());
 		content.setImage(file.getBytes());
-		content.setContentPage(form.getContentPage());
+		content.setContentPage("Index");
 		content.setDrugUpdateType(form.getDrugUpdateType());
 
 		content.setContent_summary(form.getContent_summary());
