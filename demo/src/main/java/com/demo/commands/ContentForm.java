@@ -13,9 +13,7 @@ public class ContentForm {
   
     private Integer id;        
 
-    @NotNull
-    @NotBlank  
-    private String contentType;    
+//tes
     
     @NotNull
     @NotBlank  
@@ -24,6 +22,9 @@ public class ContentForm {
     @NotNull
     @NotBlank  
     private String content_summary;        
+    
+    
+    private String contentType;
    
   
     private String content_details;
@@ -44,9 +45,22 @@ public class ContentForm {
     private Date expireDate;
     
     
-    private String drugUpdateType;  
+    private String drugUpdateType;      
     
     
+    
+	public String getContentType() {
+		return contentType;
+	}
+
+
+
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
+	}
+
+
+
 	public String getContentPage() {
 		return contentPage;
 	}
@@ -93,17 +107,6 @@ public class ContentForm {
 		this.id = id;
 	}
 
-
-
-	public String getContentType() {
-		return contentType;
-	}
-
-
-
-	public void setContentType(String contentType) {
-		this.contentType = contentType;
-	}
 
 
 

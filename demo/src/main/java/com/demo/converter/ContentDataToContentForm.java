@@ -16,14 +16,14 @@ public class ContentDataToContentForm implements Converter<Content,ContentForm> 
 		
 		frm.setAdd_section(data.getAddSection());
 		frm.setContent_details(data.getContent_details());
-		frm.setContent_summary(data.getContent_summary());
-		frm.setContentType(data.getContentType());
+		frm.setContent_summary(data.getContent_summary());	
 		frm.setDrugUpdateType(data.getDrugUpdateType());
 		frm.setExpireDate(data.getExpireDate());
 		frm.setHeader(data.getHeader());
 		frm.setId(data.getId());
 		frm.setImage(data.getImage());	
 		frm.setContentPage(data.getContentPage());
+		frm.setContentType(data.getContentType());
 
 		return frm;
 	}

@@ -19,29 +19,17 @@
 		<div class="panel panel-default">
 			<div class="panel-body">
 				<h4>
-					<span class="label label-primary">Enter Content Information</span>
+					<span class="label label-primary">Enter Advertisement Information</span>
 				</h4>
 				<div>
 					<form class="form-horizontal" th:object="${content}"
-						th:action="@{/admin/saveContent}" method="post" action="#"
+						th:action="@{/admin/saveAddContent}" method="post" action="#"
 						enctype="multipart/form-data">
 						<input type="hidden" th:field="*{id}" />
 
+				
 						<div class="form-group">
-							<label class="col-sm-2 control-label">Content Type</label>
-							<div class="col-sm-5">
-								<select th:field="*{contentType}" class="form-control">
-									<option value="" label="--- Select ---" />
-									<option value="Advertisement" label="Advertisement" />
-									<option value="News" label="News" />
-									<option value="DrugUpdate" label="Drug Update" />
-								</select>
-								<p th:if="${#fields.hasErrors('contentType')}"
-									th:errors="*{contentType}">Content Type</p>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">Content Page</label>
+							<label class="col-sm-2 control-label">Advertisement Page</label>
 							<div class="col-sm-5">
 								<select th:field="*{contentPage}" class="form-control">
 									<option value="0" label="--- Select ---" />
@@ -49,25 +37,26 @@
 								</select>
 							</div>
 						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">Drug Update Type</label>
+						
+										<div class="form-group">
+							<label class="col-sm-2 control-label">Advertisement
+								Section</label>
 							<div class="col-sm-5">
-								<select th:field="*{drugUpdateType}" class="form-control">
-									<option value="" label="--- Select ---" />
-									<option value="ByBrand" label="By Brand" />
-									<option value="ByGeneric" label="By Generic" />
-									<option value="ByNewMolecules" label="By New Molecules" />
+								<select th:field="*{add_section}" class="form-control">
+									<option value="0" label="--- Select ---" />
+									<option value="add1" label="Add 1" />
+									<option value="add2" label="Add 2" />
+									<option value="add3" label="Add 3" />
+									<option value="add4" label="Add 4" />
+									<option value="add5" label="Add 5" />
+									<option value="add6" label="Add 6" />
+
+
 								</select>
-								<p th:if="${#fields.hasErrors('drugUpdateType')}"
-									th:errors="*{drugUpdateType}">Drug Update Type</p>
-
-
 							</div>
 						</div>
-
-
 						<div class="form-group">
-							<label class="col-sm-2 control-label">Content Header :</label>
+							<label class="col-sm-2 control-label">Advertisement Content Header :</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" th:field="*{header}" />
 								<p th:if="${#fields.hasErrors('header')}" th:errors="*{header}">Header</p>
@@ -76,7 +65,7 @@
 						</div>
 
 						<div class="form-group">
-							<label class="col-sm-2 control-label">Content Summary:</label>
+							<label class="col-sm-2 control-label">Advertisement Content Summary:</label>
 							<div class="col-sm-10">
 								<textarea class="form-control" rows="8"
 									style="margin-top: 10px;"
@@ -100,23 +89,7 @@
 							</div>
 						</div>
 
-						<div class="form-group">
-							<label class="col-sm-2 control-label">Advertisement
-								Section</label>
-							<div class="col-sm-5">
-								<select th:field="*{add_section}" class="form-control">
-									<option value="0" label="--- Select ---" />
-									<option value="add1" label="Add 1" />
-									<option value="add2" label="Add 2" />
-									<option value="add3" label="Add 3" />
-									<option value="add4" label="Add 4" />
-									<option value="add5" label="Add 5" />
-									<option value="add6" label="Add 6" />
-
-
-								</select>
-							</div>
-						</div>
+		
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Upload Image:</label>
 							<div class="col-sm-10">

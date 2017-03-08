@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+<title th:text="#{index.page.title}">Page Title</title>
+
+<!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+	<div class="container">
+		<!--/*/ <th:block th:include="fragments/headerForManager :: header"></th:block> /*/-->
+		<div class="panel panel-default">
+			<div class="panel-body">
+
+				<h4>
+					<span class="label label-primary">Content Search</span>
+				</h4>
+				<form class="form-inline" th:object="${content}"
+					th:action="@{/admin/contentSearch}" method="post">
+					<div class="row">
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label class="col-sm-8 control-label">Content Type</label>
+								<div class="col-sm-2">
+									<select th:field="*{contentType}" class="form-control">
+										<option value="0" label="--- Select ---" />
+										<option value="Advertisement" label="Advertisement" />
+										<option value="News" label="News" />
+										<option value="DrugUpdate" label="Drug Update" />
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<button type="submit" class="btn btn-primary">Search</button>
+							</div>
+							<div class="form-group">
+								<a href="/admin/contentList" class="btn btn-success" role="button">Reset
+								</a>
+							</div>
+						</div>
+
+					</div>
+
+				</form>
+			</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-body">
+
+				<a href="/admin/content/newDrugUpdate" class="btn btn-success" role="button">Add
+					New Drug Update</a>
+			</div>
+		</div>
+		<div th:if="${not #lists.isEmpty(contents)}">
+
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<h4>
+						<span class="label label-primary">Drug Updates List</span>
+						
+					</h4>
+					<table class="table table-striped">
+						<tr>
+							<th>Content Type</th>
+							<th>Content Header</th>
+							<th>Expire Date</th>
+							<th>View</th>
+							<th sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')">Edit</th>
+							<th sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')">Delete</th>
+						</tr>
+						<tr th:each="content : ${contents}">
+							<td th:text="${content.contentType}">Content Type</td>
+							<td th:text="${content.header}">Header</td>
+							<td th:text="${content.expireDate}">Expire Date</td>
+							<td><a th:href="${'/admin/drugUpdateContentDetails/' + content.id}">Details</a></td>
+							<td sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')"><a th:href="${'/admin/content/editDrugUpdate/' + content.id}">Edit</a></td>
+							<td sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')"><a th:href="${'/admin/content/deleteDrugUpdate/' + content.id}">Delete</a></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+
+		</div>
+		<div th:if="${#lists.isEmpty(contents)}">
+
+			<div class="alert alert-info" role="alert">No Data Found</div>
+
+		</div>
+	</div>
+
+</body>
+</html>

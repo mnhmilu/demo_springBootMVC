@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+<title th:text="#{index.page.title}">Page Title</title>
+
+
+<!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+<script>
+	$(function() {
+		$("#expireDate").datepicker();
+	});
+</script>
+</head>
+<body>
+	<div class="container">
+		<!--/*/ <th:block th:include="fragments/headerForManager :: header"></th:block> /*/-->
+
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<h4>
+					<span class="label label-primary">Enter Drug Update Information</span>
+				</h4>
+				<div>
+					<form class="form-horizontal" th:object="${content}"
+						th:action="@{/admin/saveDrugUpdateContent}" method="post" action="#"
+						enctype="multipart/form-data">
+						<input type="hidden" th:field="*{id}" />				
+				
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Drug Update Type</label>
+							<div class="col-sm-5">
+								<select th:field="*{drugUpdateType}" class="form-control">
+									<option value="" label="--- Select ---" />
+									<option value="ByBrand" label="By Brand" />
+									<option value="ByGeneric" label="By Generic" />
+									<option value="ByNewMolecules" label="By New Molecules" />
+								</select>
+								<p th:if="${#fields.hasErrors('drugUpdateType')}"
+									th:errors="*{drugUpdateType}">Drug Update Type</p>
+
+
+							</div>
+						</div>
+
+
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Drug Update Content Header :</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" th:field="*{header}" />
+								<p th:if="${#fields.hasErrors('header')}" th:errors="*{header}">Header</p>
+							</div>
+
+						</div>
+
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Drug Update Content Summary:</label>
+							<div class="col-sm-10">
+								<textarea class="form-control" rows="8"
+									style="margin-top: 10px;"
+									placeholder="Write about content summary  here......."
+									name="composition" th:inline="text"
+									th:field="*{content_summary}">
+                            </textarea>
+								<p th:if="${#fields.hasErrors('content_summary')}"
+									th:errors="*{content_summary}">Header</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Content Details:</label>
+							<div class="col-sm-10">
+								<textarea class="form-control" rows="8"
+									style="margin-top: 10px;"
+									placeholder="Write about content details  here......."
+									name="composition" th:inline="text"
+									th:field="*{content_details}">
+                            </textarea>
+							</div>
+						</div>			
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Upload Image:</label>
+							<div class="col-sm-10">
+								<input type="file" class="form-control" name="file" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Expire Date:</label>
+							<div class="col-sm-10">
+								<input type="text" id="expireDate" class="form-control"
+									th:field="*{expireDate}"
+									th:value="${#dates.format(content.expireDate,'MM/dd/yyyy')}" />
+								<p th:if="${#fields.hasErrors('expireDate')}"
+									th:errors="*{expireDate}">Invalid Date</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-10">
+								<button type="submit" class="btn btn-primary">Submit</button>
+							</div>
+						</div>
+
+					</form>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

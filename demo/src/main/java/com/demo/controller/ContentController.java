@@ -34,6 +34,7 @@ import com.demo.commands.ContentForm;
 import com.demo.commands.ContentSearchForm;
 import com.demo.converter.ContentDataToContentForm;
 import com.demo.domain.Content;
+import com.demo.enums.ContentType;
 import com.demo.repositories.ContentRepository;
 
 @Controller
@@ -53,12 +54,30 @@ public class ContentController {
 
 	}
 
-	@RequestMapping(value = "admin/contentList", method = RequestMethod.GET)
+	@RequestMapping(value = "admin/addList", method = RequestMethod.GET)
+	public String druglist(Model model) {
+
+		model.addAttribute("content", new ContentSearchForm());
+		
+		List<Content> results=contentRepository.findContentByContentTypeOrderByInsertDateDesc(ContentType.Advertisement.name());
+		model.addAttribute("contents", results);
+		return "contents/addcontents";
+
+	}
+	@RequestMapping(value = "admin/newsList", method = RequestMethod.GET)
+	public String newslist(Model model) {
+
+		model.addAttribute("content", new ContentSearchForm());
+		model.addAttribute("contents", contentRepository.findContentByContentTypeOrderByInsertDateDesc(ContentType.News.name()));
+		return "contents/newscontents";
+
+	}
+	@RequestMapping(value = "admin/drugUpdateList", method = RequestMethod.GET)
 	public String list(Model model) {
 
 		model.addAttribute("content", new ContentSearchForm());
-		model.addAttribute("contents", contentRepository.findTop50ByOrderByInsertDateDesc());
-		return "contents/contents";
+		model.addAttribute("contents", contentRepository.findContentByContentTypeOrderByInsertDateDesc(ContentType.DrugUpdate.name()));
+		return "contents/drugUpdateContents";
 
 	}
 	
@@ -75,11 +94,10 @@ public class ContentController {
 		return "contents/contents";
 	}
 
-	@RequestMapping("admin/content/new")
-	public String newDrug(Model model) throws ParseException {
+	@RequestMapping("admin/content/newAdd")
+	public String newAddvertisement(Model model) throws ParseException {
 
-		ContentForm form = new ContentForm();
-		// SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		ContentForm form = new ContentForm();	
 
 		Date currentDate = new Date();
 		Calendar c = Calendar.getInstance();
@@ -90,40 +108,72 @@ public class ContentController {
 		form.setExpireDate(currentDatePlusOne);
 		model.addAttribute("content", form);
 
-		return "contents/contentForm";
+		return "contents/addContentForm";
 	}
+	
+	
+	@RequestMapping("admin/content/newDrugUpdate")
+	public String newDrugUpdate(Model model) throws ParseException {
 
-	@RequestMapping(value = "admin/saveContent", method = RequestMethod.POST)
-	public String saveContent(@RequestParam("file") MultipartFile file,
+		ContentForm form = new ContentForm();	
+
+		Date currentDate = new Date();
+		Calendar c = Calendar.getInstance();
+		c.setTime(currentDate);
+		c.add(Calendar.DATE, 7);
+
+		Date currentDatePlusOne = c.getTime();
+		form.setExpireDate(currentDatePlusOne);
+		model.addAttribute("content", form);
+
+		return "contents/drugUpdateContentForm";
+	}
+	
+	@RequestMapping("admin/content/newNews")
+	public String newNews(Model model) throws ParseException {
+
+		ContentForm form = new ContentForm();	
+
+		Date currentDate = new Date();
+		Calendar c = Calendar.getInstance();
+		c.setTime(currentDate);
+		c.add(Calendar.DATE, 7);
+
+		Date currentDatePlusOne = c.getTime();
+		form.setExpireDate(currentDatePlusOne);
+		model.addAttribute("content", form);
+
+		return "contents/newsContentForm";
+	}
+	
+	@RequestMapping(value = "admin/saveAddContent", method = RequestMethod.POST)
+	public String saveAddContent(@RequestParam("file") MultipartFile file,
 			@Valid @ModelAttribute("content") ContentForm form, BindingResult bindingResult, Model model)
 			throws IOException {
 
-		if (bindingResult.hasErrors() || form.getContentType().equalsIgnoreCase(",0")) {
+		if (bindingResult.hasErrors() ) {
 
 			SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 			Date today = new Date();
 			dateFormat.format(today);
 			form.setExpireDate(today);
 			model.addAttribute("content", form);
-			return "contents/contentForm";
+			return "contents/addContentForm";
 		}
 
 		// add custom validation here
 
-		String[] parts = form.getContentType().split(",");
-		String contentType = parts[0];
+	
 
 		Content content = new Content();
 		content.setId(form.getId());
 		content.setAddSection(form.getAdd_section());
 		content.setContent_details(form.getContent_details());
 		content.setImage(file.getBytes());
-		content.setContentPage(form.getContentPage());
-
-		content.setDrugUpdateType(form.getDrugUpdateType());
+		content.setContentPage(form.getContentPage());		
 
 		content.setContent_summary(form.getContent_summary());
-		content.setContentType(contentType);
+		content.setContentType(ContentType.Advertisement.name());
 		content.setExpireDate(form.getExpireDate());
 		content.setHeader(form.getHeader());
 		content.setInsertDate(new Date());
@@ -131,12 +181,84 @@ public class ContentController {
 		
 		contentRepository.save(content);
 
-		return "redirect:/admin/content/new";
+		return "redirect:/admin/content/newAdd";
+
+	}
+	@RequestMapping(value = "admin/saveNewsContent", method = RequestMethod.POST)
+	public String saveNewsContent(@RequestParam("file") MultipartFile file,
+			@Valid @ModelAttribute("content") ContentForm form, BindingResult bindingResult, Model model)
+			throws IOException {
+
+		if (bindingResult.hasErrors() ) {
+
+			SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+			Date today = new Date();
+			dateFormat.format(today);
+			form.setExpireDate(today);
+			model.addAttribute("content", form);
+			return "contents/newsContentForm";
+		}
+
+		// add custom validation here	
+
+		Content content = new Content();
+		content.setId(form.getId());		
+		content.setContent_details(form.getContent_details());
+		content.setImage(file.getBytes());
+		content.setContentPage(form.getContentPage());
+		content.setContent_summary(form.getContent_summary());
+		content.setContentType(ContentType.News.name());
+		content.setExpireDate(form.getExpireDate());
+		content.setHeader(form.getHeader());
+		content.setInsertDate(new Date());
+		content.setOriginalFileName(file.getOriginalFilename());
+		
+		contentRepository.save(content);
+
+		return "redirect:/admin/content/newNews";
+
+	}
+	
+
+
+	@RequestMapping(value = "admin/saveDrugUpdateContent", method = RequestMethod.POST)
+	public String saveContent(@RequestParam("file") MultipartFile file,
+			@Valid @ModelAttribute("content") ContentForm form, BindingResult bindingResult, Model model)
+			throws IOException {
+
+		if (bindingResult.hasErrors() ) {
+
+			SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+			Date today = new Date();
+			dateFormat.format(today);
+			form.setExpireDate(today);
+			model.addAttribute("content", form);
+			return "contents/drugUpdateContentForm";
+		}
+
+		// add custom validation here
+
+		Content content = new Content();
+		content.setId(form.getId());	
+		content.setContent_details(form.getContent_details());
+		content.setImage(file.getBytes());
+		content.setContentPage(form.getContentPage());
+		content.setDrugUpdateType(form.getDrugUpdateType());
+
+		content.setContent_summary(form.getContent_summary());
+		content.setContentType(ContentType.DrugUpdate.name());
+		content.setExpireDate(form.getExpireDate());
+		content.setHeader(form.getHeader());
+		content.setInsertDate(new Date());
+		content.setOriginalFileName(file.getOriginalFilename());		
+		contentRepository.save(content);
+
+		return "redirect:/admin/content/newDrugUpdate";
 
 	}
 
-	@RequestMapping("admin/content/{id}")
-	public String showContent(@PathVariable Integer id, Model model,HttpSession session) {
+	@RequestMapping("admin/addContentDetails/{id}")
+	public String showAddContent(@PathVariable Integer id, Model model,HttpSession session) {
 
 		slf4jLogger.info("ContentController :: showContent");
 		Content content =contentRepository.findById(id);
@@ -144,31 +266,107 @@ public class ContentController {
 		model.addAttribute("content", form);
 		model.addAttribute("imageid", form.getAdd_section());
 		session.setAttribute("stroredContent", content);
-		return "contents/contentshow";
+		return "contents/addContentshow";
 
 	}
+	
+	@RequestMapping("admin/newsContentDetails/{id}")
+	public String showNewsContent(@PathVariable Integer id, Model model,HttpSession session) {
 
-	@RequestMapping("admin/content/edit/{id}")
+		slf4jLogger.info("ContentController :: showContent");
+		Content content =contentRepository.findById(id);
+		ContentForm form = contentDataToContentForm.convert(content);
+		model.addAttribute("content", form);
+		model.addAttribute("imageid", form.getAdd_section());
+		session.setAttribute("stroredContent", content);
+		return "contents/newsContentshow";
+
+	}
+	@RequestMapping("admin/drugUpdateContentDetails/{id}")
+	public String showDrugUpdateContent(@PathVariable Integer id, Model model,HttpSession session) {
+
+		slf4jLogger.info("ContentController :: showContent");
+		Content content =contentRepository.findById(id);
+		ContentForm form = contentDataToContentForm.convert(content);
+		model.addAttribute("content", form);
+		model.addAttribute("imageid", form.getAdd_section());
+		session.setAttribute("stroredContent", content);
+		return "contents/drugUpdateContentshow";
+
+	}
+	
+
+	@RequestMapping("admin/content/editAddContent/{id}")
+	public String editAddContent(@PathVariable Integer id, Model model) {
+
+		ContentForm form = contentDataToContentForm.convert(contentRepository.findById(id));
+
+		model.addAttribute("content", form);
+
+		return "contents/addContentForm";
+
+	}
+	
+	@RequestMapping("admin/content/editNewsContent/{id}")
+	public String editNewsContent(@PathVariable Integer id, Model model) {
+
+		ContentForm form = contentDataToContentForm.convert(contentRepository.findById(id));
+
+		model.addAttribute("content", form);
+
+		return "contents/newsContentForm";
+
+	}
+	
+	@RequestMapping("admin/content/editDrugUpdate/{id}")
 	public String editContent(@PathVariable Integer id, Model model) {
 
 		ContentForm form = contentDataToContentForm.convert(contentRepository.findById(id));
 
 		model.addAttribute("content", form);
 
-		return "contents/contentForm";
+		return "contents/drugUpdateContentForm";
 
 	}
 
-	@RequestMapping("admin/content/delete/{id}")
-	public String delete(@PathVariable Integer id) {
+	@RequestMapping("admin/content/deleteNews/{id}")
+	public String deleteNews(@PathVariable Integer id) {
 		try {
 
 			contentRepository.delete(id);
-			return "redirect:/admin/contentList";
+			return "redirect:/admin/newsList";
 
 		} catch (Exception ex) {
 
-			return "redirect:/admin/contentList";
+			return "redirect:/admin/newsList";
+
+		}
+	}
+	
+	@RequestMapping("admin/content/deleteDrugUpdate/{id}")
+	public String deleteDrugUpdate(@PathVariable Integer id) {
+		try {
+
+			contentRepository.delete(id);
+			return "redirect:/admin/drugUpdateList";
+
+		} catch (Exception ex) {
+
+			return "redirect:/admin/drugUpdateList";
+
+		}
+	}
+	
+	@RequestMapping("admin/content/deleteAdd/{id}")
+	public String deleteAdd(@PathVariable Integer id) {
+		try {
+
+			contentRepository.delete(id);
+			return "redirect:/admin/addList";
+
+		} catch (Exception ex) {
+
+			return "redirect:/admin/addList";
 
 		}
 	}
