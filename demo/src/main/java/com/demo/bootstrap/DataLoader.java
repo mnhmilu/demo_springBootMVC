@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.core.env.Environment;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.demo.domain.Content;
@@ -122,7 +123,10 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		// setAdminRole.add(roleManager);
 
 		User admin = new User();
-		admin.setPassword("java8");
+		
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String hashedPassword = passwordEncoder.encode("java8");	
+		admin.setPassword(hashedPassword);
 		admin.setUsername("admin");
 		admin.setRoles(setAdminRole);
 		userRepository.save(admin);
@@ -132,7 +136,8 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		setPharmaRole.add(rolePharma);
 
 		User pharma = new User();
-		pharma.setPassword("4h=nu");
+		hashedPassword = passwordEncoder.encode("pharma8");
+		pharma.setPassword(hashedPassword);
 		pharma.setUsername("pharma");
 		admin.setRoles(setPharmaRole);
 		userRepository.save(pharma);
@@ -142,7 +147,8 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		setManagerRole.add(roleManager);
 
 		User userManager = new User();
-		userManager.setPassword("cuw!6");
+		hashedPassword = passwordEncoder.encode("manager8");
+		userManager.setPassword(hashedPassword);
 		userManager.setUsername("manager");
 		userManager.setRoles(setManagerRole);
 		userRepository.save(userManager);
@@ -153,7 +159,8 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		setDoctorRole.add(roleDoctor);
 
 		User userDoctor = new User();
-		userDoctor.setPassword("3@fra");
+		hashedPassword = passwordEncoder.encode("doctor8");
+		userDoctor.setPassword(hashedPassword);
 		userDoctor.setUsername("doctor");
 		userDoctor.setRoles(setDoctorRole);
 		userRepository.save(userDoctor);
@@ -162,7 +169,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
 	private void addDrugUpdateData() {
 
-		for (int a = 1; a <= 6; a++) {
+		for (int a = 1; a <= 46; a++) {
 
 			Content add = new Content();
 			add.setContentType("DrugUpdate");
@@ -181,7 +188,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 			contentRepository.save(add);
 		}
 
-		for (int a = 1; a <= 6; a++) {
+		for (int a = 1; a <= 46; a++) {
 
 			Content add = new Content();
 			add.setContentType("DrugUpdate");
@@ -200,7 +207,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 			contentRepository.save(add);
 		}
 
-		for (int a = 1; a <= 6; a++) {
+		for (int a = 1; a <= 46; a++) {
 
 			Content add = new Content();
 			add.setContentType("DrugUpdate");
@@ -223,7 +230,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
 	private void addAddData() {
 
-		for (int a = 1; a <= 6; a++) {
+		for (int a = 1; a <= 46; a++) {
 
 			Content add = new Content();
 			add.setContentType("Advertisement");
