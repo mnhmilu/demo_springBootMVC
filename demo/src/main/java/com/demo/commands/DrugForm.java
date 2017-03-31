@@ -38,6 +38,16 @@ public class DrugForm {
     
     @NotNull
     private Double drugprice;
+    
+    private byte[] image;  
+
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
 
 	public Integer getId() {
 		return id;

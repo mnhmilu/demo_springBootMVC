@@ -12,8 +12,7 @@
 		<div class="panel panel-default" sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')">
 			<div class="panel-body">
 
-				<a href="/doctor/new" class="btn btn-success" role="button">Add
-					Doctor</a>
+				<a href="/doctor/new" class="btn btn-success" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
 			</div>
 		</div>
 		<div th:if="${not #lists.isEmpty(specializations)}">
@@ -32,13 +31,13 @@
 				<div class="panel-body">
 
 					<table class="table table-striped">
-						<tr>
+						<tr style="border-style: groove">
 							<th>Doctors by Specialization</th>
 							<th></th>
 						</tr>
-						<tr th:each="specialization : ${specializations}">
-							<td th:text="${specialization.specializationName}">Specialization
-								Name</td>
+						<tr th:each="specialization : ${specializations}" style="border-style: groove">
+							<td th:text="${specialization.specializationName}"><a
+								th:href="${'/doctorsList/' + specialization.idSpecialization+'/'+specialization.specializationName}">Specialization</a></td>
 							<td><a
 								th:href="${'/doctorsList/' + specialization.idSpecialization+'/'+specialization.specializationName}">Doctors</a></td>
 						</tr>

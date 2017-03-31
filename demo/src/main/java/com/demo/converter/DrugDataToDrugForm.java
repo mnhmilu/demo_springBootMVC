@@ -24,7 +24,7 @@ public class DrugDataToDrugForm implements Converter<Drug,DrugForm> {
         frm.setPackSize(data.getPackSize());   
         frm.setDosageForm(data.getDosageForm());
         frm.setStrength(data.getStrength());
-        
+        frm.setImage(data.getImage());
 		return frm;
 	}
 

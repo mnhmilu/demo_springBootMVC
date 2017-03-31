@@ -26,11 +26,11 @@
 						</div>
 						<div class="col-md-4">
 							<div class="form-group">
-								<button type="submit" class="btn btn-primary">Search</button>
+								<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
 							</div>
 							<div class="form-group">
 								<a href="/admin/drugGenericList" class="btn btn-success"
-									role="button">Reset </a>
+									role="button"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> </a>
 							</div>
 						</div>
 					</div>
@@ -41,8 +41,7 @@
 		<div class="panel panel-default">
 			<div class="panel-body">
 
-				<a href="/admin/generic/new" class="btn btn-success" role="button">Add
-					New Drug Generic</a>
+				<a href="/admin/generic/new" class="btn btn-success" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
 			</div>
 		</div>
 		<div th:if="${not #lists.isEmpty(drugGenerics)}">
@@ -58,10 +57,12 @@
 							<th>Classification </th>
 							<th>Safety Remarks </th>
 							<th>Remarks</th>
-							<th>Details</th>
+							
 							<th>Edit</th>
 							<th>Delete</th>							
+							<th>Details</th>
 							<th>Brands</th>
+							
 							<th>Comparison</th>
 						</tr>
 						<tr th:each="generic : ${drugGenerics}" style="border-style: groove">						
@@ -69,13 +70,13 @@
 							<td th:text="${generic.classification}">Classification</td>
 							<td th:text="${generic.safetyRemarks}">Safety Remarks</td>
 							<td th:text="${generic.remarks}">Remarks</td>
+							
 							<td><a
-								th:href="${'/drugGenericDetails/' + generic.idGeneric}">Details</a></td>
+								th:href="${'/admin/generic/edit/' + generic.idGeneric}"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></a></td>
 							<td><a
-								th:href="${'/admin/generic/edit/' + generic.idGeneric}">Edit</a></td>
-							<td><a
-								th:href="${'/admin/generic/delete/' + generic.idGeneric}">Delete</a></td>
-								
+								th:href="${'/admin/generic/delete/' + generic.idGeneric}"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>
+								<td><a
+								th:href="${'/drugGenericDetails/' + generic.idGeneric}"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> </a></td>
 								<td><a
 								th:href="${'/generic/brands/' + generic.idGeneric}">Brands</a></td>
 								<td><a th:href="${'/drug/drugByGenericForComparison/' + generic.idGeneric}">Price Comparison</a></td>

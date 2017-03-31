@@ -1,5 +1,6 @@
 package com.demo.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -22,11 +27,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.demo.commands.DrugForm;
 import com.demo.commands.DrugSearchForm;
 import com.demo.converter.DrugDataToDrugForm;
 import com.demo.converter.DrugFormToDrugData;
+import com.demo.domain.Content;
 import com.demo.domain.Drug;
 import com.demo.domain.DrugGeneric;
 import com.demo.domain.DrugManufacturer;
@@ -166,7 +174,7 @@ public class DrugController {
 	}
 
 	@RequestMapping(value = "drug/saveDrug", method = RequestMethod.POST)
-	public String saveDrug(@Valid @ModelAttribute("drug") DrugForm form, BindingResult bindingResult, Model model) {
+	public String saveDrug(@RequestParam("file") MultipartFile file,@Valid @ModelAttribute("drug") DrugForm form, BindingResult bindingResult, Model model,HttpSession session) throws IOException {
 
 		if (bindingResult.hasErrors()) {
 
@@ -176,7 +184,20 @@ public class DrugController {
 
 			return "drugs/drugForm";
 		}
+		
+		if(file.getBytes().length ==0)
+		{
+			Drug content=(Drug ) session.getAttribute("stroredDrug");
+			form.setImage(content.getImage());
+			//TODO: check and test carefully
+			
+		}
+		else
+		{
+		
+		  form.setImage(file.getBytes());
 
+		}
 		Drug drug = drugFormToDrugData.convert(form);
 
 		drugDaoService.save(drug);
@@ -188,19 +209,29 @@ public class DrugController {
 	}
 
 	@RequestMapping("drug/{id}")
-	public String showDrug(@PathVariable Integer id, Model model) {
+	public String showDrug(@PathVariable Integer id, Model model,HttpSession session) {
 
 		slf4jLogger.info("DrugController :: showDrug");
 
-		DrugForm form = drugDataToDrugForm.convert(drugDaoService.findById(id));
+		Drug drug = drugDaoService.findById(id);
+		
+		DrugForm form = drugDataToDrugForm.convert(drug);	
+		
+		session.setAttribute("stroredDrug", drug);
+		model.addAttribute("imageid", "imageid");
 		model.addAttribute("drug", form);
 		return "drugs/drugshow";
 	}
 
 	@RequestMapping("drug/edit/{id}")
-	public String edit(@PathVariable Integer id, Model model) {
+	public String edit(@PathVariable Integer id, Model model,HttpSession session) {
 
-		DrugForm form = drugDataToDrugForm.convert(drugDaoService.findById(id));
+		
+		Drug drug =drugDaoService.findById(id);
+		DrugForm form = drugDataToDrugForm.convert(drug);
+		
+		session.setAttribute("stroredDrug", drug);
+		
 		model.addAttribute("generics", drugGenericDaoService.findAll());
 		model.addAttribute("brands", drugManufacturerDaoServie.findAll());
 
@@ -260,17 +291,34 @@ public class DrugController {
 		
 
 		BarChart barChart = GCharts.newBarChart(plots);
-		barChart.setTitle("Comparison for Generic: " + drugsSearchResult.get(0).getDrugGeneric().getGenericName(),
-				Color.BLACK, 20);
+		barChart.setTitle("Comparison for Generic: " + drugsSearchResult.get(0).getDrugGeneric().getGenericName(),Color.BLACK, 20);
 		barChart.setSize(760, 320);
 		barChart.setHorizontal(true);
-
 		model.addAttribute("barUrl", barChart.toURLString());
 		model.addAttribute("drugs", drugsSearchResult);
 		}
 		model.addAttribute("msg", msg);
 
 		return "drugs/drugsComparison";
+	}
+	
+	@RequestMapping(value = "/drug/image/{imageid}", method = RequestMethod.GET)
+	public ResponseEntity<byte[]> getImage(@PathVariable final String imageid,HttpSession session)  {
+
+		byte[] bytes = null;
+		
+		
+		Drug content=(Drug )session.getAttribute("stroredDrug");
+		
+		if (content!=null) {			
+			bytes = content.getImage();
+		}
+
+		// Set headers
+		final HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.IMAGE_PNG);
+
+		return new ResponseEntity<byte[]>(bytes, headers, HttpStatus.CREATED);
 	}
 
 }

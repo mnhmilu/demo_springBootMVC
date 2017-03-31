@@ -30,7 +30,8 @@ public class DrugFormToDrugData implements Converter<DrugForm,Drug> {
         entity.setDrugManufacturer(manufacturer);        
         DrugGeneric generic = new DrugGeneric();
         generic.setIdGeneric(formData.getGenericId());
-        entity.setDrugGeneric(generic);      
+        entity.setDrugGeneric(generic);   
+        entity.setImage(formData.getImage());
 		
 		return entity;
 	}

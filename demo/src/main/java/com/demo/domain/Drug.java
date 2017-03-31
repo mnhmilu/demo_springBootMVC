@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -71,8 +72,23 @@ public class Drug {
     private DrugManufacturer drugManufacturer;    	
      
     
-    @Temporal(TemporalType.DATE)
+    public byte[] getImage() {
+		return image;
+	}
+
+
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
+
+
+	@Temporal(TemporalType.DATE)
     private Date lastUpdatedDate;
+    
+    
+    @Column(name="image")
+    @Lob
+    private byte[] image;      
 
 
 	public Integer getId() {
