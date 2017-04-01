@@ -9,27 +9,41 @@
 		<div th:fragment="header">
 
 			<div class="row">
-				<div class="col-md-8">
+				<div class="col-md-6">
 					<h1>
 						<p class="text-primary">
 							<strong>Rx MIMS Bangladesh </strong>
 						</p>
 					</h1>
+
 				</div>
-				<div class="col-md-4" align="right">
-					<h5 th:inline="text" sec:authorize="isAuthenticated()">
-						Welcome
-						<div sec:authentication="name">.</div>
-						<form th:action="@{/logout}" method="post">
-<!-- 							<input type="submit" value="Sign Out" class="btn btn-primary" ><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span></input> -->
-							<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>  </button>
-						</form>
-					</h5>
-					<h5 th:inline="text" sec:authorize="!isAuthenticated()">
-						<form th:action="@{/manager}" method="get">
-							<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>  </button>
-						</form>
-					</h5>
+
+				<div class="col-md-6" align="right">
+
+					<div class="column">
+					
+
+						<h5 th:inline="text" sec:authorize="isAuthenticated()">
+						
+						 
+
+							Welcome
+							<div sec:authentication="name">.</div>
+							<form th:action="@{/logout}" method="post">
+								<button type="submit" class="btn btn-primary">
+									<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+								</button>
+							</form>
+						</h5>
+						<h5 th:inline="text" sec:authorize="!isAuthenticated()">
+							<form th:action="@{/manager}" method="get">
+								<button type="submit" class="btn btn-primary">
+									<span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
+								</button>
+							</form>
+						</h5>
+					</div>
+
 				</div>
 			</div>
 
@@ -37,7 +51,8 @@
 				<div class="container-fluid">
 					<div class="navbar-header">
 						<a class="navbar-brand" href="#" th:href="@{/}">Home</a>
-						<ul class="nav navbar-nav" sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')">
+						<ul class="nav navbar-nav"
+							sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')">
 							<li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown" role="button" aria-haspopup="true"
 								aria-expanded="false">Drugs <span class="caret"></span></a>
@@ -46,18 +61,20 @@
 									<li><a href="#" th:href="@{/drugList}">Drugs</a></li>
 								</ul></li>
 						</ul>
-							<ul class="nav navbar-nav" sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')">
+						<ul class="nav navbar-nav"
+							sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')">
 							<li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown" role="button" aria-haspopup="true"
 								aria-expanded="false">Contents<span class="caret"></span></a>
 								<ul class="dropdown-menu">
 									<li><a href="#" th:href="@{/admin/addList}">Advertisement</a></li>
 									<li><a href="#" th:href="@{/admin/newsList}">News</a></li>
-									<li><a href="#" th:href="@{/admin/drugUpdateList}">Drug Updates</a></li>
+									<li><a href="#" th:href="@{/admin/drugUpdateList}">Drug
+											Updates</a></li>
 								</ul></li>
 						</ul>
 
-						<ul class="nav navbar-nav">							
+						<ul class="nav navbar-nav">
 							<li><a href="#" th:href="@{/specializations}">Doctors </a></li>
 						</ul>
 						<ul class="nav navbar-nav">
@@ -74,7 +91,7 @@
 							<li class="dropdown"><a href="#" class="dropdown-toggle"
 								data-toggle="dropdown" role="button" aria-haspopup="true"
 								aria-expanded="false">Settings <span class="caret"></span></a>
-								<ul class="dropdown-menu">									
+								<ul class="dropdown-menu">
 									<li><a href="#" th:href="@{/admin/contentList}">Contents
 									</a></li>
 									<li><a href="#" th:href="@{/admin/contentList}">Access

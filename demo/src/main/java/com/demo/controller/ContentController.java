@@ -100,8 +100,8 @@ public class ContentController {
 	public String addContentSearch(ContentSearchForm form, BindingResult bindingResult, Model model,
 			Pageable pageable) {
 
-		if (form.getHeader() == null) {
-			return "redirect:/admin/addcontents";
+		if (form.getHeader().trim() == "") {
+			return "redirect:/admin/addList";
 		}
 
 		Page<Content> results = contentRepository.findContentByContentTypeOrByHeaderOrderByInsertDateDesc(null,
@@ -117,8 +117,8 @@ public class ContentController {
 	public String newsContentSearch(ContentSearchForm form, BindingResult bindingResult, Model model,
 			Pageable pageable) {
 
-		if (form.getHeader() == null) {
-			return "redirect:/admin/newscontents";
+		if (form.getHeader().trim() == "") {
+			return "redirect:/admin/newsList";
 		}
 
 		Page<Content> results = contentRepository.findContentByContentTypeOrByHeaderOrderByInsertDateDesc(null,
@@ -134,8 +134,8 @@ public class ContentController {
 	public String drugUpdateContentSearch(ContentSearchForm form, BindingResult bindingResult, Model model,
 			Pageable pageable) {
 
-		if (form.getHeader() == null) {
-			return "redirect:/admin/drugUpdateContents";
+		if (form.getHeader().trim() == "") {
+			return "redirect:/admin/drugUpdateList";
 		}
 
 		Page<Content> results = contentRepository.findContentByContentTypeOrByHeaderOrderByInsertDateDesc(null,

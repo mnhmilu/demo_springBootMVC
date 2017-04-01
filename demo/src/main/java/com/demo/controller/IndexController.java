@@ -1,6 +1,7 @@
 package com.demo.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -30,10 +31,12 @@ import com.demo.converter.DrugDataToDrugForm;
 import com.demo.domain.Content;
 import com.demo.domain.Drug;
 import com.demo.domain.DrugGeneric;
+import com.demo.domain.HitCounter;
 import com.demo.enums.ContentType;
 import com.demo.repositories.ContentRepository;
 import com.demo.repositories.DrugGenericRepository;
 import com.demo.repositories.DrugRepository;
+import com.demo.repositories.HitCounterRepository;
 
 @Controller
 public class IndexController {
@@ -42,7 +45,11 @@ public class IndexController {
 	private DrugDataToDrugForm drugDataToDrugForm;
 	private DrugGenericRepository drugGenericDaoService;
 	private ContentRepository contentRepository;
-	private CounterService cournterService;
+	private CounterService cournterService;	
+	
+	@Autowired
+	private HitCounterRepository hitCounterRepository;
+	
 
 	private final Logger slf4jLogger = LoggerFactory.getLogger(DrugController.class);
 
@@ -92,6 +99,25 @@ public class IndexController {
 		model.addAttribute("add1", "add1");
 		model.addAttribute("add2", "add2");
 		model.addAttribute("add3", "add3");
+		
+		HitCounter hitCounter =hitCounterRepository.findByCounterDate(new Date());
+		
+		
+		if(hitCounter!=null)
+		{
+			hitCounter.setCounter(hitCounter.getCounter()+1);
+			hitCounterRepository.save(hitCounter);
+		}
+		else
+		{
+			hitCounter = new HitCounter();
+			hitCounter.setCounter(101);
+			hitCounter.setCounterDate(new Date());			
+		}
+		
+		hitCounterRepository.save(hitCounter);	
+		
+		model.addAttribute("hitCount", hitCounter.getCounter());
 
 		return "index";
 
