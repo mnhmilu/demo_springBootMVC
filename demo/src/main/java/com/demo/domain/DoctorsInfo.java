@@ -44,6 +44,41 @@ public class DoctorsInfo {
     
     @Temporal(TemporalType.DATE)
     private Date insertDate; 
+    
+    @Temporal(TemporalType.DATE)
+    private Date updateDate; 
+    
+    @Column(name = "insertedBy")
+    private String insertedBy;
+    
+    @Column(name = "updatedBy")
+    private String updatedBy;  
+    
+    
+
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
+	}
+
+	public String getInsertedBy() {
+		return insertedBy;
+	}
+
+	public void setInsertedBy(String insertedBy) {
+		this.insertedBy = insertedBy;
+	}
+
+	public String getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+	}
 
 	public Integer getId() {
 		return id;

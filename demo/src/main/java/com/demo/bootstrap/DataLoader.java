@@ -169,7 +169,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
 	private void addDrugUpdateData() {
 
-		for (int a = 1; a <= 46; a++) {
+		for (int a = 1; a <= 3; a++) {
 
 			Content add = new Content();
 			add.setContentType("DrugUpdate");
@@ -396,33 +396,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		doctor.setDoctorsSpecialization(specialization);
 		doctorsInfoRepository.save(doctor);
 
-		for (int a = 0; a < 50; a++) {
-
-			doctor.setDoctorName("Dr Iqbal " + a);
-			doctor.setId(0);
-
-			doctor.setChamber(
-					"i) Rampura Diagonistic Center ii) Banani Tel: 76555222, Mobile: 01733400999, Fax: 65552323");
-			doctor.setDoctorDetails(
-					"MBBS,PGT,MBBS, FAEM (CMC, Vellore), FDP (George Washington University, USA), MEM (India), "
-							+ "MMSc EM (Texila American University, Guyana), Examiner Royal College of Emergency Medicine (UK),"
-							+ "	Consultant");
-			doctorsInfoRepository.save(doctor);
-		}
-		for (int a = 0; a < 50; a++) {
-
-			doctor.setDoctorName("Dr Alamgir Hossain " + a);
-			doctor.setId(0);
-			specialization.setIdSpecialization(specialization.getIdSpecialization());
-			doctor.setDoctorsSpecialization(specialization);
-			doctor.setChamber(
-					"i) Rampura Diagonistic Center ii) Banani Tel: 76555222, Mobile: 01733400999, Fax: 65552323");
-			doctor.setDoctorDetails(
-					"MBBS,PGT,MBBS, FAEM (CMC, Vellore), FDP (George Washington University, USA), MEM (India), "
-							+ "MMSc EM (Texila American University, Guyana), Examiner Royal College of Emergency Medicine (UK),"
-							+ "	Consultant");
-			doctorsInfoRepository.save(doctor);
-		}
+		
 
 	}
 

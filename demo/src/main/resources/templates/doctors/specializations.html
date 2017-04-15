@@ -21,25 +21,21 @@
 
 					<button class="btn btn-primary" type="button">
 					  Total	Doctors <span class="badge" th:text="${doctorCount}">4</span>
-					</button>
-
-					<h4>
-						<span class="label label-primary">Specialists </span>
-					</h4>
+					</button>		
 
 				</div>
 				<div class="panel-body">
 
 					<table class="table table-striped">
-						<tr style="border-style: groove">
+						<tr>
 							<th>Doctors by Specialization</th>
 							<th></th>
 						</tr>
-						<tr th:each="specialization : ${specializations}" style="border-style: groove">
-							<td th:text="${specialization.specializationName}"><a
-								th:href="${'/doctorsList/' + specialization.idSpecialization+'/'+specialization.specializationName}">Specialization</a></td>
-							<td><a
-								th:href="${'/doctorsList/' + specialization.idSpecialization+'/'+specialization.specializationName}">Doctors</a></td>
+						<tr th:each="specialization : ${specializations}" >
+							<td ><a
+								th:href="${'/doctorsList/' + specialization.idSpecialization+'/'+specialization.specializationName}" th:text="${specialization.specializationName}" class="btn btn-success"
+									role="button">Specialization</a></td>
+
 						</tr>
 					</table>
 

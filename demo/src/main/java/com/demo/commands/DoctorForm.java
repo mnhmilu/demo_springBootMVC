@@ -1,6 +1,8 @@
 package com.demo.commands;
 
 
+import java.util.Date;
+
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -26,6 +28,35 @@ public class DoctorForm {
     private Integer idSpecialization;
     
     private String specializationName;   
+    
+    
+    private Date insertDate; 
+    
+    
+    private String insertedBy;
+    
+    
+    
+
+
+	public Date getInsertDate() {
+		return insertDate;
+	}
+
+
+	public void setInsertDate(Date insertDate) {
+		this.insertDate = insertDate;
+	}
+
+
+	public String getInsertedBy() {
+		return insertedBy;
+	}
+
+
+	public void setInsertedBy(String insertedBy) {
+		this.insertedBy = insertedBy;
+	}
 
 
 	public String getSpecializationName() {
