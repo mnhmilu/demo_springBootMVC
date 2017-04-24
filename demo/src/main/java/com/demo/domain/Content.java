@@ -8,7 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -47,8 +49,7 @@ public class Content {
     private String addSection;
     
     @Column(name = "contentPage")
-    private String contentPage;
-    
+    private String contentPage;    
     
     
     @Column(name = "drugUpdateType")
@@ -74,7 +75,21 @@ public class Content {
     private byte[] image;      
 
 
+    @OneToOne  
+    @JoinColumn(name="idadditionalContentType")
+    private AdditionalContentType additionalContentType;
+    
+    
+    
 
+	public AdditionalContentType getAdditionalContentType() {
+		return additionalContentType;
+	}
+
+
+	public void setAdditionalContentType(AdditionalContentType additionalContentType) {
+		this.additionalContentType = additionalContentType;
+	}
 
 
 	public byte[] getImage() {

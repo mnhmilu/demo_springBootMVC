@@ -462,6 +462,20 @@ public class ContentController {
 
 		}
 	}
+	
+	@RequestMapping(value = "content/additionalContentList/{idadditionalContentType}", method = RequestMethod.GET)
+	public String additionalContentList(@PathVariable Integer idadditionalContentType, Pageable pageable, Model model) {
+
+		model.addAttribute("content", new ContentSearchForm());
+		Page<Content> results = contentRepository
+				.findContentByAdditionalContentType(idadditionalContentType, pageable);
+		PageWrapper<Content> page = new PageWrapper<Content>(results, "/content/additionalContentList/"+idadditionalContentType);
+		model.addAttribute("contents", results);
+		model.addAttribute("page", page);
+		return "contents/additionalContents";
+
+	}
+	
 
 	@InitBinder
 	private void dateBinder(WebDataBinder binder) {

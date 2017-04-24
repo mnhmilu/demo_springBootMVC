@@ -33,6 +33,7 @@ import com.demo.domain.Drug;
 import com.demo.domain.DrugGeneric;
 import com.demo.domain.HitCounter;
 import com.demo.enums.ContentType;
+import com.demo.repositories.AdditionalConentTypeRepository;
 import com.demo.repositories.ContentRepository;
 import com.demo.repositories.DrugGenericRepository;
 import com.demo.repositories.DrugRepository;
@@ -49,6 +50,10 @@ public class IndexController {
 	
 	@Autowired
 	private HitCounterRepository hitCounterRepository;
+	
+	
+	@Autowired
+	private AdditionalConentTypeRepository additionalConentTypeRepository;
 	
 
 	private final Logger slf4jLogger = LoggerFactory.getLogger(DrugController.class);
@@ -101,6 +106,10 @@ public class IndexController {
 		model.addAttribute("add3", "add3");
 		
 		HitCounter hitCounter =hitCounterRepository.findByCounterDate(new Date());
+		
+		
+		model.addAttribute("additinalContentTypes",additionalConentTypeRepository.findAll());
+		
 		
 		
 		if(hitCounter!=null)

@@ -72,9 +72,6 @@
 								<img width="340" th:src="@{|/index/image/${add1}|}" />
 
 							</p>
-							<!-- 							<p> -->
-							<!-- 								<img width="340" th:src="@{|/index/image/${add2}|}" /> -->
-							<!-- 							</p> -->
 
 
 						</div>
@@ -240,52 +237,61 @@
 				</div>
 
 				<div class="row">
-					<div class="col-sm-6 col-md-4">
+
+
+
+
+
+
+
+					<div class="col-sm-6 col-md-8">
 						<div class="thumbnail">
 							<!-- 							<img src="..." alt="..."> -->
-							<div class="caption" style="height: 400px;">
-								<h3>
-									<span class="label label-primary">Helpful Links</span>
-								</h3>
-								<div class="list-group">
-									<a href="#" class="list-group-item list-group-item-success">Hospitals
-										and Clinics</a> <a href="#"
-										class="list-group-item list-group-item-info">Diagnostic
-										Centers</a> <a href="#"
-										class="list-group-item list-group-item-warning">Blood
-										Banks</a> <a href="#"
-										class="list-group-item list-group-item-danger">Pharmaceutical
-										Companies</a>
-								</div>
+
+							<h3>
+								<span class="label label-primary">Important Addresses</span>
+							</h3>
+							<div class="caption" style="overflow: auto; height: 410px;">
+
+
+								<table class="table table-striped">
+
+									<tr th:each="additinalContentType : ${additinalContentTypes}">
+										<td><a th:href="${'/content/additionalContentList/' +additinalContentType.idadditionalContentType}"
+											th:text="${additinalContentType.additionalContentTypeName}"
+											class="btn btn-success" role="button">additionalContentTypeName</a></td>
+
+									</tr>
+								</table>
 
 
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-6 col-md-4">
-						<div class="thumbnail">
-							<!-- 							<img src="..." alt="..."> -->
-							<div class="caption" style="height: 400px;">
-								<h3>
-									<span class="label label-primary">Support</span>
-								</h3>
-								<div class="list-group">
-									<a href="#" class="list-group-item ">
-										<h5 class="list-group-item-heading">FAQ</h5>
-									</a> <a href="#" class="list-group-item ">
-										<h5 class="list-group-item-heading">Site Map</h5>
+					<!-- 					<div class="col-sm-6 col-md-4"> -->
+					<!-- 						<div class="thumbnail"> -->
+					<!-- 														<img src="..." alt="..."> -->
+					<!-- 							<div class="caption" style="height: 400px;"> -->
+					<!-- 								<h3> -->
+					<!-- 									<span class="label label-primary">Support</span> -->
+					<!-- 								</h3> -->
+					<!-- 								<div class="list-group"> -->
+					<!-- 									<a href="#" class="list-group-item "> -->
+					<!-- 										<h5 class="list-group-item-heading">FAQ</h5> -->
+					<!-- 									</a> <a href="#" class="list-group-item "> -->
+					<!-- 										<h5 class="list-group-item-heading">Site Map</h5> -->
 
-									</a> <a href="#" class="list-group-item ">
-										<h5 class="list-group-item-heading">Contact Us</h5>
+					<!-- 									</a> <a href="#" class="list-group-item "> -->
+					<!-- 										<h5 class="list-group-item-heading">Contact Us</h5> -->
 
-									</a> <a href="#" class="list-group-item ">
-										<h5 class="list-group-item-heading">Terms of Use</h5>
+					<!-- 									</a> <a href="#" class="list-group-item "> -->
+					<!-- 										<h5 class="list-group-item-heading">Terms of Use</h5> -->
 
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
+					<!-- 									</a> -->
+					<!-- 								</div> -->
+					<!-- 							</div> -->
+					<!-- 						</div> -->
+					<!-- 					</div> -->
 					<div class="col-sm-6 col-md-4" style="height: 410px;">
 						<div class="thumbnail">
 							<h3>

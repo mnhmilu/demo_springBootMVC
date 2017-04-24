@@ -13,6 +13,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import com.demo.domain.AdditionalContentType;
 import com.demo.domain.Content;
 import com.demo.domain.DoctorsInfo;
 import com.demo.domain.DoctorsSpecialization;
@@ -21,6 +22,7 @@ import com.demo.domain.DrugGeneric;
 import com.demo.domain.DrugManufacturer;
 import com.demo.domain.security.Role;
 import com.demo.domain.security.User;
+import com.demo.repositories.AdditionalConentTypeRepository;
 import com.demo.repositories.ContentRepository;
 import com.demo.repositories.DoctorsInfoRepository;
 import com.demo.repositories.DoctorsSpecializaitonRepository;
@@ -55,6 +57,9 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 	private Environment environment;
 
 	@Autowired
+	private AdditionalConentTypeRepository additionalConentTypeRepository;
+
+	@Autowired
 	public void setProductRepository(DrugRepository drugRepository,
 			DrugManufacturerRepository drugManufacturerDaoService, DrugGenericRepository drugGenericRepository,
 			DoctorsInfoRepository doctorsInfoRepository,
@@ -82,7 +87,135 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 			addAddData();
 			addDrugUpdateData();
 			addSecurityIntitalData();
+			addAdditionalContententData();
 		}
+
+	}
+
+	private void addAdditionalContententData() {
+
+		AdditionalContentType contentName = new AdditionalContentType();
+
+		contentName.setAdditionalContentTypeName("Pathological Laboratories and Imaging Centers");
+
+		additionalConentTypeRepository.save(contentName);
+
+		contentName = new AdditionalContentType();
+
+		contentName.setAdditionalContentTypeName("Govt.Medical Colleges,Hospitals,University and Institutes");
+
+		additionalConentTypeRepository.save(contentName);
+
+		contentName = new AdditionalContentType();
+
+		contentName.setAdditionalContentTypeName("Private Medical Colleges & Institutes");
+
+		additionalConentTypeRepository.save(contentName);
+
+		contentName = new AdditionalContentType();
+
+		contentName.setAdditionalContentTypeName("Private Clinic and Hospitals: General");
+
+		additionalConentTypeRepository.save(contentName);
+
+		contentName = new AdditionalContentType();
+
+		contentName.setAdditionalContentTypeName("Gastroliver Clinics and Hospitals");
+
+		additionalConentTypeRepository.save(contentName);
+		contentName = new AdditionalContentType();
+
+		contentName.setAdditionalContentTypeName("Cardiac Hospitals");
+
+		additionalConentTypeRepository.save(contentName);
+		contentName = new AdditionalContentType();
+
+		contentName.setAdditionalContentTypeName("Respiratory Diseage,Asthma and Allergry Center");
+
+		additionalConentTypeRepository.save(contentName);
+
+		contentName = new AdditionalContentType();
+
+		contentName.setAdditionalContentTypeName("Kedney & Urology Hospitals");
+
+		additionalConentTypeRepository.save(contentName);
+
+		contentName = new AdditionalContentType();
+
+		contentName.setAdditionalContentTypeName("Neurology hospitals");
+
+		additionalConentTypeRepository.save(contentName);
+
+		contentName = new AdditionalContentType();
+
+		contentName.setAdditionalContentTypeName("Physhiatric & Drug Treatment Hospitals");
+
+		additionalConentTypeRepository.save(contentName);
+		contentName = new AdditionalContentType();
+
+		contentName.setAdditionalContentTypeName("Cancer Hospitals");
+
+		additionalConentTypeRepository.save(contentName);
+
+		contentName = new AdditionalContentType();
+
+		contentName.setAdditionalContentTypeName("Eye Hospitals & Research Institutes");
+
+		additionalConentTypeRepository.save(contentName);
+
+		contentName = new AdditionalContentType();
+
+		contentName.setAdditionalContentTypeName("Mother & Child Hospitals");
+
+		additionalConentTypeRepository.save(contentName);
+
+		contentName = new AdditionalContentType();
+
+		contentName.setAdditionalContentTypeName("Orthopedic & Spinal Hospitals");
+
+		additionalConentTypeRepository.save(contentName);
+
+		contentName = new AdditionalContentType();
+
+		contentName.setAdditionalContentTypeName("Phyiotherapy Clinic");
+
+		additionalConentTypeRepository.save(contentName);
+
+		contentName = new AdditionalContentType();
+
+		contentName.setAdditionalContentTypeName("Medical Associations and Organization");
+
+		additionalConentTypeRepository.save(contentName);
+
+		contentName = new AdditionalContentType();
+
+		contentName.setAdditionalContentTypeName("Blood Banks");
+
+		additionalConentTypeRepository.save(contentName);
+
+		contentName = new AdditionalContentType();
+
+		contentName.setAdditionalContentTypeName("Eye Banks");
+
+		additionalConentTypeRepository.save(contentName);
+
+		contentName = new AdditionalContentType();
+
+		contentName.setAdditionalContentTypeName("Ambulance Services");
+
+		additionalConentTypeRepository.save(contentName);
+
+		contentName = new AdditionalContentType();
+
+		contentName.setAdditionalContentTypeName("24 Hours Pharmacies");
+
+		additionalConentTypeRepository.save(contentName);
+		
+		contentName = new AdditionalContentType();
+
+		contentName.setAdditionalContentTypeName("Shops for Spectacles");
+
+		additionalConentTypeRepository.save(contentName);
 
 	}
 
@@ -123,9 +256,9 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		// setAdminRole.add(roleManager);
 
 		User admin = new User();
-		
+
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		String hashedPassword = passwordEncoder.encode("java8");	
+		String hashedPassword = passwordEncoder.encode("java8");
 		admin.setPassword(hashedPassword);
 		admin.setUsername("admin");
 		admin.setRoles(setAdminRole);
@@ -319,12 +452,11 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 				"History of GI ulceration; impaired cardiac, renal or hepatic function; hypertension; lactation. "
 						+ "lV admin in patients w/ moderate or severe renal impairment; hypovolaemia or dehydration; asthma, porphyria. Monitor LFTs in patients on prolonged therapy. May prolong bleeding time; caution when used in patients M coagulation disorders or on anticoagulants."
 						+ " Prolonged therapy may increase risk of anaemia. fst & 2nd trimester of pregnancy. Elderly, debilitated patients.");
-		generic.setInterAction("Not to be given IV to patients who are receiving other NSAle or anticoagulants including low dose heparin."
-				+ " Renal function may be worsened when used w/ ciclosporin or triamterene. Altered absorption when given w/ sucralfate, "
-				+ "colestyramine or colestipol. Ophthalmic application of diclofenac may reduce the efficacy of ophth acetylcholine & carbachol. Increased risk of GI ulceration , "
-				+ "& bleeding when used w/ corticosteroids, aspirin or anticoagulants. increases blood levels of digoxin, lithium & methotrexate. Potentiate potassium-sparing diuretics.");
-		
-		
+		generic.setInterAction(
+				"Not to be given IV to patients who are receiving other NSAle or anticoagulants including low dose heparin."
+						+ " Renal function may be worsened when used w/ ciclosporin or triamterene. Altered absorption when given w/ sucralfate, "
+						+ "colestyramine or colestipol. Ophthalmic application of diclofenac may reduce the efficacy of ophth acetylcholine & carbachol. Increased risk of GI ulceration , "
+						+ "& bleeding when used w/ corticosteroids, aspirin or anticoagulants. increases blood levels of digoxin, lithium & methotrexate. Potentiate potassium-sparing diuretics.");
 
 		drugGenericRepository.save(generic);
 
@@ -335,7 +467,6 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		newDrug.setDrugName("A-FENAC");
 		newDrug.setDosageForm("TAB");
 		newDrug.setStrength("25mg");
-		
 
 		newDrug.setInsertDate(new Date());
 		newDrug.setDrugprice(55.00);
@@ -347,43 +478,36 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		newDrug.setDrugName("A-FENAC");
 		newDrug.setDosageForm("TAB");
 		newDrug.setStrength("50mg");
-		
 
 		newDrug.setInsertDate(new Date());
 		newDrug.setDrugprice(84.00);
 		newDrug.setPackSize("10X10 size");
 
 		drugRepository.save(newDrug);
-		
-		
+
 		newDrug.setId(0);
 		newDrug.setDrugManufacturer(manufacturer2);
 		newDrug.setDrugName("CATAFLAM");
 		newDrug.setDosageForm("TAB");
 		newDrug.setStrength("25mg");
-		
 
 		newDrug.setInsertDate(new Date());
 		newDrug.setDrugprice(0.00);
 		newDrug.setPackSize("50's ");
 
 		drugRepository.save(newDrug);
-		
+
 		newDrug.setId(0);
 		newDrug.setDrugManufacturer(manufacturer2);
 		newDrug.setDrugName("CATAFLAM");
 		newDrug.setDosageForm("TAB");
 		newDrug.setStrength("50mg");
-		
 
 		newDrug.setInsertDate(new Date());
 		newDrug.setDrugprice(0.00);
 		newDrug.setPackSize("50's ");
 
 		drugRepository.save(newDrug);
-		
-
-
 
 		DoctorsSpecialization specialization = new DoctorsSpecialization();
 		specialization.setSpecializationName("PHYCIATRIST");
@@ -395,8 +519,6 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		doctor.setDoctorDetails("MBBS,FCPS");
 		doctor.setDoctorsSpecialization(specialization);
 		doctorsInfoRepository.save(doctor);
-
-		
 
 	}
 

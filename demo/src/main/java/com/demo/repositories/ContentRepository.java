@@ -28,7 +28,8 @@ public interface ContentRepository extends CrudRepository<Content, Integer>{
 	@Query("select d from Content d where lower(d.contentType) like lower( :contentType) or lower(d.header) like lower('%' ||:header||'%') ")
 	Page<Content> findContentByContentTypeOrByHeaderOrderByInsertDateDesc(@Param("contentType") String contentType,@Param("header") String header,Pageable pageable);	
 	
-
+	@Query("select d from Content d inner join d.additionalContentType br inner join d.additionalContentType dg where br.idadditionalContentType=:idadditionalContentType") 
+	Page<Content> findContentByAdditionalContentType(@Param("idadditionalContentType") Integer idadditionalContentType,Pageable pageable);
 	
 	
 }
