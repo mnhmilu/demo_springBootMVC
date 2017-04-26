@@ -19,21 +19,40 @@
 						<span class="label label-primary">Important Address</span>
 						
 					</h4>
-					<table class="table table-striped">
-						<tr>
+					
+								<div th:if="${not #lists.isEmpty(contents)}"
+					style="overflow-y: scroll; height: 600px;">
+
+					<div class="list-group">
+						<th:block th:each="item : ${contents}">
+
+							<div class="list-group">
+								<a href="#" class="list-group-item active"
+									th:text="${item.header}"> Content Name </a> <a href="#"
+									class="list-group-item" th:text="${item.content_summary}">Content
+									Details</a> 
+
+							</div>
+						</th:block>
+					</div>
+
+				</div>
+					
+<!-- 					<table class="table table-striped"> -->
+<!-- 						<tr> -->
 							
-							<th>Institute Name</th>
-							<th>Details</th>
+<!-- 							<th>Institute Name</th> -->
+<!-- 							<th>Details</th> -->
 						
 							
-						</tr>
-						<tr th:each="content : ${contents}">
+<!-- 						</tr> -->
+<!-- 						<tr th:each="content : ${contents}"> -->
 							
-							<td th:text="${content.header}">Header</td>
-								<td th:text="${content.content_summary}">Content summary</td>
+<!-- 							<td th:text="${content.header}">Header</td> -->
+<!-- 								<td th:text="${content.content_summary}">Content summary</td> -->
 					
-						</tr>
-					</table>
+<!-- 						</tr> -->
+<!-- 					</table> -->
 				</div>
 			</div>
 
