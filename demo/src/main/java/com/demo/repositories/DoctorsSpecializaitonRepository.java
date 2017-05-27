@@ -10,7 +10,8 @@ import com.demo.domain.DoctorsSpecialization;
 public interface DoctorsSpecializaitonRepository extends CrudRepository<DoctorsSpecialization, Integer>{
 
 	DoctorsSpecialization findByIdSpecialization(Integer id);
-	List<DoctorsSpecialization> findTop500ByOrderByInsertDateDesc();
+	List<DoctorsSpecialization> findTop500ByOrderByInsertDateDesc();	
+	List<DoctorsSpecialization> findAllByOrderBySpecializationNameAsc();
 	
 }
 	

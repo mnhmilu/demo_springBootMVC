@@ -108,7 +108,7 @@ public class IndexController {
 		HitCounter hitCounter =hitCounterRepository.findByCounterDate(new Date());
 		
 		
-		model.addAttribute("additinalContentTypes",additionalConentTypeRepository.findAll());
+		model.addAttribute("additinalContentTypes",additionalConentTypeRepository.findAllByOrderByAdditionalContentTypeNameAsc());
 		
 		
 		

@@ -55,7 +55,7 @@ public class DoctorsInfoController {
 
 		slf4jLogger.info("DoctorsInfoController ::spcializationlist:: Doctor page accessed by :" + name);
 
-		model.addAttribute("specializations", doctorsSpecializaitonRepository.findAll());
+		model.addAttribute("specializations", doctorsSpecializaitonRepository.findAllByOrderBySpecializationNameAsc());
 
 		model.addAttribute("doctorCount", doctorsInfoRepository.count());
 
