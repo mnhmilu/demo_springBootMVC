@@ -66,6 +66,16 @@ public class DoctorsInfoController {
 	@RequestMapping(value = "/doctorsList/{idSpecialization}/{specializationName}", method = RequestMethod.GET)
 	public String doctorlist(Model model, @PathVariable Integer idSpecialization,
 			@PathVariable String specializationName, Pageable pageable) {
+		
+		if(pageable.getPageSize()>20)
+		{
+			
+			slf4jLogger.warn("DoctorsInfoController ::doctorlist:: Possible Temparing Attempt");
+			return "doctors/specializations";
+			
+		}
+			
+		
 
 		Page<DoctorsInfo> SearchResultPage = doctorsInfoRepository
 				.findDoctorsInfoByDoctorsSpecialization(idSpecialization, pageable);

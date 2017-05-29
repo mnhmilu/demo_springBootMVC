@@ -465,6 +465,15 @@ public class ContentController {
 	
 	@RequestMapping(value = "content/additionalContentList/{idadditionalContentType}", method = RequestMethod.GET)
 	public String additionalContentList(@PathVariable Integer idadditionalContentType, Pageable pageable, Model model) {
+		
+		
+		if(pageable.getPageSize()>20)
+		{
+			
+			slf4jLogger.warn("ContentController ::additionalContentList:: Possible Temparing Attempt");
+			return "redirect:/";
+			
+		}
 
 		model.addAttribute("content", new ContentSearchForm());
 		Page<Content> results = contentRepository

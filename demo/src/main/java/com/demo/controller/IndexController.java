@@ -144,6 +144,14 @@ public class IndexController {
 
 			}
 		}
+		
+		if(pageable.getPageSize()>20)
+		{
+			
+			slf4jLogger.warn("IndexController ::drugSearch:: Possible Temparing Attempt");
+			return "redirect:/";
+			
+		}
 
 		String searhKeyByDurgName = null;
 
@@ -187,6 +195,14 @@ public class IndexController {
 	public String showDrugByGeneric(@PathVariable String key, Model model, Pageable pageable) {
 
 		slf4jLogger.info("IndexController :: showDrugByGeneric");
+		
+		if(pageable.getPageSize()>20)
+		{
+			
+			slf4jLogger.warn("IndexController ::showDrugByGeneric:: Possible Temparing Attempt");
+			return "redirect:/";
+			
+		}
 
 		Page<Drug> drugsSearchResultPage = drugDaoService.findDrugByDrugGeneric(key, pageable);
 		PageWrapper<Drug> page = new PageWrapper<Drug>(drugsSearchResultPage, "/index/drugByGeneric/" + key);
@@ -200,6 +216,15 @@ public class IndexController {
 	public String showDrugByBrand(@PathVariable String key, Model model, Pageable pageable) {
 
 		slf4jLogger.info("IndexController :: showDrugByBrand");
+		
+		if(pageable.getPageSize()>20)
+		{
+			
+			slf4jLogger.warn("IndexController ::showDrugByBrand:: Possible Temparing Attempt");
+			return "redirect:/";
+			
+		}
+		
 		Page<Drug> drugsSearchResultPage = drugDaoService.findDrugByDrugBrand(key, pageable);
 		PageWrapper<Drug> page = new PageWrapper<Drug>(drugsSearchResultPage, "/index/drugByBrand/" + key);
 		model.addAttribute("drugs", drugsSearchResultPage);
