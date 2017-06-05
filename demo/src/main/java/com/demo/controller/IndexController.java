@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.actuate.metrics.CounterService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -192,7 +193,7 @@ public class IndexController {
 	}
 
 	@RequestMapping("/index/drugByGeneric/{key}")
-	public String showDrugByGeneric(@PathVariable String key, Model model, Pageable pageable) {
+	public String showDrugByGeneric(@PathVariable String key, Model model,@PageableDefault(value = 10) Pageable pageable) {
 
 		slf4jLogger.info("IndexController :: showDrugByGeneric");
 		
@@ -213,7 +214,7 @@ public class IndexController {
 	}
 
 	@RequestMapping("/index/drugByBrand/{key}")
-	public String showDrugByBrand(@PathVariable String key, Model model, Pageable pageable) {
+	public String showDrugByBrand(@PathVariable String key, Model model,@PageableDefault(value = 10) Pageable pageable) {
 
 		slf4jLogger.info("IndexController :: showDrugByBrand");
 		

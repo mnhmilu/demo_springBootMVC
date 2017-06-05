@@ -41,9 +41,10 @@ public class DrugGeneric {
     @OneToOne
     private Drug drug;
     
-   
+    @Column(name = "classification",columnDefinition="TEXT")
     private String classification;
     
+    @Column(name = "safetyRemarks",columnDefinition="TEXT")
     private String safetyRemarks;
     
     @Column(name = "indicationDosages",columnDefinition="TEXT")

@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -100,7 +101,7 @@ public class DrugController {
 	}
 
 	@RequestMapping(value = "/drugSearch", method = RequestMethod.GET)
-	public String drugSearch(DrugSearchForm form, BindingResult bindingResult, Model model, Pageable pageable,
+	public String drugSearch(DrugSearchForm form, BindingResult bindingResult, Model model,@PageableDefault(value = 10) Pageable pageable,
 			HttpSession session) {
 
 		if (form != null) {

@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -68,7 +69,7 @@ public class DrugGenericController {
 	}
 
 	@RequestMapping(value = "admin/drugGenericList", method = RequestMethod.GET)
-	public String listGeneric(Model model, Pageable pageable) {
+	public String listGeneric(Model model,@PageableDefault(value = 10) Pageable pageable) {
 
 		model.addAttribute("drugGeneric", new DrugGenericSearchForm());
 
@@ -106,7 +107,7 @@ public class DrugGenericController {
 
 
 	@RequestMapping(value = "admin/drugGenericSearch", method = RequestMethod.GET)
-	public String drugGenericSearch(DrugGenericSearchForm form, BindingResult bindingResult, Model model,
+	public String drugGenericSearch(DrugGenericSearchForm form, BindingResult bindingResult, Model model,@PageableDefault(value = 10)
 			Pageable pageable, HttpSession session) {
 
 		if (form.getGenericName() == null && pageable.getPageNumber()==0) {
