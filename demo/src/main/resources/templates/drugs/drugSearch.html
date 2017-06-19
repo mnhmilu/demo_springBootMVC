@@ -22,8 +22,8 @@
 					<thead class="thead-inverse">
 						<tr class="bg-primary" >
 
-							<th>Brand Name</th>
-							<th>Generic Name</th>
+	                        <th>Generic Name</th>
+							<th>Brand Name</th>						
 							<th>Manufacturer Name</th>
 							<th>View</th>
 
@@ -31,12 +31,14 @@
 						</thead>
 						<tbody>
 						<tr th:each="drug : ${drugs}" style="border-style: ridge">
-
-							<td th:text="${drug.drugName}">Brand Name</td>
-							<td th:text="${drug.drugGeneric.genericName}">Generic Name</td>
+	                        <td th:text="${drug.drugGeneric.genericName}">Generic Name</td>
+							<td th:text="${drug.drugName}">Brand Name</td>						
 							<td th:text="${drug.drugManufacturer.manufacturer}">Manufacturer
 								Name</td>
-							<td><a th:href="${'/index/drugDeatails/' + drug.id}">Details</a></td>
+								
+								<td><a
+								th:href="${'/drugGenericDetails/' + drug.drugGeneric.idGeneric}"><span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span> </a></td>
+							
 
 						</tr>
 						</tbody>
