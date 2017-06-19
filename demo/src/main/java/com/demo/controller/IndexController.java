@@ -162,7 +162,7 @@ public class IndexController {
 
 	@RequestMapping(value = "/drugSearchFromIndex", method = RequestMethod.GET)
 	public String drugSearch(DrugSearchForm form, BindingResult bindingResult, Model model, HttpSession session,
-			Pageable pageable) {
+			@PageableDefault(value = 10) Pageable pageable) {
 		
 		
 
