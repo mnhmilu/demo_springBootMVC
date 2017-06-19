@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -63,6 +64,8 @@ public class ContentController {
 		model.addAttribute("content", new ContentSearchForm());
 		Page<Content> results = contentRepository.findContentByContentTypeOrByHeaderOrderByInsertDateDesc(
 				ContentType.Advertisement.name(), null, pageable);
+		
+		
 		PageWrapper<Content> page = new PageWrapper<Content>(results, "admin/addList");
 		model.addAttribute("contents", results);
 		model.addAttribute("page", page);
@@ -238,6 +241,7 @@ public class ContentController {
 		content.setHeader(form.getHeader());
 		content.setInsertDate(new Date());
 		content.setOriginalFileName(file.getOriginalFilename());
+		content.setLastUpdatedDate(new Date());
 
 		contentRepository.save(content);
 
@@ -284,6 +288,7 @@ public class ContentController {
 		content.setHeader(form.getHeader());
 		content.setInsertDate(new Date());
 		content.setOriginalFileName(file.getOriginalFilename());
+		content.setLastUpdatedDate(new Date());
 
 		contentRepository.save(content);
 
@@ -331,6 +336,8 @@ public class ContentController {
 		content.setHeader(form.getHeader());
 		content.setInsertDate(new Date());
 		content.setOriginalFileName(file.getOriginalFilename());
+		content.setLastUpdatedDate(new Date());
+		
 		contentRepository.save(content);
 
 		return "redirect:/admin/content/newDrugUpdate";

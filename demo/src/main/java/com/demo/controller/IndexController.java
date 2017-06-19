@@ -1,10 +1,13 @@
 package com.demo.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -88,12 +91,36 @@ public class IndexController {
 		List<Content> indexContents = contentRepository.findContentByContentPageOrderByInsertDateDesc("Index");
 
 		List<Content> news = filterContentByType(indexContents, ContentType.News.name());
+		
+		
+		news.sort(Comparator.comparing(Content::getLastUpdatedDate,Comparator.nullsLast(Comparator.reverseOrder())));	
+		
+		
 		List<Content> add = filterContentByType(indexContents, ContentType.Advertisement.name());
+		
+		add.sort(Comparator.comparing(Content::getLastUpdatedDate,Comparator.nullsLast(Comparator.reverseOrder())));	
+		
+		
 		List<Content> drugUpdate = filterContentByType(indexContents, ContentType.DrugUpdate.name());
+		
+		
 
 		List<Content> drugUpdatesByBrand = filterDrugUpdateByType(drugUpdate, "ByBrand");
+		
+		drugUpdatesByBrand.sort(Comparator.comparing(Content::getLastUpdatedDate,Comparator.nullsLast(Comparator.reverseOrder())));	
+		
+		
 		List<Content> drugUpdatesByGeneric = filterDrugUpdateByType(drugUpdate, "ByGeneric");
+		
+		
+		drugUpdatesByGeneric.sort(Comparator.comparing(Content::getLastUpdatedDate,Comparator.nullsLast(Comparator.reverseOrder())));	
+		
+		
 		List<Content> drugUpdatesByNewMolecules = filterDrugUpdateByType(drugUpdate, "ByNewMolecules");
+		
+		
+		drugUpdatesByNewMolecules.sort(Comparator.comparing(Content::getLastUpdatedDate,Comparator.nullsLast(Comparator.reverseOrder())));	
+		
 
 		model.addAttribute("drugUpdatesByBrand", drugUpdatesByBrand);
 		model.addAttribute("drugUpdatesByGeneric", drugUpdatesByGeneric);
@@ -178,7 +205,7 @@ public class IndexController {
 		model.addAttribute("drugs", drugsSearchResultPage);
 		model.addAttribute("page", page);
 
-		return "drugs/drugsGenericSearch";
+		return "drugs/drugSearch";
 
 	}
 
@@ -205,8 +232,9 @@ public class IndexController {
 			
 		}
 
-		Page<Drug> drugsSearchResultPage = drugDaoService.findDrugByDrugGeneric(key, pageable);
-		PageWrapper<Drug> page = new PageWrapper<Drug>(drugsSearchResultPage, "/index/drugByGeneric/" + key);
+		Page<DrugGeneric> drugsSearchResultPage = drugGenericDaoService.findDrugGenericByGenericName(key, pageable);
+		
+		PageWrapper<DrugGeneric> page = new PageWrapper<DrugGeneric>(drugsSearchResultPage, "/index/drugByGeneric/" + key);
 		model.addAttribute("drugs", drugsSearchResultPage);
 		model.addAttribute("page", page);
 
@@ -230,7 +258,7 @@ public class IndexController {
 		PageWrapper<Drug> page = new PageWrapper<Drug>(drugsSearchResultPage, "/index/drugByBrand/" + key);
 		model.addAttribute("drugs", drugsSearchResultPage);
 		model.addAttribute("page", page);
-		return "drugs/drugsGenericSearch";
+		return "drugs/drugsBrandSearchResult";
 	}
 
 	@RequestMapping(value = "/index/image/{imageid}", method = RequestMethod.GET)
