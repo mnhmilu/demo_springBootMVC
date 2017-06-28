@@ -24,6 +24,7 @@ public class ContentDataToContentForm implements Converter<Content,ContentForm> 
 		frm.setImage(data.getImage());	
 		frm.setContentPage(data.getContentPage());
 		frm.setContentType(data.getContentType());
+		frm.setLastUpdatedDate(data.getLastUpdatedDate());
 
 		return frm;
 	}

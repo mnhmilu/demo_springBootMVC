@@ -21,6 +21,7 @@
 				<h4>
 					<span class="label label-primary">Enter News Content Information</span>
 				</h4>
+				<div class="alert alert-danger" role="alert" th:text="${errorMessage}">...</div>
 				<div>
 					<form class="form-horizontal" th:object="${content}"
 						th:action="@{/admin/saveNewsContent}" method="post" action="#"

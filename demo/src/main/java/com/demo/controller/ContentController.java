@@ -24,6 +24,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -66,7 +67,7 @@ public class ContentController {
 				ContentType.Advertisement.name(), null, pageable);
 		
 		
-		PageWrapper<Content> page = new PageWrapper<Content>(results, "admin/addList");
+		PageWrapper<Content> page = new PageWrapper<Content>(results, "/admin/addList");
 		model.addAttribute("contents", results);
 		model.addAttribute("page", page);
 		return "contents/addcontents";
@@ -79,7 +80,7 @@ public class ContentController {
 		model.addAttribute("content", new ContentSearchForm());
 		Page<Content> results = contentRepository
 				.findContentByContentTypeOrByHeaderOrderByInsertDateDesc(ContentType.News.name(), null, pageable);
-		PageWrapper<Content> page = new PageWrapper<Content>(results, "admin/newsList");
+		PageWrapper<Content> page = new PageWrapper<Content>(results, "/admin/newsList");
 		model.addAttribute("contents", results);
 		model.addAttribute("page", page);
 		return "contents/newscontents";
@@ -92,7 +93,7 @@ public class ContentController {
 		model.addAttribute("content", new ContentSearchForm());
 		Page<Content> results = contentRepository
 				.findContentByContentTypeOrByHeaderOrderByInsertDateDesc(ContentType.DrugUpdate.name(), null, pageable);
-		PageWrapper<Content> page = new PageWrapper<Content>(results, "admin/drugUpdateList");
+		PageWrapper<Content> page = new PageWrapper<Content>(results, "/admin/drugUpdateList");
 		model.addAttribute("contents", results);
 		model.addAttribute("page", page);
 		return "contents/drugUpdateContents";
@@ -109,7 +110,7 @@ public class ContentController {
 
 		Page<Content> results = contentRepository.findContentByContentTypeOrByHeaderOrderByInsertDateDesc(null,
 				form.getHeader(), pageable);
-		PageWrapper<Content> page = new PageWrapper<Content>(results, "admin/addContentSearch");
+		PageWrapper<Content> page = new PageWrapper<Content>(results, "/admin/addContentSearch");
 		model.addAttribute("content", form);
 		model.addAttribute("contents", results);
 		model.addAttribute("page", page);
@@ -126,7 +127,7 @@ public class ContentController {
 
 		Page<Content> results = contentRepository.findContentByContentTypeOrByHeaderOrderByInsertDateDesc(null,
 				form.getHeader(), pageable);
-		PageWrapper<Content> page = new PageWrapper<Content>(results, "admin/newsContentSearch");
+		PageWrapper<Content> page = new PageWrapper<Content>(results, "/admin/newsContentSearch");
 		model.addAttribute("content", form);
 		model.addAttribute("contents", results);
 		model.addAttribute("page", page);
@@ -143,7 +144,7 @@ public class ContentController {
 
 		Page<Content> results = contentRepository.findContentByContentTypeOrByHeaderOrderByInsertDateDesc(null,
 				form.getHeader(), pageable);
-		PageWrapper<Content> page = new PageWrapper<Content>(results, "admin/drugUpdateContentSearch");
+		PageWrapper<Content> page = new PageWrapper<Content>(results, "/admin/drugUpdateContentSearch");
 		model.addAttribute("content", form);
 		model.addAttribute("contents", results);
 		model.addAttribute("page", page);
@@ -219,12 +220,32 @@ public class ContentController {
 		if(file.getBytes().length ==0)
 		{
 			Content content=(Content ) session.getAttribute("storedContent");
+			if(content !=null)
+			{
 			form.setImage(content.getImage());			
+			}
+		}
+		else if(file.getBytes().length >300000)
+		{
+			slf4jLogger.warn("ContentController ::saveAddContent:: photo size limit exceeded");		
+			model.addAttribute("errorMessage", "Eror! Photo size limit exceeded, try to upload photo < 300 KB size");
+			SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+			Date today = new Date();
+			dateFormat.format(today);
+			form.setExpireDate(today);
+			model.addAttribute("content", form);
+	
+			return "contents/addContentForm";
 		}
 		else
 		{		
-		  form.setImage(file.getBytes());
+		  form.setImage(file.getBytes());	 
+		  
 		}
+		
+		
+		
+		
 
 		// add custom validation here
 
@@ -245,7 +266,18 @@ public class ContentController {
 
 		contentRepository.save(content);
 
-		return "redirect:/admin/content/newAdd";
+		//return "redirect:/admin/content/newAdd";
+		
+		if(form.getId()==null)
+		{
+		
+		   return "redirect:/admin/content/newAdd";
+		}
+		else
+		{			
+			return "redirect:/admin/addList";					
+			
+		}
 
 	}
 
@@ -268,7 +300,22 @@ public class ContentController {
 		if(file.getBytes().length ==0)
 		{
 			Content content=(Content ) session.getAttribute("storedContent");
-			form.setImage(content.getImage());			
+			
+			if(content !=null)
+			{
+			 form.setImage(content.getImage());			
+			}
+		}
+		else if(file.getBytes().length >300000)
+		{
+			slf4jLogger.warn("ContentController ::saveAddContent:: photo size limit exceeded");		
+			model.addAttribute("errorMessage", "Eror! Photo size limit exceeded, try to upload photo < 300 KB size");
+			SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+			Date today = new Date();
+			dateFormat.format(today);
+			form.setExpireDate(today);
+			model.addAttribute("content", form);
+			return "contents/addContentForm";
 		}
 		else
 		{		
@@ -291,8 +338,19 @@ public class ContentController {
 		content.setLastUpdatedDate(new Date());
 
 		contentRepository.save(content);
+		
+		if(form.getId()==null)
+		{
+		
+		   return "redirect:/admin/content/newNews";
+		}
+		else
+		{			
+			return "redirect:/admin/newsList";					
+			
+		}
 
-		return "redirect:/admin/content/newNews";
+		//return "redirect:/admin/content/newNews";
 
 	}
 
@@ -314,7 +372,22 @@ public class ContentController {
 		if(file.getBytes().length ==0)
 		{
 			Content content=(Content ) session.getAttribute("storedContent");
-			form.setImage(content.getImage());			
+			
+			if(content !=null)
+			{
+		 	form.setImage(content.getImage());			
+			}
+		}
+		else if(file.getBytes().length >300000)
+		{
+			slf4jLogger.warn("ContentController ::saveAddContent:: photo size limit exceeded");		
+			model.addAttribute("errorMessage", "Eror! Photo size limit exceeded, try to upload photo < 300 KB size");
+			SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+			Date today = new Date();
+			dateFormat.format(today);
+			form.setExpireDate(today);
+			model.addAttribute("content", form);
+			return "contents/addContentForm";
 		}
 		else
 		{		
@@ -340,7 +413,17 @@ public class ContentController {
 		
 		contentRepository.save(content);
 
-		return "redirect:/admin/content/newDrugUpdate";
+		
+		if(form.getId()==null)
+		{
+		
+		   return "redirect:/admin/content/newDrugUpdate";
+		}
+		else
+		{			
+			return "redirect:/admin/drugUpdateList";					
+			
+		}
 
 	}
 
@@ -352,7 +435,7 @@ public class ContentController {
 		ContentForm form = contentDataToContentForm.convert(content);
 		model.addAttribute("content", form);
 		model.addAttribute("imageid", form.getAdd_section());
-		session.setAttribute("stroredContent", content);
+		session.setAttribute("storedContent", content);
 		return "contents/addContentshow";
 
 	}
@@ -364,8 +447,8 @@ public class ContentController {
 		Content content = contentRepository.findById(id);
 		ContentForm form = contentDataToContentForm.convert(content);
 		model.addAttribute("content", form);
-		model.addAttribute("imageid", form.getAdd_section());
-		session.setAttribute("stroredContent", content);
+		//model.addAttribute("imageid", form.getAdd_section());
+		session.setAttribute("storedContent", content);
 		return "contents/newsContentshow";
 
 	}
@@ -377,8 +460,8 @@ public class ContentController {
 		Content content = contentRepository.findById(id);
 		ContentForm form = contentDataToContentForm.convert(content);
 		model.addAttribute("content", form);
-		model.addAttribute("imageid", form.getAdd_section());
-		session.setAttribute("stroredContent", content);
+		//model.addAttribute("imageid", form.getAdd_section());
+		session.setAttribute("storedContent", content);
 		return "contents/drugUpdateContentshow";
 
 	}
@@ -492,6 +575,25 @@ public class ContentController {
 
 	}
 	
+	
+	@RequestMapping("content/ContentDetails/{id}")
+	public String showDetailContent(@PathVariable Integer id, Model model,HttpSession session) {
+		
+		Content content = contentRepository.findById(id);		
+
+		ContentForm form = contentDataToContentForm.convert(content);		
+		
+		session.setAttribute("storedContent", content);
+
+		model.addAttribute("content", form);
+
+		return "contents/contentDetails";
+
+	}
+	
+	
+	
+	
 
 	@InitBinder
 	private void dateBinder(WebDataBinder binder) {
@@ -508,7 +610,7 @@ public class ContentController {
 
 		byte[] bytes = null;
 
-		Content content = (Content) session.getAttribute("stroredContent");
+		Content content = (Content) session.getAttribute("storedContent");
 
 		if (content != null) {
 			bytes = content.getImage();
@@ -517,6 +619,8 @@ public class ContentController {
 		// Set headers
 		final HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.IMAGE_PNG);
+		
+	
 
 		return new ResponseEntity<byte[]>(bytes, headers, HttpStatus.CREATED);
 	}

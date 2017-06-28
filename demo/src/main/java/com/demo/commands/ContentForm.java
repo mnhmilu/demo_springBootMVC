@@ -3,6 +3,8 @@ package com.demo.commands;
 
 import java.util.Date;
 
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -45,10 +47,29 @@ public class ContentForm {
     private Date expireDate;
     
     
-    private String drugUpdateType;      
+    
+
+    private Date lastUpdatedDate;
+    
+    
+    private String drugUpdateType;        
     
     
     
+    
+    
+	public Date getLastUpdatedDate() {
+		return lastUpdatedDate;
+	}
+
+
+
+	public void setLastUpdatedDate(Date lastUpdatedDate) {
+		this.lastUpdatedDate = lastUpdatedDate;
+	}
+
+
+
 	public String getContentType() {
 		return contentType;
 	}
