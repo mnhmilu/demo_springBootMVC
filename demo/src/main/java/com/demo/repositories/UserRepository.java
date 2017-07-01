@@ -11,4 +11,6 @@ import com.demo.domain.security.User;
 public interface UserRepository extends JpaRepository<User,Long> {
 
     User findByUsername(String username);
+    User findById(long id);
+    
 }

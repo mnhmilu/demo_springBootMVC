@@ -12,4 +12,5 @@ import com.demo.domain.security.User;
 public interface RoleRepository extends JpaRepository<Role,Long> {
 
     User findByRole(String role);
+    Role findById(long id);
 }

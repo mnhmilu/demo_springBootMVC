@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title th:text="#{index.page.title}">Page Title</title>
+
+<!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+</head>
+<body>
+	<div class="container">
+		<!--/*/ <th:block th:include="fragments/headerForManager :: header"></th:block> /*/-->
+
+
+		<h2>New User Information Form</h2>
+		<form class="form-horizontal" action="#" th:action="@{/admin/createUser}"
+			th:object="${user}" method="post" >
+			
+			
+
+			<div class="form-group">
+
+				<label class="col-sm-2 control-label">Name</label>
+				<div class="col-sm-5">
+					<input class="form-control" type="text" th:field="*{username}"
+						placeholder="Enter name" />
+						<p th:if="${#fields.hasErrors('username')}"
+									th:errors="*{username}">Invalid User Name</p>
+				</div>
+			</div>	
+			
+			
+			<div class="form-group">
+
+				<label class="col-sm-2 control-label">Email</label>
+				<div class="col-sm-5">
+					<input class="form-control" type="text" th:field="*{email}"
+						placeholder="Enter email" />
+						<p th:if="${#fields.hasErrors('email')}"
+									th:errors="*{email}">Invalid Email</p>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Role</label>
+						<div class="col-sm-5">
+						
+						<div
+									th:if="${roles != null and not #lists.isEmpty(roles)}">
+									<select th:field="*{roles}" class="form-control">
+										<option value="0" label="--- Select ---" />
+										<option th:each="item: ${roles}"
+											th:value="${item.id}"
+											th:text="${item.role}">Select Brand</option>
+									</select>
+								</div>
+						
+						
+						
+				
+				<p th:if="${#fields.hasErrors('roles')}"
+									th:errors="*{roles}">Invalid Roles</p>
+		
+				</div>
+			</div>
+			<div class="form-group">
+
+				<label class="col-sm-2 control-label">Password</label>
+				<div class="col-sm-4">
+					<input class="form-control" type="text" th:field="*{password}"
+						placeholder="Enter password" />
+						<p th:if="${#fields.hasErrors('password')}"
+									th:errors="*{password}">Invalid Password</p>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2"></div>
+				<div class="col-sm-4">
+					<button type="submit" class="btn btn-primary">
+									<span class="glyphicon glyphicon-floppy-disk"
+										aria-hidden="true"></span>
+								</button>
+				</div>
+				
+				
+			</div>
+		</form>
+	</div>
+
+
+</body>
+</html>

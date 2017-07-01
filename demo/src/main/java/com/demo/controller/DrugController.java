@@ -189,7 +189,10 @@ public class DrugController {
 		if(file.getBytes().length ==0)
 		{
 			Drug content=(Drug ) session.getAttribute("stroredDrug");
-			form.setImage(content.getImage());
+			if(content!=null)
+			{
+			  form.setImage(content.getImage());
+			}
 			//TODO: check and test carefully
 			
 		}

@@ -19,18 +19,20 @@
 		<div class="panel panel-default">
 			<div class="panel-body">
 				<h4>
-					<span class="label label-primary">Enter Advertisement Information</span>
+					<span class="label label-primary">Enter Advertisement
+						Information</span>
 				</h4>
-				<div class="alert alert-danger" role="alert" th:text="${errorMessage}">...</div>
-				
-				
+				<div class="alert alert-danger" role="alert"
+					th:text="${errorMessage}">...</div>
+
+
 				<div>
 					<form class="form-horizontal" th:object="${content}"
 						th:action="@{/admin/saveAddContent}" method="post" action="#"
 						enctype="multipart/form-data">
 						<input type="hidden" th:field="*{id}" />
 
-				
+
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Advertisement Page</label>
 							<div class="col-sm-5">
@@ -40,8 +42,8 @@
 								</select>
 							</div>
 						</div>
-						
-										<div class="form-group">
+
+						<div class="form-group">
 							<label class="col-sm-2 control-label">Advertisement
 								Section</label>
 							<div class="col-sm-5">
@@ -59,7 +61,8 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-2 control-label">Advertisement Content Header :</label>
+							<label class="col-sm-2 control-label">Advertisement
+								Content Header :</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" th:field="*{header}" />
 								<p th:if="${#fields.hasErrors('header')}" th:errors="*{header}">Header</p>
@@ -68,7 +71,8 @@
 						</div>
 
 						<div class="form-group">
-							<label class="col-sm-2 control-label">Advertisement Content Summary:</label>
+							<label class="col-sm-2 control-label">Advertisement
+								Content Summary:</label>
 							<div class="col-sm-10">
 								<textarea class="form-control" rows="8"
 									style="margin-top: 10px;"
@@ -92,13 +96,13 @@
 							</div>
 						</div>
 
-		
+
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Upload Image:</label>
 							<div class="col-sm-10">
 								<input type="file" class="form-control" name="file" />
 							</div>
-							
+
 						</div>
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Expire Date:</label>
@@ -112,7 +116,10 @@
 						</div>
 						<div class="form-group">
 							<div class="col-sm-10">
-								<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span></button>
+								<button type="submit" class="btn btn-primary">
+									<span class="glyphicon glyphicon-floppy-disk"
+										aria-hidden="true"></span>
+								</button>
 							</div>
 						</div>
 

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+<title th:text="#{index.page.title}">Page Title</title>
+
+<!--/*/ <th:block th:include="fragments/headerinc :: head"></th:block> /*/-->
+
+</head>
+<body>
+
+
+	<div class="container">
+		<!--/*/ <th:block th:include="fragments/headerForManager :: header"></th:block> /*/-->
+		
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<h4>
+					<span class="label label-primary">User Search</span>
+				</h4>
+				<form class="form-inline" th:object="${user}"
+					th:action="@{/admin/searchUser}" method="post">
+					<div class="row">
+					<div class="col-sm-4">
+							<div class="form-group">
+								<label class="col-sm-8 control-label">User Name </label>
+								<div class="col-sm-2">
+									<input class="form-control" type="text"
+								th:field="*{username}" placeholder="Enter name" />
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<label class="col-sm-8 control-label">Roles </label>
+								<div class="col-sm-2">
+									<select th:field="*{roles}" class="form-control">
+									<option value="0" label="--- Select ---" />
+									<option th:each="item: ${roles}" th:value="${item.id}"
+										th:text="${item.role}">Select Roles</option>
+								</select>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search" aria-hidden="true"></span> </button>
+							</div>
+							<div class="form-group">
+								<a href="/admin/userList" class="btn btn-success" role="button"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>
+								</a>
+							</div>
+							<div class="form-group">
+							<a href="/admin/newUser" class="btn btn-success" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+								</div>
+						</div>
+
+					</div>
+
+				</form>
+			</div>
+		</div>
+
+		
+		<h2>User Information</h2>
+		<table class="table table-bordered">
+			<tr>
+				<th>Name</th>
+				<th>Email</th>
+				<th>Role</th>
+				<th>Reset Password</th>
+				<th>Delete</th>
+			</tr>
+			<tr th:each="user: ${users}">
+				<td th:text="${user.username}"></td>
+				<td th:text="${user.email}"></td>
+				<td th:text="${user.roles}"></td>
+				<td sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')"><a
+					th:href="${'/admin/resetUserPassword/' + user.id}"><span
+						class="glyphicon glyphicon-lock" aria-hidden="true"></span> </a></td>
+				<td sec:authorize="hasAuthority('ADMIN') or hasAuthority('MANAGER')"><a
+					th:href="${'/admin/deleteUser/' + user.id}"><span
+						class="glyphicon glyphicon-remove" aria-hidden="true"></span> </a></td>
+
+			</tr>
+		</table>
+
+		<div>
+			<ul class='pagination pagination-centered'>
+				<li th:class="${page.firstPage}?'disabled':''"><span
+					th:if='${page.firstPage}'>← First</span> <a
+					th:if='${not page.firstPage}'
+					th:href='@{${page.url}(page=0,size=${page.size})}'>← First</a></li>
+				<li th:class="${page.hasPreviousPage}? '' : 'disabled'"><span
+					th:if='${not page.hasPreviousPage}'>«</span> <a
+					th:if='${page.hasPreviousPage}'
+					th:href='@{${page.url}(page=${page.number-2},size=${page.size})}'
+					title='Go to previous page'>«</a></li>
+				<li th:each='item : ${page.items}'
+					th:class="${item.current}? 'active' : ''"><span
+					th:if='${item.current}' th:text='${item.number}'>1</span> <a
+					th:if='${not item.current}'
+					th:href='@{${page.url}(page=${item.number-1},size=${page.size})}'><span
+						th:text='${item.number}'>1</span></a></li>
+				<li th:class="${page.hasNextPage}? '' : 'disabled'"><span
+					th:if='${not page.hasNextPage}'>»</span> <a
+					th:if='${page.hasNextPage}'
+					th:href='@{${page.url}(page=${page.number},size=${page.size})}'
+					title='Go to next page'>»</a></li>
+				<li th:class="${page.lastPage}? 'disabled' : ''"><span
+					th:if='${page.lastPage}'>Last →</span> <a
+					th:if='${not page.lastPage}'
+					th:href='@{${page.url}(page=${page.totalPages - 1},size=${page.size})}'>Last
+						→</a></li>
+			</ul>
+		</div>
+
+	</div>
+</body>
+</html>

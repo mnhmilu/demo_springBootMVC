@@ -30,12 +30,27 @@ public class User {
     private String password;
 
     private boolean enabled;
+    
+    
+    @Column(unique=true)
+    private String email;
+    
 
     @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(joinColumns = @JoinColumn(name = "user_id"),inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+    
+    
 
-    public long getId() {
+    public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public long getId() {
         return id;
     }
 
