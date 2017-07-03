@@ -43,6 +43,7 @@ import com.demo.enums.ContentType;
 import com.demo.repositories.ContentRepository;
 
 @Controller
+//@RequestMapping(value = "/api")
 public class ContentController {
 
 	private final Logger slf4jLogger = LoggerFactory.getLogger(ContentController.class);
@@ -60,7 +61,7 @@ public class ContentController {
 	}
 
 	@RequestMapping(value = "admin/addList", method = RequestMethod.GET)
-	public String druglist(Model model, Pageable pageable) {
+	public String addlist(Model model, Pageable pageable) {
 
 		model.addAttribute("content", new ContentSearchForm());
 		Page<Content> results = contentRepository.findContentByContentTypeOrByHeaderOrderByInsertDateDesc(
@@ -222,7 +223,7 @@ public class ContentController {
 			Content content=(Content ) session.getAttribute("storedContent");
 			if(content !=null)
 			{
-			form.setImage(content.getImage());			
+		    	form.setImage(content.getImage());			
 			}
 		}
 		else if(file.getBytes().length >300000)
