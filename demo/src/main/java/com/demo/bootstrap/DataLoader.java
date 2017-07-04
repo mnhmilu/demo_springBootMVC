@@ -472,7 +472,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		newDrug.setDrugprice(55.00);
 		newDrug.setPackSize("10X10 size");
 
-		drugRepository.save(newDrug);
+		//drugRepository.save(newDrug);
 
 		newDrug.setId(0);
 		newDrug.setDrugName("A-FENAC");
@@ -483,7 +483,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		newDrug.setDrugprice(84.00);
 		newDrug.setPackSize("10X10 size");
 
-		drugRepository.save(newDrug);
+		//drugRepository.save(newDrug);
 
 		newDrug.setId(0);
 		newDrug.setDrugManufacturer(manufacturer2);
@@ -495,7 +495,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		newDrug.setDrugprice(0.00);
 		newDrug.setPackSize("50's ");
 
-		drugRepository.save(newDrug);
+		//drugRepository.save(newDrug);
 
 		newDrug.setId(0);
 		newDrug.setDrugManufacturer(manufacturer2);
@@ -507,7 +507,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		newDrug.setDrugprice(0.00);
 		newDrug.setPackSize("50's ");
 
-		drugRepository.save(newDrug);
+		//drugRepository.save(newDrug);
 
 		DoctorsSpecialization specialization = new DoctorsSpecialization();
 		specialization.setSpecializationName("PHYCIATRIST");

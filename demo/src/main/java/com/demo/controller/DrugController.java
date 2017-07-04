@@ -82,8 +82,10 @@ public class DrugController {
 	@RequestMapping(value = "/drugList", method = RequestMethod.GET)
 	public String druglist(Model model, Pageable pageable) {
 
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String name = auth.getName();
+		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		// use interface instead 
+		String name =""; //auth.getName();
 
 		slf4jLogger.info("DrugController ::druglist:: Drug page accessed by :" + name);
 
@@ -182,6 +184,8 @@ public class DrugController {
 			model.addAttribute("generics", drugGenericDaoService.findAll());
 			model.addAttribute("brands", drugManufacturerDaoServie.findAll());
 			model.addAttribute("drug", form);
+			
+			slf4jLogger.error("DrugController ::saveDrug:: binding error :" + bindingResult.getAllErrors().indexOf(0));
 
 			return "drugs/drugForm";
 		}
