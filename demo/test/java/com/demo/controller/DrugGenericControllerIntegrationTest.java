@@ -25,6 +25,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import static org.hamcrest.Matchers.hasSize;
 
 import com.demo.configuration.TestConfiguration;
 import com.demo.utility.StandaloneMvcTestViewResolver;
@@ -52,129 +53,119 @@ public class DrugGenericControllerIntegrationTest {
 	}
 
 	@Test
-	public void allTestsToVerifyFlow() throws Exception {
+	public void allTestsToVerifyDrugGenericFlow() throws Exception {
 
 		MockMultipartFile fileWithContent = new MockMultipartFile("file", "orig", null, "bar".getBytes());
 
 		MockMultipartFile emptyFile = new MockMultipartFile("file", "".getBytes());
 
-		// Test 1: initial size should be 0 as no drug data available
+		// Test 1: initial size should be 2 as drug generic data available with bootstrap data loader
 
 		mockMvc.perform(get("/admin/drugGenericList")).andDo(print()).andExpect(status().isOk()).andExpect(view().name("drugGeneric/drugsGenerics"))
 				.andExpect(model().attributeExists("drugGenerics"))
-				.andExpect(content().string(Matchers.containsString("Drug Generic List")));
-				//.andExpect(model().attribute("drugGenerics", Matchers.hasProperty("totalElements", equalTo(totalCount))));
+				.andExpect(content().string(Matchers.containsString("Drug Generic List")))			
+				.andExpect(model().attribute("drugGenerics", hasSize(2)));    // ????????
+				//.andExpect(model().attribute("drugGenerics", Matchers.hasProperty("totalElements", equalTo(totalCount))));  //TODO: find why it is not working
 		
-		
-		/*
 
-		// Test 2: new drug with content file after insert count will be 1
 
-		this.mockMvc.perform(MockMvcRequestBuilders.fileUpload("/drug/saveDrug").file(fileWithContent)
-				// post("/admin/saveAddContent")
-				.param("genericId", "1").param("manufacturerId", "1").param("drugName", "testDrugName")
-				.param("strength", "testStrength").param("dosageForm", "testDosageForm").param("storage", "testStorage")
-				.param("packSize", "testSize").param("drugprice", "50.56")
+		// Test 2: new generic drug , after insert count will be 3
+
+		this.mockMvc.perform(
+				 post("/admin/generics")
+				.param("genericName", "genericNameTest")
+				.param("classification", "classificationTest")
+				.param("safetyRemarks", "safetyRemarksTest")
+				.param("indicationDosages", "indicationDosagesTest")
+				.param("contraindication", "contraindicationTest")
+				.param("advanceDrugReaction", "advanceDrugReactionTest")
+				.param("interAction", "interActionTest")
+				.param("specialPrecaution", "specialPrecautionTest")
 
 		).andDo(print()).andExpect(status().isMovedTemporarily());
 
-		totalCount = 1L;
+		totalCount = 3L;
 
-		mockMvc.perform(get("/drugList")).andExpect(status().isOk()).andExpect(view().name("drugs/drugs"))
-				.andExpect(model().attributeExists("drugs"))
-				.andExpect(content().string(Matchers.containsString("Drug Search")))
-				.andExpect(model().attribute("drugs", Matchers.hasProperty("totalElements", equalTo(totalCount))))
+		mockMvc.perform(get("/admin/drugGenericList")).andExpect(status().isOk()).andExpect(view().name("drugGeneric/drugsGenerics"))
+				.andExpect(model().attributeExists("drugGenerics"))
+				.andExpect(content().string(Matchers.containsString("Drug Generic List")))
+				.andExpect(model().attribute("drugGenerics", hasSize(3)))
 				.andDo(print());
+		
+		
+		
+		// Test 3 when called to show a drug generic info it should shown properly
 
-		// Test 3 new drug with empty file after insert count will be 2
+				mockMvc.perform(get("/drugGenericDetails/3")).andExpect(status().isOk()).andExpect(view().name("drugGeneric/drugGenericDetails"))
+						.andExpect(content().string(Matchers.containsString("genericNameTest")));
 
-		this.mockMvc.perform(MockMvcRequestBuilders.fileUpload("/drug/saveDrug").file(emptyFile)
-				// post("/admin/saveAddContent")
-				.param("genericId", "1").param("manufacturerId", "1").param("drugName", "testDrugName2")
-				.param("strength", "testStrength2").param("dosageForm", "testDosageForm2")
-				.param("storage", "testStorage2").param("packSize", "testSize").param("drugprice", "50.56")
+	    // Test 4 when a item edited it should be reflected on show drug  information and count should remain 3
 
-		).andDo(print()).andExpect(status().isMovedTemporarily());
+				this.mockMvc.perform(MockMvcRequestBuilders.fileUpload("/admin/generics").file(fileWithContent).param("idGeneric", "3")
+						.param("genericName", "genericNameChanged")
 
-		totalCount = 2L;
+				).andDo(print()).andExpect(status().isMovedTemporarily());
 
-		mockMvc.perform(get("/drugList")).andExpect(status().isOk()).andExpect(view().name("drugs/drugs"))
-				.andExpect(model().attributeExists("drugs"))
-				.andExpect(content().string(Matchers.containsString("Drug Search")))
-				.andExpect(model().attribute("drugs", Matchers.hasProperty("totalElements", equalTo(totalCount))))
+				// show item
+				mockMvc.perform(get("/drugGenericDetails/3")).andExpect(status().isOk()).andExpect(view().name("drugGeneric/drugGenericDetails"))
+						.andExpect(content().string(Matchers.containsString("genericNameChanged")));
+
+				
+				 // count that no new entry added after edit mistakenly 
+				mockMvc.perform(get("/admin/drugGenericList")).andExpect(status().isOk()).andExpect(view().name("drugGeneric/drugsGenerics"))
+				.andExpect(model().attributeExists("drugGenerics"))
+				.andExpect(content().string(Matchers.containsString("Drug Generic List")))
+				.andExpect(model().attribute("drugGenerics", hasSize(3)))
 				.andDo(print());
+			
+
 
 		// Test 4 After delete count should be 1
 
-		mockMvc.perform(get("/drug/delete/2")).andExpect(status().isMovedTemporarily());
+		mockMvc.perform(get("/admin/generic/delete/3")).andExpect(status().isMovedTemporarily());
+	
 
-		totalCount = 1L;
-
-		mockMvc.perform(get("/drugList")).andExpect(status().isOk()).andExpect(view().name("drugs/drugs"))
-				.andExpect(model().attributeExists("drugs"))
-				.andExpect(content().string(Matchers.containsString("Drug Search")))
-				.andExpect(model().attribute("drugs", Matchers.hasProperty("totalElements", equalTo(totalCount))))
-				.andDo(print());
-
-		// Test 5 when called to show a drug info it should shown properly
-
-		mockMvc.perform(get("/drug/1")).andExpect(status().isOk()).andExpect(view().name("drugs/drugshow"))
-				.andExpect(content().string(Matchers.containsString("testDrugName")));
-
-		// Test 5 when a item edited it should be reflected on show drug
-		// information and count should remain 1
-
-		this.mockMvc.perform(MockMvcRequestBuilders.fileUpload("/drug/saveDrug").file(fileWithContent).param("id", "1")
-				.param("genericId", "1").param("manufacturerId", "1").param("drugName", "testDrugNameChanged part2")
-				.param("strength", "testStrength").param("dosageForm", "testDosageForm").param("storage", "testStorage")
-				.param("packSize", "testSize").param("drugprice", "50.56")
-
-		).andDo(print()).andExpect(status().isMovedTemporarily());
-
-		// show item
-		mockMvc.perform(get("/drug/1")).andExpect(status().isOk()).andExpect(view().name("drugs/drugshow"))
-				.andExpect(content().string(Matchers.containsString("testDrugNameChanged part2")));
-
-		mockMvc.perform(get("/drugList")).andExpect(status().isOk()).andExpect(view().name("drugs/drugs"))
-				.andExpect(model().attributeExists("drugs"))
-				.andExpect(content().string(Matchers.containsString("Drug Search")))
-				.andExpect(model().attribute("drugs", Matchers.hasProperty("totalElements", equalTo(totalCount))))
-				.andDo(print());
-
-		// Test 6 test the search functionalaities with partial brand name,
-		// should return result to prove partial serch is working
-
-		this.mockMvc.perform(post("/drugSearchFromIndex").param("drugName", "part2")
-
-		).andDo(print()).andExpect(view().name("drugs/drugSearch"))
-				.andExpect(content().string(Matchers.containsString("Search Results")))
-				.andExpect(content().string(Matchers.containsString("part2"))).andExpect(status().isOk());
-
-		// Test 7 test the pagination with number 30 items
-
-		for (int a = 0; a < 29; a++) {
-
-			this.mockMvc.perform(MockMvcRequestBuilders.fileUpload("/drug/saveDrug").file(emptyFile)
-					// post("/admin/saveAddContent")
-					.param("genericId", "1").param("manufacturerId", "1").param("drugName", "testDrugName2 " + a)
-					.param("strength", "testStrength2").param("dosageForm", "testDosageForm2")
-					.param("storage", "testStorage2").param("packSize", "testSize").param("drugprice", "50.56")
-
-			).andDo(print()).andExpect(status().isMovedTemporarily());
-
-		}
+		mockMvc.perform(get("/admin/drugGenericList")).andExpect(status().isOk()).andExpect(view().name("drugGeneric/drugsGenerics"))
+		.andExpect(model().attributeExists("drugGenerics"))
+		.andExpect(content().string(Matchers.containsString("Drug Generic List")))
+		.andExpect(model().attribute("drugGenerics", hasSize(2)))
+		.andDo(print());
 		
 		
-		
-		mockMvc.perform(get("/drugList")).andExpect(status().isOk()).andExpect(view().name("drugs/drugs"))
-		.andExpect(content().string(Matchers.containsString("testDrugName2 1")));
+		// Test 5 test the pagination with number 30 items
 
-		
-		mockMvc.perform(get("/drugList?page=1&size=20")).andExpect(status().isOk()).andExpect(view().name("drugs/drugs"))
-		.andExpect(content().string(Matchers.containsString("testDrugName2 28")));
+				for (int a = 0; a < 29; a++) {
+
+					this.mockMvc.perform(
+							 post("/admin/generics")
+							.param("genericName", "genericNameTest "+a)
+							.param("classification", "classificationTest")
+							.param("safetyRemarks", "safetyRemarksTest")
+							
+
+					).andDo(print()).andExpect(status().isMovedTemporarily());
+
+				}
+				
+				
+				
+				mockMvc.perform(get("/admin/drugGenericList")).andExpect(status().isOk()).andExpect(view().name("drugGeneric/drugsGenerics"))
+				.andExpect(content().string(Matchers.containsString("genericNameTest 1")));
 
 				
-		*/
+				mockMvc.perform(get("/admin/drugGenericList?page=1&size=20")).andExpect(status().isOk()).andExpect(view().name("drugGeneric/drugsGenerics"))
+				.andExpect(content().string(Matchers.containsString("genericNameTest 28")));
+
+		
+
+		// Test 6 test the search functionalaities with partial brand name,
+		// should return result to prove partial search is working
+
+		this.mockMvc.perform(post("/admin/drugGenericSearch").param("genericName", "genericNameTest 28"))
+		.andDo(print()).andExpect(view().name("drugGeneric/drugsGenerics"))
+				.andExpect(content().string(Matchers.containsString("Drug Generic Search")))
+				.andExpect(content().string(Matchers.containsString("28"))).andExpect(status().isOk());
+		
 		
 
 	}

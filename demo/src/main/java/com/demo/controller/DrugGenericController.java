@@ -106,7 +106,7 @@ public class DrugGenericController {
 	
 
 
-	@RequestMapping(value = "admin/drugGenericSearch", method = RequestMethod.GET)
+	@RequestMapping(value = "admin/drugGenericSearch", method = RequestMethod.POST)
 	public String drugGenericSearch(DrugGenericSearchForm form, BindingResult bindingResult, Model model,@PageableDefault(value = 10)
 			Pageable pageable, HttpSession session) {
 

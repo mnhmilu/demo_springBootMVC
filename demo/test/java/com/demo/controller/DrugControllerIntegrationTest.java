@@ -1,6 +1,7 @@
 package com.demo.controller;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -62,7 +63,7 @@ public class DrugControllerIntegrationTest {
 
 		mockMvc.perform(get("/drugList")).andExpect(status().isOk()).andExpect(view().name("drugs/drugs"))
 				.andExpect(model().attributeExists("drugs"))
-				.andExpect(content().string(Matchers.containsString("Drug Search")))
+				.andExpect(content().string(Matchers.containsString("Drug Search")))			
 				.andExpect(model().attribute("drugs", Matchers.hasProperty("totalElements", equalTo(totalCount))))
 				.andDo(print());
 
