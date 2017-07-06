@@ -160,7 +160,7 @@ public class IndexController {
 
 	}
 
-	@RequestMapping(value = "/drugSearchFromIndex", method = RequestMethod.GET)
+	@RequestMapping(value = "/drugSearchFromIndex", method = RequestMethod.POST)
 	public String drugSearch(DrugSearchForm form, BindingResult bindingResult, Model model, HttpSession session,
 			@PageableDefault(value = 10) Pageable pageable) {
 		
@@ -198,7 +198,7 @@ public class IndexController {
 
 		}
 
-		Page<Drug> drugsSearchResultPage = drugDaoService.findDrugByDrugManufacturerOrByDrugGenericOrDrugName(null, "",
+		Page<Drug> drugsSearchResultPage = drugDaoService.findDrugByDrugManufacturerOrByDrugGenericOrDrugName(null,searhKeyByDurgName,
 				searhKeyByDurgName, pageable);
 
 		PageWrapper<Drug> page = new PageWrapper<Drug>(drugsSearchResultPage, "/drugSearchFromIndex");

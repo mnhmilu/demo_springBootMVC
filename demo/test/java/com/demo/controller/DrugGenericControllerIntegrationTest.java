@@ -35,14 +35,14 @@ import com.demo.utility.StandaloneMvcTestViewResolver;
 @WebAppConfiguration
 @Sql({ "test.sql" })
 @ActiveProfiles("dev")
-public class DrugControllerIntegrationTest {
+public class DrugGenericControllerIntegrationTest {
 
 	@Autowired
 	private WebApplicationContext wac;
 
 	private MockMvc mockMvc;
 
-	Long totalCount = 0L;
+	Long totalCount = 2L;
 
 	@Before
 	public void setup() {
@@ -60,11 +60,13 @@ public class DrugControllerIntegrationTest {
 
 		// Test 1: initial size should be 0 as no drug data available
 
-		mockMvc.perform(get("/drugList")).andExpect(status().isOk()).andExpect(view().name("drugs/drugs"))
-				.andExpect(model().attributeExists("drugs"))
-				.andExpect(content().string(Matchers.containsString("Drug Search")))
-				.andExpect(model().attribute("drugs", Matchers.hasProperty("totalElements", equalTo(totalCount))))
-				.andDo(print());
+		mockMvc.perform(get("/admin/drugGenericList")).andDo(print()).andExpect(status().isOk()).andExpect(view().name("drugGeneric/drugsGenerics"))
+				.andExpect(model().attributeExists("drugGenerics"))
+				.andExpect(content().string(Matchers.containsString("Drug Generic List")));
+				//.andExpect(model().attribute("drugGenerics", Matchers.hasProperty("totalElements", equalTo(totalCount))));
+		
+		
+		/*
 
 		// Test 2: new drug with content file after insert count will be 1
 
@@ -172,7 +174,7 @@ public class DrugControllerIntegrationTest {
 		.andExpect(content().string(Matchers.containsString("testDrugName2 28")));
 
 				
-		
+		*/
 		
 
 	}

@@ -25,7 +25,7 @@ public interface DrugRepository extends CrudRepository<Drug, Integer>{
 	
 	
 	Drug findById(Integer id);
-	@Query("select d from Drug d inner join d.drugManufacturer br inner join d.drugGeneric dg where br.manufacturerId=:manufacturerId or lower(dg.genericName) like lower(:genericName)  or lower(d.drugName) LIKE lower ('%'||:drugName||'%')")
+	@Query("select d from Drug d inner join d.drugManufacturer br inner join d.drugGeneric dg where br.manufacturerId=:manufacturerId or lower(dg.genericName) like lower('%'||:genericName||'%')  or lower(d.drugName) LIKE lower ('%'||:drugName||'%')")
 	Page<Drug> findDrugByDrugManufacturerOrByDrugGenericOrDrugName(@Param("manufacturerId") Integer manufacturerId,@Param("genericName") String genericName,@Param("drugName") String drugName,Pageable pageable);	
 	
 	@Query("select d from Drug d inner join d.drugManufacturer br inner join d.drugGeneric dg where br.manufacturerId=:manufacturerId or lower(dg.genericName) like lower(:genericName)  or lower(d.drugName) LIKE lower ('%'||:drugName||'%')")
