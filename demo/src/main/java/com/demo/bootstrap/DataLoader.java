@@ -496,19 +496,26 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		newDrug.setPackSize("50's ");
 
 		//drugRepository.save(newDrug);
+		
+		for(int a=0;a<30;a++)
+		{
 
 		newDrug.setId(0);
 		newDrug.setDrugManufacturer(manufacturer2);
-		newDrug.setDrugName("CATAFLAM");
+		newDrug.setDrugName("CATAFLAM test"+a);
 		newDrug.setDosageForm("TAB");
 		newDrug.setStrength("50mg");
 
 		newDrug.setInsertDate(new Date());
 		newDrug.setDrugprice(0.00);
 		newDrug.setPackSize("50's ");
+		
 
-		//drugRepository.save(newDrug);
+		drugRepository.save(newDrug);
 
+		}
+		
+		
 		DoctorsSpecialization specialization = new DoctorsSpecialization();
 		specialization.setSpecializationName("PHYCIATRIST");
 		doctorsSpecializaitonRepository.save(specialization);

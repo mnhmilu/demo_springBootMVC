@@ -78,8 +78,8 @@ public class IndexController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String index(Model model, HttpSession session) {
 
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String name = auth.getName(); // get logged in username
+		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String name = "";//auth.getName(); // get logged in username
 
 		slf4jLogger.info("IndexController ::index:: Home page access by :" + name);
 
@@ -160,7 +160,7 @@ public class IndexController {
 
 	}
 
-	@RequestMapping(value = "/drugSearchFromIndex", method = RequestMethod.POST)
+	@RequestMapping(value = "/drugSearchFromIndex", method = RequestMethod.GET)
 	public String drugSearch(DrugSearchForm form, BindingResult bindingResult, Model model, HttpSession session,
 			@PageableDefault(value = 10) Pageable pageable) {
 		

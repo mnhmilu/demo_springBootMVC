@@ -82,10 +82,10 @@ public class DrugController {
 	@RequestMapping(value = "/drugList", method = RequestMethod.GET)
 	public String druglist(Model model,@PageableDefault(value = 10) Pageable pageable) {
 
-		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		
 		// use interface instead 
-		String name =""; //auth.getName();
+		String name =auth.getName();
 
 		slf4jLogger.info("DrugController ::druglist:: Drug page accessed by :" + name);
 
