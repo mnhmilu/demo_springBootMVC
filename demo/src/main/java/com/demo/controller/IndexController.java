@@ -198,7 +198,7 @@ public class IndexController {
 
 		}
 
-		Page<Drug> drugsSearchResultPage = drugDaoService.findDrugByDrugManufacturerOrByDrugGenericOrDrugName(null,searhKeyByDurgName,
+		Page<Drug> drugsSearchResultPage = drugDaoService.findDrugByDrugManufacturerOrByDrugGenericOrDrugName(null,null,
 				searhKeyByDurgName, pageable);
 
 		PageWrapper<Drug> page = new PageWrapper<Drug>(drugsSearchResultPage, "/drugSearchFromIndex");
