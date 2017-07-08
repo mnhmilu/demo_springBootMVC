@@ -226,10 +226,10 @@ public class ContentController {
 		    	form.setImage(content.getImage());			
 			}
 		}
-		else if(file.getBytes().length >300000)
+		else if(file.getBytes().length >500000)
 		{
 			slf4jLogger.warn("ContentController ::saveAddContent:: photo size limit exceeded");		
-			model.addAttribute("errorMessage", "Eror! Photo size limit exceeded, try to upload photo < 300 KB size");
+			model.addAttribute("errorMessage", "Eror! Photo size limit exceeded, try to upload photo < 500 KB size");
 			SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 			Date today = new Date();
 			dateFormat.format(today);

@@ -497,12 +497,12 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
 		//drugRepository.save(newDrug);
 		
-		for(int a=0;a<30;a++)
-		{
+		//for(int a=0;a<30;a++)
+		//{
 
 		newDrug.setId(0);
 		newDrug.setDrugManufacturer(manufacturer2);
-		newDrug.setDrugName("CATAFLAM test"+a);
+		newDrug.setDrugName("CATAFLAM test");
 		newDrug.setDosageForm("TAB");
 		newDrug.setStrength("50mg");
 
@@ -511,9 +511,9 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 		newDrug.setPackSize("50's ");
 		
 
-		drugRepository.save(newDrug);
+		//drugRepository.save(newDrug);
 
-		}
+		//}
 		
 		
 		DoctorsSpecialization specialization = new DoctorsSpecialization();

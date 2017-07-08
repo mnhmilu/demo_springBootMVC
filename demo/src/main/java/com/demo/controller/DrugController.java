@@ -2,6 +2,7 @@ package com.demo.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -85,7 +86,11 @@ public class DrugController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		
 		// use interface instead 
-		String name =auth.getName();
+		String name="";
+		if(auth !=null){
+			
+		 name =auth.getName();
+	     }
 
 		slf4jLogger.info("DrugController ::druglist:: Drug page accessed by :" + name);
 
@@ -207,6 +212,14 @@ public class DrugController {
 
 		}
 		Drug drug = drugFormToDrugData.convert(form);
+		
+		
+		if (drug.getId()==null || drug.getId() ==0)
+		{
+		  drug.setInsertDate(new Date());
+		}
+		
+		drug.setLastUpdatedDate(new Date());
 
 		drugDaoService.save(drug);
 

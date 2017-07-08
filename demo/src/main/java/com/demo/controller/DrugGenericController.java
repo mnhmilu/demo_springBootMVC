@@ -162,7 +162,13 @@ public class DrugGenericController {
 		}
 
 		DrugGeneric generic = drugGenericFormToDrugGenericData.convert(form);	
-		generic.setInsertDate(new Date());
+		
+		if(form.getIdGeneric()==null || form.getIdGeneric()==0)
+		{
+		  generic.setInsertDate(new Date());
+		}
+		
+		generic.setLastUpdatedDate(new Date());
 		drugGenericDaoService.save(generic);
 
 		return "redirect:/admin/drugGenericList";

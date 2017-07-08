@@ -143,7 +143,7 @@ public class DrugControllerIntegrationTest {
 		// Test 6 test the search functionalaities with partial brand name,
 		// should return result to prove partial serch is working
 
-		this.mockMvc.perform(post("/drugSearchFromIndex").param("drugName", "part2")
+		this.mockMvc.perform(get("/drugSearchFromIndex").param("drugName", "part2")
 
 		).andDo(print()).andExpect(view().name("drugs/drugSearch"))
 				.andExpect(content().string(Matchers.containsString("Search Results")))

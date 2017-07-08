@@ -70,8 +70,29 @@ public class DrugGeneric {
     private String interAction;
     
     
+    @Temporal(TemporalType.DATE)
+    private Date lastUpdatedDate;
+    
+    
+    
+    
+    
     private String remarks;   
     
+    
+    
+    
+    
+
+	public Date getLastUpdatedDate() {
+		return lastUpdatedDate;
+	}
+
+
+	public void setLastUpdatedDate(Date lastUpdatedDate) {
+		this.lastUpdatedDate = lastUpdatedDate;
+	}
+
 
 	public String getClassification() {
 		return classification;
