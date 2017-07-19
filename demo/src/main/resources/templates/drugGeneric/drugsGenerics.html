@@ -15,7 +15,7 @@
 					<span class="label label-primary">Drug Generic Search</span>
 				</h4>
 				<form class="form-inline" th:object="${drugGeneric}"
-					th:action="@{/admin/drugGenericSearch}" method="get">
+					th:action="@{/admin/drugGenericSearch}" method="post">
 					<div class="row">
 						<div class="col-md-6">
 							<label class="col-md-4 control-label">Generic Name</label>
@@ -32,18 +32,17 @@
 								<a href="/admin/drugGenericList" class="btn btn-success"
 									role="button"><span class="glyphicon glyphicon-repeat" aria-hidden="true"></span> </a>
 							</div>
+	<div class="form-group">
+
+				<a href="/admin/generic/new" class="btn btn-success" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+			</div>
 						</div>
 					</div>
 
 				</form>
 			</div>
 		</div>
-		<div class="panel panel-default">
-			<div class="panel-body">
 
-				<a href="/admin/generic/new" class="btn btn-success" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
-			</div>
-		</div>
 		<div th:if="${not #lists.isEmpty(drugGenerics)}">
 
 			<div class="panel panel-default">

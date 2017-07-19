@@ -132,6 +132,10 @@ public class IndexController {
 		model.addAttribute("add1", "add1");
 		model.addAttribute("add2", "add2");
 		model.addAttribute("add3", "add3");
+		model.addAttribute("add4", "add4");
+		model.addAttribute("add5", "add5");
+		model.addAttribute("add6", "add6");
+		
 		
 		HitCounter hitCounter =hitCounterRepository.findByCounterDate(new Date());
 		
@@ -270,7 +274,11 @@ public class IndexController {
 
 		if (contentRepository.count() > 0) {
 			Content content = filterAddByType(contents, imageid);
-			bytes = content.getImage();
+			
+			if(content!=null)
+			{
+		    	bytes = content.getImage();
+			}
 		}
 
 		// Set headers

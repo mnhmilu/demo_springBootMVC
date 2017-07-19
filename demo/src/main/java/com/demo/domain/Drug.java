@@ -33,11 +33,11 @@ public class Drug {
     @Column(name = "drugName" ,nullable = false)
     private String drugName; 
 
-    @Column(name = "strength")
+    @Column(name = "strength" ,columnDefinition="TEXT")
     private String strength;      
     
     
-    @Column(name = "storage")
+    @Column(name = "storage",columnDefinition="TEXT")
     private String storage;       
  
     

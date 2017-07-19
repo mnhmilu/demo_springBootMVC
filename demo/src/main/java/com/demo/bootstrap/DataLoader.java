@@ -363,7 +363,7 @@ public class DataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
 	private void addAddData() {
 
-		for (int a = 1; a <= 46; a++) {
+		for (int a = 0; a <= 6; a++) {
 
 			Content add = new Content();
 			add.setContentType("Advertisement");
